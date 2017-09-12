@@ -2,7 +2,7 @@ import unittest
 from interface.waybill.waybill_cancel import WayBillCancel
 
 
-class CancelWayBillBvtCase(unittest.TestCase):
+class CancelWayBillCase(unittest.TestCase):
     def setUp(self):
         self.wayBillId = '123456'
         pass
@@ -10,7 +10,7 @@ class CancelWayBillBvtCase(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_normal_cancel(self):
+    def test_bvt_normal_cancel(self):
         response = WayBillCancel().waybill_cancel(self.wayBillId)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
