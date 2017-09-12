@@ -2,7 +2,7 @@ import unittest
 from interface.waybill.waybill_delete import WayBillDelete
 
 
-class DeleteWayBill_BvtCase(unittest.TestCase):
+class DeleteWayBillBvtCase(unittest.TestCase):
     def setUp(self):
         self.wayBillId = '123456'
         pass

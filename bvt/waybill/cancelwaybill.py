@@ -2,7 +2,7 @@ import unittest
 from interface.waybill.waybill_cancel import WayBillCancel
 
 
-class CancelWayBill_BvtCase(unittest.TestCase):
+class CancelWayBillBvtCase(unittest.TestCase):
     def setUp(self):
         self.wayBillId = '123456'
         pass
