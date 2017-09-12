@@ -22,12 +22,14 @@ class HttpClient:
         response = requests.post(url, data=json.dumps(body_dict), headers=header_dict, params=param_dict, timeout=self.timeout)
         return response
 
-    def post_multipart(self, url, file_path, header_dict=None):
+    def post_multipart_file(self, url, file_path, header_dict=None):
         files = {'file': open(file_path, 'rb')}
         response = requests.post(url, files=files, headers=header_dict)
         return response
 
-
+    def post_multipart(self, url, files, header_dict=None):
+        response = requests.post(url, files=files, headers=header_dict)
+        return response
 
 if __name__ == '__main__':
     response = HttpClient().post_json('http://192.168.180.58:8080/api/tms/wallet/cashOut',{'test':'123'})
