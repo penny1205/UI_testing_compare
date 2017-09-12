@@ -3,7 +3,7 @@ from util.http.httpclient import HttpClient
 from util.file.fileutil import FileUtil
 
 class WayBillCancel(object):
-    __slots__ = ('__cancelWayBillApiUrl', '__token_dict')
+    __slots__ = ('__cancelWayBillApiUrl', '__head_dict')
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
