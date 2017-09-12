@@ -1,5 +1,4 @@
 import unittest
-
 from util.http.httpclient import HttpClient
 
 class CancelWayBill(unittest.TestCase):
