@@ -1,0 +1,38 @@
+#__author__ = 'pan'
+# -*- coding:utf-8 -*-
+
+from util.http.httpclient import HttpClient
+from util.config.yaml.readyaml import ReadYaml
+from util.file.fileutil import FileUtil
+
+class SupplierSelect(object):
+    '''
+    查询供应商信息列表
+    /api/tms/supplier/listSuppliers
+    '''
+    __slots__ = ('__selectDriverApiUrl', '__head_dict')
+
+    def __init__(self):
+        config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
+        self.__selectDriverApiUrl = "https://{0}:{1}{2}/api/tms/supplier/listSuppliers".format(
+            config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
+        self.__head_dict = {
+            'token': config['tms_api_token'],
+            'YD_OAUTH': config['tms_api_YD_OAUTH'],
+        }
+
+    def supplier_select(self,currentPage='1',rows='10',name='',type='',contactPersonMobile =''):
+         '''供应商信息列表'''
+         try:
+             payload ={
+             'currentPage': currentPage,
+             'rows': rows,
+             'name': name,
+             'type': type,
+             'contactPersonMobile': contactPersonMobile,
+             }
+             request = HttpClient().get(self.__selectDriverApiUrl,self.__head_dict,payload)
+             response = request.json()
+             return response
+         except Exception:
+             return None
