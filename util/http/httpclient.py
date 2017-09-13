@@ -33,4 +33,5 @@ class HttpClient:
 
 if __name__ == '__main__':
     response = HttpClient().post_form('http://192.168.180.58:8080/api/tms/wallet/cashOut',{'test':'123'})
+
     print(response.text)
