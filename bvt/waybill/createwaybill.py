@@ -18,8 +18,10 @@ class TestCreateWayBill(unittest.TestCase):
         pass
 
     @parameterized.expand([
-        ('2','2017-09-14','北京','北京','天津','天津','1000','10','0.01','0.02','0.03','0.04','1'
-         ,'备注我要录单测试','TMS','快递','10','10','10','10','10'),
+        ('1', '2017-09-14', '北京', '北京', '天津', '天津', '1000', '10', '0.01', '0.02', '0.03', '0.04', '1'
+         , '备注我要录单测试', 'TMS', '快递', '10', '10', '10', '10', '10'),
+        ('2', '2017-09-14', '天津', '天津', '北京', '北京', '1000', '10', '0.01', '0.02', '0.03', '0.04', '1'
+         , '备注我要录单测试', 'TMS', '快递', '10', '10', '10', '10', '10'),
     ])
     def test_waybill_success(self,carType,applyDate,sendProvince,sendCity,arriveProvince,arriveCity,
                              income,totalAmt,preAmt,oilAmt,destAmt,lastAmt,hasReceipt,content,source,
@@ -30,6 +32,7 @@ class TestCreateWayBill(unittest.TestCase):
                                                                income,totalAmt,preAmt,oilAmt,destAmt,lastAmt,hasReceipt,
                                                                content,source,cargoName,cargoWeight,cargoVolume,
                                                                cargoNumberOfCases,cargoWorth,insuranceCosts)
+
         waybill_list = WayBillSelect().waybill_select(normalCondition=mobile,searchStatus=True).json()['content']['dataList']
         if waybill_list == None:
             self.logger.info('Waybill created fail!')
