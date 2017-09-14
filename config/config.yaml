@@ -13,8 +13,8 @@ tms_api_YD_OAUTH: eyJlbmNyeXB0ZWREYXRhIjoiLzlTbWhlOHpsZG9DbjZYSjFzSG1PV0xuMFNHcG
 partnerNo: ShiDeTang
 
 ##########log Config##########
-log_path_info: F:\\PycharmProjects\\api_testing\\log
-log_path_error: F:\PycharmProjects\api_testing\\log\\error
+log_path_info: /home/testing/Logs/tms_uat
+log_path_error: /home/testing/Logs/tms_uat/error
 
 ##########Mail Config##########
 #receiver eg:['eamilAddress1@keking.cn','eamilAddress2@keking.cn']
