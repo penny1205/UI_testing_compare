@@ -4,14 +4,17 @@
 import logging
 import os
 import time
+from util.config.yaml.readyaml import ReadYaml
+from util.file.fileutil import FileUtil
 
 class Log:
     '''打印日志'''
 
-    def __init__(self,log_path=os.path.dirname(os.path.dirname(__file__))+ '/log/'):
-        self.logname = os.path.join(log_path ,'{0}.log'.format(time.strftime("%Y-%m-%d")))
+    def __init__(self):
+        self.config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
 
-    def _print_console(self,level,message):
+    def _print_console(self,level,message,log_path):
+        self.logname = os.path.join(log_path, '{0}.log'.format(time.strftime("%Y-%m-%d")))
         # 创建一个logger
         logger = logging.getLogger()
         logger.setLevel(logging.DEBUG)
@@ -43,13 +46,17 @@ class Log:
         fh.close()
 
     def info(self,message):
-        self._print_console('info',message)
+        log_path = self.config['log_path_info']
+        self._print_console('info',message,log_path)
 
     def debug(self,message):
-        self._print_console('debug',message)
+        log_path = self.config['log_path_info']
+        self._print_console('debug',message,log_path)
 
     def warning(self,message):
-        self._print_console('warning',message)
+        log_path = self.config['log_path_error']
+        self._print_console('warning',message,log_path)
 
     def error(self,message):
-        self._print_console('error',message)
+        log_path = self.config['log_path_error']
+        self._print_console('error',message,log_path)

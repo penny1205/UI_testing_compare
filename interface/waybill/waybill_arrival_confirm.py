@@ -25,12 +25,7 @@ class WayBillArrivalConfirm(object):
          '''到达确认'''
          try:
              payload ={'billId': wayBillId, 'destAmt': destAmt, 'destMemo': destMemo}
-             request = HttpClient().post_form(self.__arrivalConfirmWayBillApiUrl,payload,self.__head_dict)
-             response = request.json()
+             response = HttpClient().post_form(self.__arrivalConfirmWayBillApiUrl,payload,self.__head_dict)
              return response
          except Exception:
              return None
-         # if response['code'] == 0:
-         #     return True
-         # else:
-         #     self.logger.info('/payment/confirmWayComplete return status code error:{0}'.format(response))

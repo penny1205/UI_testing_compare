@@ -30,8 +30,7 @@ class ProjectSelect(object):
              'projectStatus': projectStatus,
              'projectName': projectName,
              }
-             request = HttpClient().get(self.__selectProjectApiUrl,self.__head_dict,payload)
-             response = request.json()
+             response = HttpClient().get(self.__selectProjectApiUrl,self.__head_dict,payload)
              return response
          except Exception:
              return None

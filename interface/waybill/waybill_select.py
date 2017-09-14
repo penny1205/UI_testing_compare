@@ -15,7 +15,7 @@ class WayBillSelect(object):
 
     def __init__(self):
         config = ReadYaml( FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        self.__selectWayBillApiUrl = "http://{0}:{1}{2}/api/tms/wayBill/wayBillList".format(
+        self.__selectWayBillApiUrl = "https://{0}:{1}{2}/api/tms/wayBill/wayBillList".format(
             config['tms_api_host'], config['tms_api_port'], config['tms_api_path'])
         self.__head_dict = {
             'token': config['tms_api_token'],
@@ -44,14 +44,9 @@ class WayBillSelect(object):
              'needAccount': needAccount, #是否需要手动定位次数字段，true需要，false不需要
              'normalCondition':normalCondition,
              'searchStatus': searchStatus #查询方式：true:普通查询，false:高级查询
-
              }
-             request = HttpClient().get(self.__selectWayBillApiUrl,payload,self.__head_dict)
-             response = request.json()
+             response = HttpClient().get(self.__selectWayBillApiUrl,self.__head_dict,payload)
              return response
          except Exception:
              return None
-         # if response['code'] == 0:
-         #     return response['content']['dataList']
-         # else:
-         #     self.logger.info('/api/tms/wayBill/wayBillList return status code error:{0}'.format(response))
+

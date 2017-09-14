@@ -31,8 +31,7 @@ class SupplierSelect(object):
              'type': type,
              'contactPersonMobile': contactPersonMobile,
              }
-             request = HttpClient().get(self.__selectDriverApiUrl,self.__head_dict,payload)
-             response = request.json()
+             response = HttpClient().get(self.__selectDriverApiUrl,self.__head_dict,payload)
              return response
          except Exception:
              return None

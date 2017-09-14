@@ -32,16 +32,7 @@ class DriverCreate(object):
             'carModel' : 'XIANG_SHI_CHE',
             'carLoad' : '20'
             }
-            request = HttpClient().post_form(self.__createDriverApiUrl,payload,self.__head_dict)
-            response = request.json()
+            response = HttpClient().post_form(self.__createDriverApiUrl,payload,self.__head_dict)
             return response
         except Exception:
             return None
-#         if response['code'] == 0:
-#             return response['content']['dataList']
-#         else:
-#             self.logger.info(' /api/tms/driver/createTmsAppDriver/all return status code error:{0}'.format(response))
-#
-# if __name__ == '__main__':
-#     driver_list = DriverCreate().driver_create()
-#     print(driver_list)

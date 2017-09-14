@@ -25,12 +25,7 @@ class WayBillDetailGet(object):
         '''获取运单详情'''
         try:
             payload = {'wayBillId': wayBillId}
-            request = HttpClient().post_form(self.__getWayBillDetailApiUrl,payload,self.__head_dict)
-            response = request.json()
+            response = HttpClient().post_form(self.__getWayBillDetailApiUrl,payload,self.__head_dict)
             return response
         except Exception:
             return None
-        # if response['code'] == 0:
-        #     return response['content']
-        # else:
-        #     self.logger.info('/payment/tmsConfirmWayBill return status code error:{0}'.format(response))
