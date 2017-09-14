@@ -13,16 +13,16 @@ tms_api_YD_OAUTH: eyJlbmNyeXB0ZWREYXRhIjoiLzlTbWhlOHpsZG9DbjZYSjFzSG1PV0xuMFNHcG
 partnerNo: ShiDeTang
 
 ##########log Config##########
-log_path_info: F:\\PycharmProjects\\api_testing\\log
-log_path_error: F:\PycharmProjects\api_testing\\log\\error
+log_path_info: /home/testing/Logs/tms_uat
+log_path_error: /home/testing/Logs/tms_uat/error
 
 ##########Mail Config##########
 #receiver eg:['eamilAddress1@keking.cn','eamilAddress2@keking.cn']
-email_receiver : ['zhangdawei@keking.cn']
+email_receiver : ['zhangdawei@keking.cn', 'liuxinyu@keking.cn', 'panyuanyuan@keking.cn', 'qihong@keking.cn']
 #sender
-email_sender : 'panyuanyuan@keking.cn'
-email_sender_pwd : 'pyy11qqww22'
+email_sender : 'ahkj@keking.cn'
+email_sender_pwd : 'redmineonly'
 #mail server
 email_host : mail.keking.cn
 #mail title prefix
-email_title : "TMS_API自动化测试报告"
+email_title : "TMS迭代BVT测试报告"

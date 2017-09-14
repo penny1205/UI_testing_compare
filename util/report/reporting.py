@@ -20,5 +20,5 @@ class ReportUtil:
 
 if __name__ == '__main__':
     from util.unittest.unittestutil import UnitTestUtil
-    suite = UnitTestUtil().discover_pattern('E:/PythonWorkSpace/tms_api_testing/biz', '*.py', '.*?_bvt_')
+    suite = UnitTestUtil().discover_pattern('E:/PythonWorkSpace/tms_api_testing/biz', '*.py')
     print(ReportUtil().generate_report(suite, '测试报告', '随便测试一下Report', 'G:/report/report.html'))

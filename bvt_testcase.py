@@ -2,19 +2,24 @@ from util.unittest.unittestutil import UnitTestUtil
 from util.report.reporting import ReportUtil
 from util.file.fileutil import FileUtil
 from util.mail.sendmail import SendMail
+from util.config.yaml.readyaml import ReadYaml
 
 import time
 
 if __name__ == '__main__':
     try:
-        bvtcases = UnitTestUtil().discover_pattern(FileUtil.getProjectObsPath() + '/bvt/waybill', '*.py', 'test_.*?')
-        ReportUtil().generate_report(bvtcases, 'TMS迭代BVT测试报告 ' + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())), 'qa testing report', FileUtil.getProjectObsPath() + '/report/report.html')
+        config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
+        bvtcases = UnitTestUtil().discover_pattern(FileUtil.getProjectObsPath() + '/bvt/waybill', '*.py')
+
+        ReportUtil().generate_report(bvtcases, config['email_title'] + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())), 'qa testing report', FileUtil.getProjectObsPath() + '/report/report.html')
         reader = open(FileUtil.getProjectObsPath() + '/report/report.html', 'rb')
         mail_body = reader.read()
         reader.close()
-        SendMail().send_mail(['zhangdawei@keking.cn', 'liuxinyu@keking.cn', 'panyuanyuan@keking.cn', 'qihong@keking.cn'],
-                             'ahkj@keking.cn', 'redmineonly','mail.keking.cn',
-                             'TMS迭代BVT测试报告 ' + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())), mail_body,
+        SendMail().send_mail(config['email_receiver'],
+                             config['email_sender'], config['email_sender_pwd'],config['email_host'],
+                             config['email_title'] + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())), mail_body,
                              {FileUtil.getProjectObsPath() + '/report/report.html'})
+        print('BvtCase run success!')
     except Exception:
+        raise
         print('BvtCase run fail!')

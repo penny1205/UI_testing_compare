@@ -39,10 +39,9 @@ class SendMail:
             smtp.quit()
             return True
         except Exception:
+            raise
             return False
 
 
 if __name__ == '__main__':
-    result = SendMail().send_mail(['zhangdawei@keking.cn'], 'ahkj@keking.cn', 'redmineonly', 'mail.keking.cn', 'hello',
-                                  'test_email', {})
-    print(result)
+    print('sendMail')
