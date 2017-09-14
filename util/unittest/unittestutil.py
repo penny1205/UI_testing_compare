@@ -3,7 +3,7 @@ import re
 
 
 class UnitTestUtil:
-    def discover_pattern(self, filepath, filename_pattern, casename_pattern):
+    def discover_pattern_undefine(self, filepath, filename_pattern, casename_pattern):
         suite = unittest.TestSuite()
         discover_cases = unittest.TestLoader().discover(filepath, pattern=filename_pattern, top_level_dir=None)
         for test_suite in discover_cases:
@@ -18,4 +18,12 @@ class UnitTestUtil:
                     else:
                         index = index + 1
                 suite.addTest(test_case)
+        return suite
+
+    def discover_pattern(self, filepath, filename_pattern):
+        suite = unittest.TestSuite()
+        discover_cases = unittest.TestLoader().discover(filepath, pattern=filename_pattern, top_level_dir=None)
+        for test_suite in discover_cases:
+            for testcase in test_suite:
+                suite.addTest(testcase)
         return suite
