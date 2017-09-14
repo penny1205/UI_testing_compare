@@ -3,6 +3,7 @@ from interface.waybill.waybill_delete import WayBillDelete
 
 
 class DeleteWayBillCase(unittest.TestCase):
+    '''删除运单'''
     def setUp(self):
         self.wayBillId = '123456'
         pass
