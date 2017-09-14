@@ -39,6 +39,7 @@ class SendMail:
             smtp.quit()
             return True
         except Exception:
+            raise
             return False
 
 
