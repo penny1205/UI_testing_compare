@@ -16,7 +16,7 @@ class TestSelectWayBill(unittest.TestCase):
         self.logger.info('########################### TestSelectWayBill START ###########################')
 
         global carType,applyDate,sendCity,arriveCity,wayBillId,mobile,name,idNo,carNo
-        carType =random.sample(['1','2'])
+        carType =str(random.randint(1,2))
         applyDate = time.strftime('%Y-%m-%d')
         sendCity = '北京'
         arriveCity = '天津'
