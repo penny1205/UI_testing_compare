@@ -154,10 +154,10 @@ class CreateWayBill(object):
                             cargoNumberOfCases=cargoNumberOfCases, cargoWorth=cargoWorth, insuranceCosts=insuranceCosts
                         ).json()['content']
                         return self.waybill,self.driver['mobile'],self.driver['name'],\
-                               self.driver['idNo'],self.driver['mobile'],self.driver['carNo'],
+                               self.driver['idNo'],self.driver['carNo'],
                     else:
                         return self.waybill,self.driver['mobile'],self.driver['name'],\
-                               self.driver['idNo'],self.driver['mobile'],self.driver['carNo'],
+                               self.driver['idNo'],self.driver['carNo'],
             else:
                 self.logger.error('外请车类型错误: {0}'.format(carType))
                 return None,None
