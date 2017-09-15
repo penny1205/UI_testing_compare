@@ -18,14 +18,21 @@ class WayBillArrivalConfirm(object):
         self.__arrivalConfirmWayBillApiUrl = 'http://{0}:{1}{2}/payment/confirmWayComplete'.format(
             config['app_api_host'],config['app_api_port'],config['app_api_path'])
         self.__head_dict = {
-            'token': config['tms_api_token']
+            # 'content-type': "application/json",
+            'token': config['tms_api_token'],
+            'YD_OAUTH': config['tms_api_YD_OAUTH']
         }
 
-    def waybill_arrival_confirm(self,wayBillId='',destAmt='',destMemo=''):
+    def waybill_arrival_confirm(self,wayBillId='',destAmt='',destMemo='',lastAmt='',lastMemo=''):
          '''到达确认'''
          try:
-             payload ={'billId': wayBillId, 'destAmt': destAmt, 'destMemo': destMemo}
-             response = HttpClient().post_form(self.__arrivalConfirmWayBillApiUrl,payload,self.__head_dict)
+             payload ={'billId': wayBillId,
+                       'destAmt': destAmt,
+                       'destMemo': destMemo,
+                       'lastAmt':lastAmt,
+                       'lastMemo':lastMemo
+                       }
+             response = HttpClient().post_json(self.__arrivalConfirmWayBillApiUrl,payload,self.__head_dict)
              return response
          except Exception:
              return None

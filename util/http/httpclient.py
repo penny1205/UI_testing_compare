@@ -19,6 +19,7 @@ class HttpClient:
         return response
 
     def post_json(self, url, body_dict=None, header_dict=None, param_dict=None):
+        header_dict['content-type']='application/json'
         response = requests.post(url, data=json.dumps(body_dict), headers=header_dict, params=param_dict, timeout=self.timeout)
         return response
 

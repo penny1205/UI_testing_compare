@@ -18,7 +18,7 @@ class WayBillDepartureConfirm(object):
         self.__departureConfirmWayBillApiUrl = 'http://{0}:{1}{2}/payment/tmsConfirmWayBill'.format(
             config['app_api_host'],config['app_api_port'],config['app_api_path'])
         self.__head_dict = {
-            'content-type': "application/json",
+            # 'content-type': "application/json",
             'token': config['tms_api_token'],
             'YD_OAUTH': config['tms_api_YD_OAUTH']
         }
