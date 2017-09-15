@@ -22,7 +22,7 @@ class WayBillSelect(object):
             'YD_OAUTH': config['tms_api_YD_OAUTH']
         }
 
-    def waybill_select(self,currentPage='1',rows='10',billStatus='',name='', mobile='',carType='2',carNo='',
+    def waybill_select(self,currentPage='1',rows='10',billStatus='',name='', mobile='',carType='',carNo='',
                        sendCity='',arriveCity='',applyDateFirst='',applyDateLast='',shipperInsertTimeFirst='',
                        shipperInsertTimeLast='',needAccount='false',normalCondition='',searchStatus='false'):
          '''查询运单'''

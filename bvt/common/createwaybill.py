@@ -160,6 +160,6 @@ class CreateWayBill(object):
                                self.driver['idNo'],self.driver['carNo'],
             else:
                 self.logger.error('外请车类型错误: {0}'.format(carType))
-                return None,None
+                return None,None,None,None,None
         except Exception:
             return None
