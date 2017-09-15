@@ -1,14 +1,15 @@
 #__author__ = 'pan'
 # -*- coding:utf-8 -*-
 
+import time
 import unittest
-from parameterized import parameterized
 from util.log.log import Log
 from interface.waybill.waybill_select import WayBillSelect
 from bvt.common.createwaybill import CreateWayBill
 
 class TestCreateWayBill(unittest.TestCase):
-    '''我要录单'''
+    '''我要录单 '''
+
     def setUp(self):
         self.logger = Log()
         self.logger.info('########################### TestCreateWayBill START ###########################')
@@ -17,45 +18,31 @@ class TestCreateWayBill(unittest.TestCase):
         self.logger.info('############################ TestCreateWayBill END ############################')
         pass
 
-    @parameterized.expand([
-        ('1', '2017-09-14', '北京', '北京', '天津', '天津', '1000', '10', '0.01', '0.02', '0.03', '0.04', '1'
-         , '备注我要录单测试', 'TMS', '快递', '10', '10', '10', '10', '10'),
-        ('2', '2017-09-14', '天津', '天津', '北京', '北京', '1000', '10', '0.01', '0.02', '0.03', '0.04', '1'
-         , '备注我要录单测试', 'TMS', '快递', '10', '10', '10', '10', '10'),
-    ])
-    def test_create_waybill_success(self,carType,applyDate,sendProvince,sendCity,arriveProvince,arriveCity,
-                                    income,totalAmt,preAmt,oilAmt,destAmt,lastAmt,hasReceipt,content,source,
-                                    cargoName,cargoWeight,cargoVolume,cargoNumberOfCases,cargoWorth,insuranceCosts):
-        '''我要录单成功'''
-
-        waybillCreated,mobile = CreateWayBill().create_waybill(carType,applyDate,sendProvince,sendCity,arriveProvince,arriveCity,
-                                                               income,totalAmt,preAmt,oilAmt,destAmt,lastAmt,hasReceipt,
-                                                               content,source,cargoName,cargoWeight,cargoVolume,
-                                                               cargoNumberOfCases,cargoWorth,insuranceCosts)
+    def test_create_company_waybill_success(self):
+        '''我要录单 创建公司车运单'''
+        applyDate = time.strftime('%Y-%m-%d')
+        wayBillId,mobile = CreateWayBill().create_waybill('1',applyDate,'北京','北京','天津','天津', '1000', '10',
+                                                               '0.01', '0.02', '0.03', '0.04', '1', '备注我要录单测试',
+                                                               'TMS', '快递', '10', '10', '10', '10', '10')[:2]
 
         waybill_list = WayBillSelect().waybill_select(normalCondition=mobile,searchStatus=True).json()['content']['dataList']
         L = []
         for waybill in waybill_list:
             L.append(waybill['id'])
-        self.assertIn(waybillCreated, L, 'Waybill created fail!')
+        self.assertIn(wayBillId, L, 'Waybill created fail!')
 
+    def test_create_outside_driver_waybill_success(self):
+        '''我要录单 创建外请车运单'''
+        applyDate = time.strftime('%Y-%m-%d')
+        wayBillId,mobile = CreateWayBill().create_waybill('2',applyDate,'天津','天津','北京','北京', '1000', '10',
+                                                               '0.01', '0.02', '0.03', '0.04', '1', '备注我要录单测试',
+                                                               'TMS', '快递', '10', '10', '10', '10', '10')[:2]
 
-    @parameterized.expand([
-        ('3', '2017-09-14', '北京', '北京', '天津', '天津', '1000', '10', '0.01', '0.02', '0.03', '0.04', '1'
-         , '备注我要录单测试', 'TMS', '快递', '10', '10', '10', '10', '10'),
-    ])
-    def test_create_waybill_carType_error(self,carType,applyDate,sendProvince,sendCity,arriveProvince,arriveCity,
-                                    income,totalAmt,preAmt,oilAmt,destAmt,lastAmt,hasReceipt,content,source,
-                                    cargoName,cargoWeight,cargoVolume,cargoNumberOfCases,cargoWorth,insuranceCosts):
-
-        waybillCreated, mobile = CreateWayBill().create_waybill(carType, applyDate, sendProvince, sendCity,
-                                                                arriveProvince, arriveCity,
-                                                                income, totalAmt, preAmt, oilAmt, destAmt, lastAmt,
-                                                                hasReceipt,
-                                                                content, source, cargoName, cargoWeight, cargoVolume,
-                                                                cargoNumberOfCases, cargoWorth, insuranceCosts)
-        self.assertIn(waybillCreated,None)
-        self.assertEqual(mobile,None)
+        waybill_list = WayBillSelect().waybill_select(normalCondition=mobile,searchStatus=True).json()['content']['dataList']
+        L = []
+        for waybill in waybill_list:
+            L.append(waybill['id'])
+        self.assertIn(wayBillId, L, 'Waybill created fail!')
 
 if __name__ == "__main__":
     unittest.main()
