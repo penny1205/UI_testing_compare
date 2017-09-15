@@ -26,7 +26,7 @@ class CreateWayBill(object):
 
         # 获取项目列表
         project_list = ProjectSelect().driver_select(rows='1000').json()['content']['dataList']
-        if project_list == None:
+        if project_list == []:
             self.project['projectId'] = '0'
             self.project['projectName'] = '其他'
         else:
@@ -35,7 +35,7 @@ class CreateWayBill(object):
 
         # 获取供应商列表
         supplier_list = SupplierSelect().supplier_select(rows='1000').json()['content']['dataList']
-        if supplier_list == None:
+        if supplier_list == []:
             self.supplier['name'] = None
             self.supplier['supplierId'] = None
         else:
@@ -47,7 +47,7 @@ class CreateWayBill(object):
                #公司车
                # 获取我的司机
                my_car_list = MyCarSelect().my_car_select(rows='1000').json()['content']['dataList']
-               if my_car_list == None:
+               if my_car_list == []:
                    self.my_car = None
                    self.logger.info('My car list is empty')
                else:
@@ -56,7 +56,7 @@ class CreateWayBill(object):
 
                # 获取我的车辆
                my_driver_list = MyDriverSelect().my_driver_select(rows='1000').json()['content']['dataList']
-               if my_driver_list == None:
+               if my_driver_list == []:
                    self.my_driver = None
                    self.logger.info('My driver list is empty')
                else:
@@ -108,7 +108,7 @@ class CreateWayBill(object):
                 #外请车
                 # 获取我的外请车列表
                 driver_list = DriverSelect().driver_select(rows='1000').json()['content']['dataList']
-                if driver_list == None:
+                if driver_list == []:
                     self.driver = None
                     self.logger.info('My outside driver list is empty')
                 else:
