@@ -25,7 +25,7 @@ class WayBillDetailGet(object):
         '''获取运单详情'''
         try:
             payload = {'wayBillId': wayBillId}
-            response = HttpClient().post_form(self.__getWayBillDetailApiUrl,payload,self.__head_dict)
+            response = HttpClient().get(self.__getWayBillDetailApiUrl,self.__head_dict,payload)
             return response
         except Exception:
             return None
