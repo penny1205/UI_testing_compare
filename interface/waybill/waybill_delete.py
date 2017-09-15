@@ -23,6 +23,3 @@ class WayBillDelete(object):
         except Exception:
             return None
 
-if __name__ == "__main__":
-    response = WayBillDelete().waybill_delete("76459")
-    print(response.json())
