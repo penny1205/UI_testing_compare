@@ -9,6 +9,7 @@ class DeleteWayBillCase(unittest.TestCase):
     """删除运单"""
     def setUp(self):
         self.logger = Log()
+        self.logger.info('########################### TestDeleteWayBill START ###########################')
         time = str(datetime.date.today())
         self.wayBillId = CreateWayBill().create_waybill('2', time, '北京', '北京', '天津', '天津', '1000', '10',
                                                         '0.01', '0.02', '0.03', '0.04', '1', '备注我要录单测试',
@@ -17,6 +18,7 @@ class DeleteWayBillCase(unittest.TestCase):
         pass
 
     def tearDown(self):
+        self.logger.info('########################### TestDeleteWayBill END ###########################')
         pass
 
     # '''ddt demo'''
