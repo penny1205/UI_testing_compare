@@ -100,9 +100,11 @@ class CreateWayBill(object):
                            cargoName=cargoName, cargoWeight=cargoWeight, cargoVolume=cargoVolume,
                            cargoNumberOfCases=cargoNumberOfCases, cargoWorth=cargoWorth, insuranceCosts=insuranceCosts
                        ).json()['content']
-                       return self.waybill, self.my_driver['mobile']
+                       return self.waybill, self.my_driver['mobile'],self.my_driver['name'],\
+                              self.my_driver['idNo'],self.my_car['carNo']
                    else:
-                       return self.waybill, self.my_driver['mobile']
+                       return self.waybill, self.my_driver['mobile'],self.my_driver['name'],\
+                              self.my_driver['idNo'],self.my_car['carNo']
 
             elif carType == '2':
                 #外请车
@@ -151,9 +153,11 @@ class CreateWayBill(object):
                             cargoName=cargoName, cargoWeight=cargoWeight, cargoVolume=cargoVolume,
                             cargoNumberOfCases=cargoNumberOfCases, cargoWorth=cargoWorth, insuranceCosts=insuranceCosts
                         ).json()['content']
-                        return self.waybill, self.driver['mobile']
+                        return self.waybill,self.driver['mobile'],self.driver['name'],\
+                               self.driver['idNo'],self.driver['mobile'],self.driver['carNo'],
                     else:
-                        return self.waybill, self.driver['mobile']
+                        return self.waybill,self.driver['mobile'],self.driver['name'],\
+                               self.driver['idNo'],self.driver['mobile'],self.driver['carNo'],
             else:
                 self.logger.error('外请车类型错误: {0}'.format(carType))
                 return None,None
