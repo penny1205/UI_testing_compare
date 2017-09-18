@@ -27,7 +27,6 @@ class DeleteWayBillCase(unittest.TestCase):
     # @parameterized.expand(MockParamsData.generate(1))
     def test_bvt_normal_delete(self):
         response = WayBillDelete().waybill_delete(self.wayBillId)
-        print(response)
         self.logger.info('删除运单的结果：%s' % response.json())
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
