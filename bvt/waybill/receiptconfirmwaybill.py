@@ -10,13 +10,14 @@ from interface.waybill.waybill_detail_get import WayBillDetailGet
 from interface.waybill.waybill_departure_confirm import WayBillDepartureConfirm
 from interface.waybill.waybill_arrival_confirm import WayBillArrivalConfirm
 from interface.waybill.waybill_receipt_upload import WayBillReceiptUpload
+from interface.waybill.waybill_receipt_comfirm import WayBillReceiptConfirm
 from bvt.common.createwaybill import CreateWayBill
 
-class TestReceiptUploadWayBill(unittest.TestCase):
-    '''回单上传'''
+class TestReceiptConfirmWayBill(unittest.TestCase):
+    '''回单确认'''
     def setUp(self):
         self.logger = Log()
-        self.logger.info('####################### TestReceiptUploadWayBill START #######################')
+        self.logger.info('####################### TestReceiptConfirmWayBill START #######################')
 
         global carType,applyDate,sendCity,arriveCity,wayBillId,mobile,name,idNo,carNo
         carType = str(random.randint(1,2))
@@ -31,22 +32,25 @@ class TestReceiptUploadWayBill(unittest.TestCase):
 
 
     def tearDown(self):
-        self.logger.info('######################## TestReceiptUploadWayBill END ########################')
+        self.logger.info('######################## TestReceiptConfirmWayBill END ########################')
         pass
 
-    def test_receipt_upload_waybill_success(self):
-        '''回单上传'''
+    def test_receipt_confirm_waybill_success(self):
+        '''回单确认'''
         WayBillDepartureConfirm().waybill_departure_confirm(wayBillId)
         waybill_transport_detail = WayBillDetailGet().waybill_detail_get(wayBillId).json()['content']
         WayBillArrivalConfirm().waybill_arrival_confirm(wayBillId,waybill_transport_detail['transportCash']['destAmt'],
                                                         waybill_transport_detail['transportCash']['destAmtMemo'])
-        response = WayBillReceiptUpload().waybill_receipt_upload(wayBillId,'Y','Y','N','回单上传测试','C',receipt_0)
+        WayBillReceiptUpload().waybill_receipt_upload(wayBillId,'Y','Y','N','回单上传测试','C',receipt_0)
+        waybill_arrived_detail = WayBillDetailGet().waybill_detail_get(wayBillId).json()['content']
+        response = WayBillReceiptConfirm().waybill_receipt_confirm(wayBillId,
+                   waybill_arrived_detail['transportCash']['retAmt'],'金额变动','有异常')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
-        waybill_arrived_detail = WayBillDetailGet().waybill_detail_get(wayBillId).json()['content']
-        self.logger.info('回单上传的运单号是：{0}'.format(waybill_arrived_detail['transportCashDetail']['tmsBillCode']))
-        self.assertEqual(waybill_arrived_detail['transportCash']['billStatus'], 'H')
-        self.assertEqual(waybill_arrived_detail['transportCash']['transStatus'], 'A')
+        waybill_completed_detail = WayBillDetailGet().waybill_detail_get(wayBillId).json()['content']
+        self.logger.info('回单确认的运单号是：{0}'.format(waybill_completed_detail['transportCashDetail']['tmsBillCode']))
+        self.assertEqual(waybill_completed_detail['transportCash']['billStatus'], 'S')
+        self.assertEqual(waybill_completed_detail['transportCash']['transStatus'],'C')
 
 if __name__ == "__main__":
     unittest.main()

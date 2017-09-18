@@ -27,13 +27,12 @@ class WayBillReceiptConfirm(object):
          '''回单确认'''
          try:
              payload ={
-                 'wayBillId': wayBillId,
+                 'id': wayBillId,
                  'shipperMemo': shipperMemo,
                  'lastAmt':lastAmt,
                  'lastMemo':lastMemo
                        }
              response = HttpClient().post_json(self.__wayBillReceiptConfirmApiUrl,payload,self.__head_dict)
-             print(response.json())
              return response
          except Exception:
              return None

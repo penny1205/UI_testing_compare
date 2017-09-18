@@ -14,7 +14,7 @@ class TestArrivalConfirmWayBill(unittest.TestCase):
     '''到达确认'''
     def setUp(self):
         self.logger = Log()
-        self.logger.info('########################### TestSelectWayBill START ###########################')
+        self.logger.info('####################### TestArrivalConfirmWayBill START #######################')
 
         global carType,applyDate,sendCity,arriveCity,wayBillId,mobile,name,idNo,carNo
         carType = str(random.randint(1,2))
@@ -25,7 +25,7 @@ class TestArrivalConfirmWayBill(unittest.TestCase):
             arriveCity,'1000','10','0.01','0.02','0.03','0.04','1','测试','TMS','快递','10', '10', '10', '10', '10')
 
     def tearDown(self):
-        self.logger.info('############################ TestSelectWayBill END ############################')
+        self.logger.info('######################## TestArrivalConfirmWayBill END ########################')
         pass
 
     def test_arrival_confirm_waybill_success(self):
