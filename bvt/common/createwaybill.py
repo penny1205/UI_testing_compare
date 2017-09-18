@@ -26,9 +26,9 @@ class CreateWayBill(object):
 
         # 获取项目列表
         project_list = ProjectSelect().driver_select(rows='1000').json()['content']['dataList']
+
         if project_list == []:
-            self.project['projectId'] = '0'
-            self.project['projectName'] = '其他'
+            self.project = {'projectId': '0', 'projectName': '其他'}
         else:
             self.project = random.sample(project_list, 1)[0]
             self.logger.info('选择的项目是: {0}'.format(self.project))
@@ -36,8 +36,7 @@ class CreateWayBill(object):
         # 获取供应商列表
         supplier_list = SupplierSelect().supplier_select(rows='1000').json()['content']['dataList']
         if supplier_list == []:
-            self.supplier['name'] = None
-            self.supplier['supplierId'] = None
+            self.supplier = {'name':None,'supplierId':None}
         else:
             self.supplier = random.sample(supplier_list, 1)[0]
             self.logger.info('选择的供应商是: {0}'.format(self.supplier))
