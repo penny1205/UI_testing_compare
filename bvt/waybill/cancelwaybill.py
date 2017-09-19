@@ -25,6 +25,7 @@ class CancelWayBillCase(unittest.TestCase):
 
     def test_bvt_normal_cancel(self):
         response = WayBillCancel().waybill_cancel(self.wayBillId)
+        self.logger.info('取消运单返回状态码：{0}'.format(response))
         self.logger.info('取消运单的结果：%s' % response.json())
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
