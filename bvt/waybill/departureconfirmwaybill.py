@@ -30,6 +30,7 @@ class TestDepartureConfirmWayBill(unittest.TestCase):
     def test_departure_confirm_waybill_success(self):
         '''发车确认'''
         response = WayBillDepartureConfirm().waybill_departure_confirm(wayBillId)
+        self.logger.info('发车确认返回状态码：{0}'.format(response))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
         waybill_detail = WayBillDetailGet().waybill_detail_get(wayBillId).json()['content']

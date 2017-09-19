@@ -75,5 +75,4 @@ class WayBillReceiptUpload(object):
              response = HttpClient().post_multipart(self.__wayBillReceiptUploadApiUrl,payload,self.__head_dict)
              return response
          except Exception:
-             raise
-             # return None
+             return None

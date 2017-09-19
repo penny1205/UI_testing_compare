@@ -34,6 +34,7 @@ class TestArrivalConfirmWayBill(unittest.TestCase):
         waybill_transport_detail = WayBillDetailGet().waybill_detail_get(wayBillId).json()['content']
         response = WayBillArrivalConfirm().waybill_arrival_confirm(wayBillId,waybill_transport_detail['transportCash']['destAmt'],
                                                                    waybill_transport_detail['transportCash']['destAmtMemo'])
+        self.logger.info('到达确认返回状态码：{0}'.format(response))
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)

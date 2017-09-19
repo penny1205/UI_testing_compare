@@ -45,6 +45,7 @@ class TestReceiptConfirmWayBill(unittest.TestCase):
         waybill_arrived_detail = WayBillDetailGet().waybill_detail_get(wayBillId).json()['content']
         response = WayBillReceiptConfirm().waybill_receipt_confirm(wayBillId,
                    waybill_arrived_detail['transportCash']['retAmt'],'金额变动','有异常')
+        self.logger.info('回单确认返回状态码：{0}'.format(response))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
         waybill_completed_detail = WayBillDetailGet().waybill_detail_get(wayBillId).json()['content']
