@@ -41,6 +41,7 @@ class TestReceiptUploadWayBill(unittest.TestCase):
         WayBillArrivalConfirm().waybill_arrival_confirm(wayBillId,waybill_transport_detail['transportCash']['destAmt'],
                                                         waybill_transport_detail['transportCash']['destAmtMemo'])
         response = WayBillReceiptUpload().waybill_receipt_upload(wayBillId,'Y','Y','N','回单上传测试','C',receipt_0)
+        self.logger.info('回单上传返回状态码：{0}'.format(response))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
         waybill_arrived_detail = WayBillDetailGet().waybill_detail_get(wayBillId).json()['content']
