@@ -27,7 +27,7 @@ class TestReceiptUploadWayBill(unittest.TestCase):
             arriveCity,'1000','10','0.01','0.02','0.03','0.04','1','测试','TMS','快递','10', '10', '10', '10', '10')
 
         global receipt_0
-        receipt_0 = FileUtil.getProjectObsPath() + '\image\logo.png'
+        receipt_0 = FileUtil.getProjectObsPath() + '/image/logo.png'
 
 
     def tearDown(self):
