@@ -5,26 +5,27 @@ from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
 
-class DriverSelect(object):
+class DriverRelevanceCreate(object):
     '''
-    我的外请车列表,用于录单时查询获所有外请车包括已关联和未关联
-    /api/tms/driver/listAppDriver
+    关联外请车
+    /api/tms/driver/createRelevance
     '''
-    __slots__ = ('__driverSelectApiUrl','partnerNo', '__head_dict')
+    __slots__ = ('__driverRelevanceCreateApiUrl', '__head_dict')
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        self.__driverSelectApiUrl = "https://{0}:{1}{2}/api/tms/driver/listAppDriver".format(
+        self.__driverRelevanceCreateApiUrl = "https://{0}:{1}{2}/api/tms/driver/createRelevance".format(
             config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
         self.__head_dict = {
             'token': config['tms_api_token'],
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
 
-    def driver_select(self):
-         '''我的外请车列表,用于录单时外请车列表'''
+    def driver_relevance_create(self,loginId = ''):
+         '''关联外请车'''
          try:
-             response = HttpClient().get(self.__driverSelectApiUrl,self.__head_dict)
+             payload ={'loginId': loginId }
+             response = HttpClient().post_form(self.__driverRelevanceCreateApiUrl, payload, self.__head_dict)
              return response
          except Exception:
              return None

@@ -5,26 +5,29 @@ from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
 
-class DriverSelect(object):
+class MyCarDelete(object):
     '''
-    我的外请车列表,用于录单时查询获所有外请车包括已关联和未关联
-    /api/tms/driver/listAppDriver
+    删除自有车信息
+   /api/tms/car/deleteCar
     '''
-    __slots__ = ('__driverSelectApiUrl','partnerNo', '__head_dict')
+    __slots__ = ('__myCarDeleteApiUrl','__head_dict')
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        self.__driverSelectApiUrl = "https://{0}:{1}{2}/api/tms/driver/listAppDriver".format(
+        self.__myCarDeleteApiUrl = "https://{0}:{1}{2}/api/tms/car/deleteCar".format(
             config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
         self.__head_dict = {
             'token': config['tms_api_token'],
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
 
-    def driver_select(self):
-         '''我的外请车列表,用于录单时外请车列表'''
+    def my_car_delete(self,carId):
+         '''删除自有车信息'''
          try:
-             response = HttpClient().get(self.__driverSelectApiUrl,self.__head_dict)
+             payload ={
+                 'carId': carId,
+             }
+             response = HttpClient().post_form(self.__myCarDeleteApiUrl,payload,self.__head_dict,)
              return response
          except Exception:
              return None

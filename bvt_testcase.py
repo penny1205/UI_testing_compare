@@ -9,7 +9,7 @@ import time
 if __name__ == '__main__':
     try:
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        bvtcases = UnitTestUtil().discover_pattern(FileUtil.getProjectObsPath() + '/bvt/waybill', '*.py')
+        bvtcases = UnitTestUtil().discover_pattern(FileUtil.getProjectObsPath() + '/bvt/test*', '*.py')
 
         ReportUtil().generate_report(bvtcases, config['email_title'] + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())), 'qa testing report', FileUtil.getProjectObsPath() + '/report/report.html')
         reader = open(FileUtil.getProjectObsPath() + '/report/report.html', 'rb')
@@ -21,5 +21,5 @@ if __name__ == '__main__':
                              {FileUtil.getProjectObsPath() + '/report/report.html'})
         print('BvtCase run success!')
     except Exception:
-        raise
         print('BvtCase run fail!')
+        raise

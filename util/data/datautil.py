@@ -59,6 +59,7 @@ class DataUtil(object):
             id = id + checkcode[str(count % 11)]  # 算出校验码
             return id
 
+    #随机生成车牌号
     def genneratorCarNo(self):
         province = random.sample(provinces, 1)  # 随机省份
         letter = [chr(random.randint(65, 91))]    # 随机大写字母
@@ -78,6 +79,16 @@ class DataUtil(object):
         nums = num_1 + num_2 + num_3 + num_4 + num_5
         carNo = ''.join(province + letter + nums)
         return carNo
+
+    #随机选择车长
+    def genneratorCarLength(self):
+        carLength = random.sample(carLengths, 1)[0]
+        return carLength
+
+    #随机选择车型
+    def genneratorCarTypeInfo(self):
+        carTypeInfo = random.sample(carTypeInfos, 1)[0]
+        return carTypeInfo
 
     def genneratorCarInfo(self):
         carLength = random.sample(carLengths, 1)
