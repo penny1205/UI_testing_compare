@@ -21,11 +21,10 @@ class DriverMobileSelect(object):
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
 
-    def driver_mobile_select(self,isCertificate='1',mobile =''):
+    def driver_mobile_select(self,mobile =''):
          '''录单时手机号查询'''
          try:
              payload ={
-             'isCertificate': isCertificate,
              'mobile': mobile,
 
              }
