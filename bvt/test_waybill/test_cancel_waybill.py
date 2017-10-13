@@ -2,10 +2,10 @@ import unittest
 import datetime
 from util.log.log import Log
 from interface.waybill.waybill_cancel import WayBillCancel
-from bvt.common.createwaybill import CreateWayBill
+from bvt.common.create_waybill import CreateWayBill
 
 
-class CancelWayBillCase(unittest.TestCase):
+class TestCancelWayBillCase(unittest.TestCase):
     """取消运单"""
 
     def setUp(self):

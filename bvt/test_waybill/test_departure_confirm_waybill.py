@@ -7,7 +7,7 @@ import unittest
 from util.log.log import Log
 from interface.waybill.waybill_detail_get import WayBillDetailGet
 from interface.waybill.waybill_departure_confirm import WayBillDepartureConfirm
-from bvt.common.createwaybill import CreateWayBill
+from bvt.common.create_waybill import CreateWayBill
 
 class TestDepartureConfirmWayBill(unittest.TestCase):
     '''发车确认'''

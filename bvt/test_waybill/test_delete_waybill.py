@@ -2,7 +2,7 @@ import unittest
 import datetime
 from util.log.log import Log
 from interface.waybill.waybill_delete import WayBillDelete
-from bvt.common.createwaybill import CreateWayBill
+from bvt.common.create_waybill import CreateWayBill
 
 
 class DeleteWayBillCase(unittest.TestCase):

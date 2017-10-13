@@ -8,7 +8,7 @@ from util.log.log import Log
 from interface.waybill.waybill_detail_get import WayBillDetailGet
 from interface.waybill.waybill_departure_confirm import WayBillDepartureConfirm
 from interface.waybill.waybill_arrival_confirm import WayBillArrivalConfirm
-from bvt.common.createwaybill import CreateWayBill
+from bvt.common.create_waybill import CreateWayBill
 
 class TestArrivalConfirmWayBill(unittest.TestCase):
     '''到达确认'''

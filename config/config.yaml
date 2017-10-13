@@ -11,10 +11,11 @@ app_api_path: /app
 tms_api_token: eyJlbmNyeXB0ZWREYXRhIjoib202VHBrSEhKSGhQMW1GNVhEdkNtazhqYlNodUhkZnNhRlVRK2lzdEpOV2w4WW93elozQnFick1leE9JdXhmQjE2T2ZZM3lBakREbXFiNThlWnJGTDVYRjYvYmFWQk8xWTlNN05GdmpxZjJLaE9nbnVETXhHbzRVMWdSeitCcEciLCJ3cmFwcGVkS2V5IjoiWXVuWC9yQ3VpN20rVmE1ZDM3UnliTHBBL09YOUVINE0rdFNPb3hCSjZWMlBTblFwTEpsTjErbmJOZGxvTWJaUlBjMWVCanU2cGVRSEZCUG9jdGhRb0E9PSJ9
 tms_api_YD_OAUTH: eyJlbmNyeXB0ZWREYXRhIjoiLzlTbWhlOHpsZG9DbjZYSjFzSG1PV0xuMFNHcGlLRTNVbnB2R1JBWmNzS1lZazhiYXROTHVqMFlXcnArMlM2YkhNTzhoVnFmdDFRM1R3MGJmdVl0d0xvYW9FaXkwUjdlbjRpUFR0cjBRTkd2VXdvdzhMMTZIQk0xa3duSno5ejBBaHVtQk8xdnVEeUZibFl2ejBsdkRGREsrNWZuQ09rSmpkMVp5S0ZYeHVhRWRwUk55WTd2cVg1NFR6cEYxUmFrYTk5dG1SbnROK3IyWTBnUU5sNUdGQkl5T3NEZ0MzNnZ1T0tQY0JVUVJrZz0iLCJ3cmFwcGVkS2V5IjoiTy90RzdoK01NQzNPVEI1a2lKUEkxUVZZNXd6VzA0MkxvWVRtODRGRmNza2dPWlNKNEcwd3ZEMzJNeWozcjcyWjIzTC9zOHppRmF2ZUV1aWtrQmxCSXc9PSJ9
 partnerNo: ShiDeTang
+loginId: APPSHIPPER20160927145329qQBQS
 
 ##########log Config##########
-log_path_info: /home/testing/Logs/tms_uat
-log_path_error: /home/testing/Logs/tms_uat/error
+log_path_info: F:\PycharmProjects\api_testing\log
+log_path_error: F:\PycharmProjects\api_testing\log\error
 
 ##########Mail Config##########
 #receiver eg:['eamilAddress1@keking.cn','eamilAddress2@keking.cn']
@@ -26,3 +27,10 @@ email_sender_pwd : 'redmineonly'
 email_host : mail.keking.cn
 #mail title prefix
 email_title : "TMS迭代BVT测试报告"
+
+#########DB Config###########
+db_host: 106.75.31.207
+db_port: 23306
+db_user: yd_devp
+db_passwd: yd_7758
+db_dbname: YDAPPDB

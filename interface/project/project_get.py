@@ -5,10 +5,10 @@ from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
 
-class ProjectSelect(object):
+class ProjectGet(object):
     '''
-    查询项目列表
-   /api/tms/customer/listProjects
+    获取项目详情
+    /api/tms/customer/getProject
     '''
     __slots__ = ('__selectProjectApiUrl', '__head_dict')
 
@@ -21,14 +21,11 @@ class ProjectSelect(object):
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
 
-    def project_select(self,currentPage='1',rows='10',projectStatus ='',projectName=''):
-         '''我的外请车列表'''
+    def project_get(self,projectId=''):
+         '''获取项目详情'''
          try:
              payload ={
-                 'currentPage': currentPage,
-                 'rows': rows,
-                 'projectStatus': projectStatus,
-                 'projectName': projectName,
+                 'projectId': projectId,
              }
              response = HttpClient().get(self.__selectProjectApiUrl,self.__head_dict,payload)
              return response
