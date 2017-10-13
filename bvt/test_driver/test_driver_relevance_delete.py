@@ -35,7 +35,7 @@ class TestDriverRelevanceDelete(unittest.TestCase):
     def test_driver_relevance_delete_success(self):
         '''删除外请车关联关系'''
         driver_list = DriverRelevanceSelect().driver_relevance_select(mobile=self.mobile).json()['content']['dataList']
-        if driver_list != None:
+        if driver_list != []:
             for driver in driver_list:
                 if str(driver['loginId']) == self.loginId:
                     response = DriverRelevanceDelete().driver_relevance_delete(id=driver['tmsDriverId'])

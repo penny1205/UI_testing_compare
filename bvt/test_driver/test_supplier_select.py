@@ -37,7 +37,7 @@ class TestSupplierSelect(unittest.TestCase):
         self.assertEqual(response.json()['code'], 0)
         self.logger.info('按供应商名称查询返回：{0}'.format(response.json()))
         supplier_list = response.json()['content']['dataList']
-        if supplier_list != None:
+        if supplier_list != []:
             L = []
             for supplier in supplier_list:
                 L.append(str(supplier['supplierId']))

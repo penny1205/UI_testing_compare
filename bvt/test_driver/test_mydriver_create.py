@@ -27,7 +27,7 @@ class TestMyDriverCreate(unittest.TestCase):
         driverId = CreateMyDriver().create_my_driver(self.mobile,self.name,self.idNo,self.photoDriverCard,
                                                      self.frontIdCard,self.backIdCard)
         my_driver_list = MyDriverSelect().my_driver_select(mobile=self.mobile).json()['content']['dataList']
-        if my_driver_list != None:
+        if my_driver_list != []:
             L = []
             for my_driver in my_driver_list:
                 L.append(str(my_driver['driverId']))

@@ -32,7 +32,7 @@ class TestMyDriverSelect(unittest.TestCase):
         self.assertEqual(response.json()['code'], 0)
         self.logger.info('按手机号查询司机是：{0}'.format(response.json()))
         my_driver_list = response.json()['content']['dataList']
-        if my_driver_list != None:
+        if my_driver_list != []:
             L = []
             for my_driver in my_driver_list:
                 L.append(str(my_driver['driverId']))
@@ -46,7 +46,7 @@ class TestMyDriverSelect(unittest.TestCase):
         self.assertEqual(response.json()['code'], 0)
         self.logger.info('按姓名查询司机是：{0}'.format(response.json()))
         my_driver_list = response.json()['content']['dataList']
-        if my_driver_list != None:
+        if my_driver_list != []:
             L = []
             for my_driver in my_driver_list:
                 L.append(str(my_driver['driverId']))

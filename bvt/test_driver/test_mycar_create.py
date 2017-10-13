@@ -28,7 +28,7 @@ class TestMyCarCreate(unittest.TestCase):
         carId = CreateMyCar().create_my_car(self.carNo, self.carModel,self.carLength ,'10','',self.buycarTime,'长城',
                                             self.photoDriverCard,self.photoCar)
         my_car_list = MyCarSelect().my_car_select(carNo=self.carNo).json()['content']['dataList']
-        if my_car_list != None:
+        if my_car_list != []:
             L = []
             for my_car in my_car_list:
                 L.append(str(my_car['carId']))

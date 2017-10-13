@@ -53,7 +53,7 @@ class TestDriverCreate(unittest.TestCase):
                                                self.carNo, self.carLength, self.carModel, '10')[0]
         driver_list = DriverRelevanceSelect().driver_relevance_select(mobile=self.mobile_certificate).json()['content'][
             'dataList']
-        if driver_list != None:
+        if driver_list != []:
             L = []
             for driver in driver_list:
                 L.append(str(driver['loginId']))
