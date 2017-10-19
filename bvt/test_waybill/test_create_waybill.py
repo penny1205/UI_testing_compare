@@ -5,7 +5,7 @@ import time
 import unittest
 from util.log.log import Log
 from interface.waybill.waybill_select import WayBillSelect
-from bvt.common.createwaybill import CreateWayBill
+from bvt.common.create_waybill import CreateWayBill
 
 class TestCreateWayBill(unittest.TestCase):
     '''我要录单 '''

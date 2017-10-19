@@ -34,7 +34,7 @@ class TestDriverRelevanceUpdate(unittest.TestCase):
     def test_driver_relevance_Update_mobile_success(self):
         '''修改未认证的外请车的手机号'''
         driver_list = DriverRelevanceSelect().driver_relevance_select(mobile=self.mobile).json()['content']['dataList']
-        if driver_list != None:
+        if driver_list != []:
             for driver in driver_list:
                 if driver['loginId'] == self.loginId and driver['certificate'] == 'N':
                     self.mobile_update = DataUtil().createmoble()

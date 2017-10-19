@@ -39,7 +39,7 @@ class TestDriverUnCertificateCreate(unittest.TestCase):
         self.assertEqual(response.json()['code'], 0)
         self.logger.info('新增未认证的外请车的手机号是：{0}，返回结果是：{1}'.format(self.mobile, response.json()))
         driver_list = DriverRelevanceSelect().driver_relevance_select(mobile=self.mobile).json()['content']['dataList']
-        if driver_list != None:
+        if driver_list != []:
             L = []
             for driver in driver_list:
                 L.append(str(driver['tmsDriverId']))

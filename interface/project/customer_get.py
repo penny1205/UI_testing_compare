@@ -5,30 +5,29 @@ from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
 
-class DriverMobileSelect(object):
+class CustomerGet(object):
     '''
-    录单时手机号查询外请车列表,包括已关联和未关联
-    /api/tms/driver/listAppCars
+    获取客户详情
+    /api/tms/customer/getTmsCustomer
     '''
-    __slots__ = ('__driverMobileSelectApiUrl','partnerNo', '__head_dict')
+    __slots__ = ('__selectProjectApiUrl', '__head_dict')
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        self.__driverMobileSelectApiUrl = "https://{0}:{1}{2}/api/tms/driver/listAppCars".format(
+        self.__selectProjectApiUrl = "https://{0}:{1}{2}/api/tms/customer/getTmsCustomer".format(
             config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
         self.__head_dict = {
             'token': config['tms_api_token'],
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
 
-    def driver_mobile_select(self,mobile =''):
-         '''录单时手机号查询'''
+    def customer_get(self,customerId=''):
+         '''获取客户详情'''
          try:
              payload ={
-             'mobile': mobile,
-
+                 'customerId': customerId,
              }
-             response = HttpClient().get(self.__driverMobileSelectApiUrl,self.__head_dict,payload)
+             response = HttpClient().get(self.__selectProjectApiUrl,self.__head_dict,payload)
              return response
          except Exception:
              return None

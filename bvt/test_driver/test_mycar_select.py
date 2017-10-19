@@ -34,7 +34,7 @@ class TestMyCarSelect(unittest.TestCase):
         self.assertEqual(response.json()['code'], 0)
         self.logger.info('输入的查询条件车牌号是：{0}，查询结果是：{1}'.format(self.carNo, response.json()))
         my_car_list = response.json()['content']['dataList']
-        if my_car_list != None:
+        if my_car_list != []:
             L = []
             for my_car in my_car_list:
                 L.append(str(my_car['carId']))

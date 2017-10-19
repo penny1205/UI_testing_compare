@@ -30,7 +30,7 @@ class TestSupplierCreate(unittest.TestCase):
                     self.contactPersonIdNo,self.contactPersonIdCardPhoto,self.businessLicencePhoto,
                     self.businessPermitPhoto,self.taxRegistrationCertificatePhoto,self.contractPhoto)
         supplier_list = SupplierSelect().supplier_select(name=self.name).json()['content']['dataList']
-        if supplier_list != None:
+        if supplier_list != []:
             L = []
             for supplier in supplier_list:
                 L.append(str(supplier['supplierId']))

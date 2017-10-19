@@ -25,8 +25,7 @@ class CreateWayBill(object):
         '''我要录单'''
 
         # 获取项目列表
-        project_list = ProjectSelect().driver_select(rows='1000').json()['content']['dataList']
-
+        project_list = ProjectSelect().project_select(rows='1000').json()['content']['dataList']
         if project_list == []:
             self.project = {'projectId': '0', 'projectName': '其他'}
         else:
@@ -40,6 +39,8 @@ class CreateWayBill(object):
         else:
             self.supplier = random.sample(supplier_list, 1)[0]
             self.logger.info('选择的供应商是: {0}'.format(self.supplier))
+
+        #新建外请车
 
         try:
             if carType == '1':

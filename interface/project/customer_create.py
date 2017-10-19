@@ -5,30 +5,32 @@ from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
 
-class DriverMobileSelect(object):
+class CustomerCreate(object):
     '''
-    录单时手机号查询外请车列表,包括已关联和未关联
-    /api/tms/driver/listAppCars
+    新增客户
+   /api/tms/customer/addCustomer
     '''
-    __slots__ = ('__driverMobileSelectApiUrl','partnerNo', '__head_dict')
+    __slots__ = ('__selectProjectApiUrl', '__head_dict')
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        self.__driverMobileSelectApiUrl = "https://{0}:{1}{2}/api/tms/driver/listAppCars".format(
+        self.__selectProjectApiUrl = "https://{0}:{1}{2}/api/tms/customer/addCustomer".format(
             config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
         self.__head_dict = {
             'token': config['tms_api_token'],
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
 
-    def driver_mobile_select(self,mobile =''):
-         '''录单时手机号查询'''
+    def customer_create(self,customerName='',customerCode='',phone ='',customerDeveloper=''):
+         '''新增客户'''
          try:
              payload ={
-             'mobile': mobile,
-
+                 'customerName': customerName,
+                 'customerCode': customerCode,
+                 'phone': phone,
+                 'customerDeveloper': customerDeveloper,
              }
-             response = HttpClient().get(self.__driverMobileSelectApiUrl,self.__head_dict,payload)
+             response = HttpClient().post_json(self.__selectProjectApiUrl,payload,self.__head_dict)
              return response
          except Exception:
              return None

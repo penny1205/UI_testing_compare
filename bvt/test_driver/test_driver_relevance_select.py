@@ -39,7 +39,7 @@ class TestDriverRelevanceSelect(unittest.TestCase):
         self.assertEqual(response.json()['code'], 0)
         self.logger.info('输入的手机号是：{0}，查询结果是：{1}'.format(self.mobile, response.json()))
         driver_list = response.json()['content']['dataList']
-        if driver_list != None:
+        if driver_list != []:
             L = []
             for driver in driver_list:
                 L.append(str(driver['loginId']))
@@ -55,7 +55,7 @@ class TestDriverRelevanceSelect(unittest.TestCase):
         self.assertEqual(response.json()['code'], 0)
         self.logger.info('输入的车牌号是：{0}，查询结果是：{1}'.format(self.mobile, response.json()))
         driver_list = response.json()['content']['dataList']
-        if driver_list != None:
+        if driver_list != []:
             L = []
             for driver in driver_list:
                 L.append(str(driver['loginId']))
