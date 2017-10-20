@@ -10,11 +10,11 @@ class CustomerGet(object):
     获取客户详情
     /api/tms/customer/getTmsCustomer
     '''
-    __slots__ = ('__selectProjectApiUrl', '__head_dict')
+    __slots__ = ('__CustomerGetApiUrl', '__head_dict')
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        self.__selectProjectApiUrl = "https://{0}:{1}{2}/api/tms/customer/getTmsCustomer".format(
+        self.__CustomerGetApiUrl = "https://{0}:{1}{2}/api/tms/customer/getTmsCustomer".format(
             config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
         self.__head_dict = {
             'token': config['tms_api_token'],
@@ -27,7 +27,7 @@ class CustomerGet(object):
              payload ={
                  'customerId': customerId,
              }
-             response = HttpClient().get(self.__selectProjectApiUrl,self.__head_dict,payload)
+             response = HttpClient().get(self.__CustomerGetApiUrl,self.__head_dict,payload)
              return response
          except Exception:
              return None

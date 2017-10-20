@@ -6,24 +6,24 @@ from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
 
 
-class WayBillCreate(object):
+class WayBillUpdate(object):
     '''
-    新增运单
-    /api/tms/wayBill/createWayBill
+    修改运单
+    /payment/v2/updateTransport
     '''
-    __slots__ = ('__createWayBillApiUrl','partnerNo', '__head_dict')
+    __slots__ = ('__WayBillUpdateApiUrl','partnerNo', '__head_dict')
 
     def __init__(self):
         config = ReadYaml( FileUtil.getProjectObsPath()  + '/config/config.yaml').getValue()
-        self.__createWayBillApiUrl = 'https://{0}:{1}{2}/api/tms/wayBill/createWayBill'.format(
-            config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
+        self.__WayBillUpdateApiUrl = 'http://{0}:{1}{2}/payment/v2/updateTransport'.format(
+            config['app_api_host'],config['app_api_port'],config['app_api_path'])
         self.partnerNo = config['partnerNo']
         self.__head_dict = {
             'token': config['tms_api_token'],
             'YD_OAUTH': config['tms_api_YD_OAUTH']
         }
 
-    def waybill_create(self,carType='',applyDate='',projects='',projectId='',supplierName='',supplierId='',
+    def waybill_update(self,waybillId='',carType='',applyDate='',projects='',projectId='',supplierName='',supplierId='',
                        realName='',idNo='',mobile='',carNo='',carLength='',carModel='',photoAirWay='', loginId='',
                        sendProvince='',sendCity='',sendDistrict='',arriveProvince='',arriveCity='',arriveDistrict='',
                        income='',totalAmt='',preAmt='',oilAmt='',destAmt='',lastAmt='',hasReceipt='',content='',source='',
@@ -32,13 +32,14 @@ class WayBillCreate(object):
                        vehicleIdNo='',driverCardNo='',
                        #depositBank='',accountName='',
                       ):
-        '''新增运单'''
+        '''修改运单'''
         try:
             if photoAirWay != '':
                 with open(photoAirWay, 'rb') as f:
                     photoAirWay = f.read()
 
             files = {
+                'billId':(None, str(waybillId)),  # 运单号
                 'carType': (None, str(carType)),
                 'applyDate': (None, str(applyDate)),
                 'projects': (None, str(projects)),
@@ -91,7 +92,8 @@ class WayBillCreate(object):
             #    'depositBank': (None, str(depositBank)), # 开户行
             #    'accountName': (None, str(accountName)) # 账户名称
             }
-            response = HttpClient().post_multipart(self.__createWayBillApiUrl,files,self.__head_dict)
+            response = HttpClient().post_multipart(self.__WayBillUpdateApiUrl,files,self.__head_dict)
             return response
         except Exception:
-            return None
+            raise
+            # return None

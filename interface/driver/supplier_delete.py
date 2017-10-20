@@ -10,11 +10,11 @@ class SupplierDelete(object):
     删除供应商信息
     /api/tms/supplier/deleteSupplier
     '''
-    __slots__ = ('__supplierCreateApiUrl','__head_dict')
+    __slots__ = ('__supplierDeleteApiUrl','__head_dict')
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        self.__supplierCreateApiUrl = "https://{0}:{1}{2}/api/tms/supplier/deleteSupplier".format(
+        self.__supplierDeleteApiUrl = "https://{0}:{1}{2}/api/tms/supplier/deleteSupplier".format(
             config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
         self.__head_dict = {
             'token': config['tms_api_token'],
@@ -27,7 +27,7 @@ class SupplierDelete(object):
              payload ={
                  'supplierId': supplierId,
              }
-             response = HttpClient().post_form(self.__supplierCreateApiUrl,payload,self.__head_dict)
+             response = HttpClient().post_form(self.__supplierDeleteApiUrl,payload,self.__head_dict)
              return response
          except Exception:
              return None

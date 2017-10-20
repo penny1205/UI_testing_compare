@@ -5,37 +5,47 @@ from util.log.log import Log
 from util.db.dbutil import DBUtil
 from util.file.fileutil import FileUtil
 from util.config.yaml.readyaml import ReadYaml
-from interface.project.customer_create import CustomerCreate
-from interface.project.customer_select import CustomerSelect
+from interface.customer.customer_create import CustomerCreate
 
 class CreateCustomer(object):
-    '''新增项目'''
+    '''新增客户'''
 
     def __init__(self):
         self.logger = Log()
         self.config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
 
     def create_customer(self,customerName,customerCode,phone,customerDeveloper):
-        '''新增项目'''
+        '''新增客户'''
         try:
             response = CustomerCreate().customer_create(customerName=customerName,customerCode=customerCode,phone=phone,
                                                         customerDeveloper=customerDeveloper)
-            self.logger.info('新增的项目名称是: {0}'.format(customerName))
+            self.logger.info('新增的客户名称是: {0}'.format(customerName))
             # 判断客户名称和客户编号是否重复
-            if response.json()['code'] == 9020103:
-                customer_list = CustomerSelect().customer_select(customerName=customerName).json()['content']['dataList']
-                if customer_list != []:
-                    for customer in customer_list:
-                        DBUtil().conn_get(host=self.config['db_host'], port=self.config['db_port'],
-                                          user=self.config['db_user'],passwd=self.config['db_passwd'],
-                                          dbname=self.config['db_dbname'])
-                        sql = 'DELETE FROM YD_TMS_CUSTOMER WHERE customerName = '
-                        DBUtil().execute_sql()
-
-            elif response.json()['code'] == 9020104:
-                customer_list = CustomerSelect().customer_select(customerName=customerName)
-                return
-            else:
+            if response.json()['code'] == 0:
                 return response.json()['content']
+            elif response.json()['code'] == 9020103:
+                sql = 'DELETE FROM YD_TMS_CUSTOMER WHERE customerName = \'{0}\' and partnerNo = \'{1}\''.format(
+                    customerName,self.config['partnerNo'])
+                self.DBUtil = DBUtil(host=self.config['db_host'], port=self.config['db_port'],
+                                     user=self.config['db_user'],passwd=self.config['db_passwd'],
+                                     dbname=self.config['db_dbname'],charset=self.config['db_charset'])
+                self.DBUtil.execute_sql(sql)
+                customerId = CustomerCreate().customer_create(customerName=customerName,customerCode=customerCode,
+                                                              phone=phone,customerDeveloper=customerDeveloper).json()[
+                    'content']
+                return customerId
+            elif response.json()['code'] == 9020104:
+                sql = 'DELETE FROM YD_TMS_CUSTOMER WHERE customerCode = \'{0}\'and partnerNo = \'{1}\''.format(
+                    customerCode,self.config['partnerNo'])
+                self.DBUtil = DBUtil(host=self.config['db_host'], port=self.config['db_port'],
+                                     user=self.config['db_user'], passwd=self.config['db_passwd'],
+                                     dbname=self.config['db_dbname'],charset=self.config['db_charset'])
+                self.DBUtil.execute_sql(sql)
+                customerId = CustomerCreate().customer_create(customerName=customerName,
+                                                              customerCode=customerCode, phone=phone,
+                                                              customerDeveloper=customerDeveloper).json()['content']
+                return customerId
+            else:
+                return None
         except Exception:
             return None

@@ -10,11 +10,11 @@ class DriverRelevanceUpdate(object):
     修改外请车信息
     /api/tms/driver/updateTmsAppDriver
     '''
-    __slots__ = ('__createDriverApiUrl', '__head_dict')
+    __slots__ = ('__driverRelevanceUpdateApiUrl', '__head_dict')
 
     def __init__(self):
         config = ReadYaml( FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        self.__createDriverApiUrl = 'https://{0}:{1}{2}/api/tms/driver/updateTmsAppDriver'.format(
+        self.__driverRelevanceUpdateApiUrl = 'https://{0}:{1}{2}/api/tms/driver/updateTmsAppDriver'.format(
             config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
         self.__head_dict = {
             'token': config['tms_api_token']
@@ -55,7 +55,7 @@ class DriverRelevanceUpdate(object):
                 'carModel': (None, str(carModel)),
                 'carLoad': (None, str(carLoad)),
             }
-            response = HttpClient().post_multipart(self.__createDriverApiUrl, files, self.__head_dict)
+            response = HttpClient().post_multipart(self.__driverRelevanceUpdateApiUrl, files, self.__head_dict)
             return response
         except Exception:
             return None

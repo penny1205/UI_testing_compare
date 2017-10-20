@@ -5,6 +5,7 @@ import os
 import random
 import unittest
 from util.log.log import Log
+from util.config.yaml.readyaml import ReadYaml
 from util.data.datautil import DataUtil
 from util.file.fileutil import FileUtil
 from interface.driver.driver_relevance_select import DriverRelevanceSelect
@@ -24,7 +25,8 @@ class TestDriverCreate(unittest.TestCase):
         self.photoIdReserve = FileUtil.getProjectObsPath() + os.path.sep + 'image' + os.path.sep + 'backIdCard.jpg'
         self.photoDriverCard = FileUtil.getProjectObsPath() + os.path.sep + 'image' + os.path.sep + 'photoDriverCard.jpg'
         self.photoTransPort = FileUtil.getProjectObsPath() + os.path.sep + 'image' + os.path.sep + 'photoTransPort.jpg'
-        mobile_certificate = ['13077327043','18301771383','15000422980']
+        config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
+        mobile_certificate = config['mobile_certificate']
         self.mobile_certificate = random.sample(mobile_certificate, 1)[0]
 
     def tearDown(self):
@@ -38,13 +40,13 @@ class TestDriverCreate(unittest.TestCase):
                                                 self.photoDriverCard,self.photoTransPort,
                                                 self.carNo, self.carLength, self.carModel, '10')[0]
         driver_list = DriverRelevanceSelect().driver_relevance_select(mobile=self.mobile).json()['content']['dataList']
-        if driver_list != None:
+        if driver_list != []:
             L = []
             for driver in driver_list:
                 L.append(str(driver['loginId']))
             self.assertIn(loginId, L, 'Driver created fail!')
         else:
-            self.logger.error('Driver created fail')
+            self.logger.error('Please check the results of the driver for empty')
 
     def test_certificate_driver_create_success(self):
         '''新增已认证外请车 '''

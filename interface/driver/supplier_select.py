@@ -10,11 +10,11 @@ class SupplierSelect(object):
     查询供应商信息列表
     /api/tms/supplier/listSuppliers
     '''
-    __slots__ = ('__selectDriverApiUrl', '__head_dict')
+    __slots__ = ('__supplierSelectApiUrl', '__head_dict')
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        self.__selectDriverApiUrl = "https://{0}:{1}{2}/api/tms/supplier/listSuppliers".format(
+        self.__supplierSelectApiUrl = "https://{0}:{1}{2}/api/tms/supplier/listSuppliers".format(
             config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
         self.__head_dict = {
             'token': config['tms_api_token'],
@@ -31,7 +31,7 @@ class SupplierSelect(object):
              'type': type,
              'contactPersonMobile': contactPersonMobile,
              }
-             response = HttpClient().get(self.__selectDriverApiUrl,self.__head_dict,payload)
+             response = HttpClient().get(self.__supplierSelectApiUrl,self.__head_dict,payload)
              return response
          except Exception:
              return None

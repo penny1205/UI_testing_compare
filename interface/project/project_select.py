@@ -10,11 +10,11 @@ class ProjectSelect(object):
     查询项目列表
    /api/tms/customer/listProjects
     '''
-    __slots__ = ('__selectProjectApiUrl', '__head_dict')
+    __slots__ = ('__projectSelectApiUrl', '__head_dict')
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        self.__selectProjectApiUrl = "https://{0}:{1}{2}/api/tms/customer/listProjects".format(
+        self.__projectSelectApiUrl = "https://{0}:{1}{2}/api/tms/customer/listProjects".format(
             config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
         self.__head_dict = {
             'token': config['tms_api_token'],
@@ -30,7 +30,7 @@ class ProjectSelect(object):
                  'projectStatus': projectStatus,
                  'projectName': projectName,
              }
-             response = HttpClient().get(self.__selectProjectApiUrl,self.__head_dict,payload)
+             response = HttpClient().get(self.__projectSelectApiUrl,self.__head_dict,payload)
              return response
          except Exception:
              return None
