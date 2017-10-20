@@ -7,7 +7,8 @@ from util.file.fileutil import FileUtil
 provinces = ['京', '津', '沪', '渝', '冀', '豫', '云', '辽', '黑', '湘', '皖', '鲁', '新', '苏', '浙', '赣', '鄂', '桂',
              '甘', '晋', '蒙', '陕', '吉', '闽', '贵', '粤', '青', '藏', '川', '宁', '琼']
 carLengths = ["4.2", "5.0", "6.2", "6.8", "7.6", "8.6", "9.6", "11.7", "12.5", "13.0", "15.0", "16.0", "17.5", "21.0"]
-carTypeInfos = ["GAO_LAN_CHE", "PING_BAN_CHE", "XIANG_SHI_CHE", "LENG_CANG_CHE", "DA_JIAN_CHE", "GAO_DI_BAN_CHE"]
+carTypeInfos = ["GAO_DI_BAN_CHE", "GAO_LAN_CHE", "PING_BAN_CHE", "TE_ZHONG_CHE", "XIANG_SHI_CHE", "GUA_CHE",
+                "BAN_GUA_CHE", "LENG_CANG_CHE", "DA_JIAN_CHE", "QI_TA"]
 
 
 class DataUtil(object):
