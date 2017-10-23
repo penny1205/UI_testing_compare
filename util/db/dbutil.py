@@ -7,18 +7,16 @@ from util.log.log import Log
 class DBUtil(object):
     '''操作数据库'''
 
-    def __init__(self):
+    def __init__(self,host,port,user,passwd,dbname,charset):
         self.logger = Log()
-
-    def conn_get(self,host,port,user,passwd,dbname):
-        '''连接数据库'''
         try:
             self.connect = pymysql.Connect(
                 host = host,
                 port = port,
                 user = user,
                 passwd = passwd,
-                db = dbname
+                db = dbname,
+                charset = charset
             )
         except Exception as e:
             self.logger.error('Database Initialization Connection Failed 1 : {0}'.format(e))
@@ -62,10 +60,3 @@ class DBUtil(object):
             self.logger.info('Execute sql failed ! : {0}'.format(e))
             self.connect.close()
             raise
-
-
-# if __name__ == '__main__':
-#     sql = 'SELECT count(case_id)  FROM test_data'
-#     db = DBUtil('../config/dbconfig.yaml')
-#     db.excute_select_one_record('SELECT count(case_id)  FROM test_data')
-#     # conn = pymysql.Connect(host='10.122.74.230', port=3306, user='root', passwd='infobird123', database='testdb')

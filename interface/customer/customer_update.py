@@ -8,13 +8,13 @@ from util.file.fileutil import FileUtil
 class CustomerUpdate(object):
     '''
     客户资料修改
-    /api/tms/customer/updateCustomer
+    /api/tms/customer/updateTmsCustomer
     '''
-    __slots__ = ('__selectProjectApiUrl', '__head_dict')
+    __slots__ = ('__customerUpdateApiUrl', '__head_dict')
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        self.__selectProjectApiUrl = "https://{0}:{1}{2}/api/tms/customer/updateCustomer".format(
+        self.__customerUpdateApiUrl = "https://{0}:{1}{2}/api/tms/customer/updateTmsCustomer".format(
             config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
         self.__head_dict = {
             'token': config['tms_api_token'],
@@ -32,7 +32,7 @@ class CustomerUpdate(object):
                  'phone': phone,
                  'customerDeveloper': customerDeveloper,
              }
-             response = HttpClient().post_json(self.__selectProjectApiUrl,payload,self.__head_dict)
+             response = HttpClient().post_form(self.__customerUpdateApiUrl,payload,self.__head_dict)
              return response
          except Exception:
              return None

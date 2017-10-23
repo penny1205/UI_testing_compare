@@ -7,7 +7,7 @@ from util.file.fileutil import FileUtil
 
 class DriverSelect(object):
     '''
-    我的外请车列表,用于录单时查询获所有外请车包括已关联和未关联
+    用于录单时查询获所有外请车包括已关联和未关联
     /api/tms/driver/listAppDriver
     '''
     __slots__ = ('__driverSelectApiUrl','partnerNo', '__head_dict')
@@ -22,7 +22,7 @@ class DriverSelect(object):
         }
 
     def driver_select(self):
-         '''我的外请车列表,用于录单时外请车列表'''
+         '''用于录单时查询外请车'''
          try:
              response = HttpClient().get(self.__driverSelectApiUrl,self.__head_dict)
              return response

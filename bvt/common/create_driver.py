@@ -78,4 +78,3 @@ class CreateDriver(object):
                 return None,None
         except Exception:
             raise
-            # return None

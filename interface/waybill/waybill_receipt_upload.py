@@ -64,7 +64,6 @@ class WayBillReceiptUpload(object):
                   'losted': (None, str(losted)),
                   'memo': (None, str(memo)),
                   'type': (None, str(type)),
-                  # 'receipt_0': (os.path.basename(receipt_0), open(receipt_0,'rb')),
                   'receipt_0':(receipt_name_0,receipt_0),
                   'receipt_1':(receipt_name_1,receipt_1),
                   'receipt_2':(receipt_name_2,receipt_2),

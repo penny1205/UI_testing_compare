@@ -1,7 +1,6 @@
 #__author__ = 'pan'
 # -*- coding:utf-8 -*-
 
-import requests
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
@@ -24,21 +23,28 @@ class WayBillCreate(object):
             'YD_OAUTH': config['tms_api_YD_OAUTH']
         }
 
-    def waybill_create(self,carType='',applyDate='',projects='',projectId='',
-                       realName='',idNo='',mobile='',carNo='', loginId='',
-                       sendProvince='',sendCity='',arriveProvince='',arriveCity='',
-                       income='',totalAmt='',preAmt='',oilAmt='',destAmt='',lastAmt='',hasReceipt='',
-                       supplierName='',supplierId='',content='',source='',
-                       cargoName='',cargoWeight='',cargoVolume='',cargoNumberOfCases='',cargoWorth='',insuranceCosts=''
+    def waybill_create(self,carType='',applyDate='',projects='',projectId='',supplierName='',supplierId='',
+                       realName='',idNo='',mobile='',carNo='',carLength='',carModel='',photoAirWay='', loginId='',
+                       sendProvince='',sendCity='',sendDistrict='',arriveProvince='',arriveCity='',arriveDistrict='',
+                       income='',totalAmt='',preAmt='',oilAmt='',destAmt='',lastAmt='',hasReceipt='',content='',source='',
+                       cargoName='',cargoWeight='',cargoVolume='',cargoNumberOfCases='',cargoWorth='',insuranceCosts='',
+                       handlingFee='',deliveryFee='',oilCardDeposit='',otherFee='',upWayBillId='',oilCardNo='',
+                       vehicleIdNo='',driverCardNo='',
+                       #depositBank='',accountName='',
                       ):
         '''新增运单'''
         try:
-            # 用表单来传数据
+            if photoAirWay != '':
+                with open(photoAirWay, 'rb') as f:
+                    photoAirWay = f.read()
+
             files = {
                 'carType': (None, str(carType)),
                 'applyDate': (None, str(applyDate)),
                 'projects': (None, str(projects)),
                 'projectId': (None, str(projectId)),
+                'supplierName': (None, str(supplierName)),  # 供应商
+                'supplierId': (None, str(supplierId)),
                 'partnerNo': (None, str(self.partnerNo)),
                 'loginId': (None, str(loginId)),
                 'source': (None, str(source)),
@@ -47,11 +53,16 @@ class WayBillCreate(object):
                 'idNo':(None,str(idNo)),
                 'mobile':(None,str(mobile)),
                 'carNo':(None,str(carNo)),
+                'carLength': (None, str(carLength)),
+                'carModel': (None, str(carModel)),
+                'photoAirWay': (None, str(photoAirWay)), # 运单协议照片
                 #线路
                 'sendProvince':(None,str(sendProvince)),
                 'sendCity': (None, str(sendCity)),
+                'sendDistrict':  (None, str(sendDistrict)),
                 'arriveProvince':(None,str(arriveProvince)),
                 'arriveCity':(None,str(arriveCity)),
+                'arriveDistrict': (None,str(arriveDistrict)),
                 #金额
                 'income': (None, str(income)),
                 'totalAmt':(None,str(totalAmt)),
@@ -60,18 +71,26 @@ class WayBillCreate(object):
                 'destAmt':(None,str(destAmt)),
                 'lastAmt':(None,str(lastAmt)),
                 'hasReceipt': (None, str(hasReceipt)),
-                'supplierName': (None, str(supplierName)),  # 供应商
-                'supplierId': (None, str(supplierId)),
                 'content':(None,str(content)),#备注
-                #货物信息
+                #货物信息(拓展属性）
                 'cargoName': (None, str(cargoName)),
                 'cargoWeight':(None,str(cargoWeight)),
                 'cargoVolume':(None,str(cargoVolume)),
                 'cargoNumberOfCases':(None,str(cargoNumberOfCases)),
                 'cargoWorth':(None,str(cargoWorth)),
-                'insuranceCosts':(None,str(insuranceCosts))
+                'insuranceCosts':(None,str(insuranceCosts)),
+                #拓展属性
+                'handlingFee': (None, str(handlingFee)), #/ 装卸费
+                'deliveryFee': (None, str(deliveryFee)),# 送货费
+                'oilCardDeposit': (None, str(oilCardDeposit)), # 油卡押金
+                'otherFee': (None, str(otherFee)), # 其他费用
+                'upWayBillId': (None, str(upWayBillId)),  # 订单号
+                'oilCardNo': (None, str(oilCardNo)),  # 油卡卡号
+                'vehicleIdNo': (None, str(vehicleIdNo)), # 车架号
+                'driverCardNo': (None, str(driverCardNo)), # 司机银行卡号
+            #    'depositBank': (None, str(depositBank)), # 开户行
+            #    'accountName': (None, str(accountName)) # 账户名称
             }
-
             response = HttpClient().post_multipart(self.__createWayBillApiUrl,files,self.__head_dict)
             return response
         except Exception:

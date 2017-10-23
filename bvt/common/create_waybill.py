@@ -11,6 +11,9 @@ from interface.driver.mycar_select import MyCarSelect
 from interface.driver.mydriver_select import MyDriverSelect
 from interface.driver.driver_select import DriverSelect
 from interface.driver.supplier_select import SupplierSelect
+from interface.driver.driver_bank_VIN_get import DriverBankVINGet
+from bvt.common.create_project import CreateProject
+from bvt.common.create_driver import CreateDriver
 
 
 class CreateWayBill(object):
@@ -19,20 +22,31 @@ class CreateWayBill(object):
     def __init__(self):
         self.logger = Log()
 
-    def create_waybill(self,carType,applyDate,sendProvince,sendCity,arriveProvince,arriveCity,
-                       income,totalAmt,preAmt,oilAmt,destAmt,lastAmt,hasReceipt,content,source,
-                       cargoName,cargoWeight,cargoVolume,cargoNumberOfCases,cargoWorth,insuranceCosts):
+    def create_waybill(self, carType, applyDate, photoAirWay,
+                       sendProvince, sendCity, sendDistrict, arriveProvince, arriveCity, arriveDistrict,
+                       income, totalAmt, preAmt, oilAmt, destAmt, lastAmt, hasReceipt, content, source,
+                       cargoName, cargoWeight, cargoVolume, cargoNumberOfCases, cargoWorth, insuranceCosts,
+                       handlingFee, deliveryFee, oilCardDeposit, otherFee, upWayBillId, oilCardNo, vehicleIdNo,driverCardNo,
+                       #depositBank, accountName,
+                       projectName, startTime, endTime, customerName, customerCode, phone, customerDeveloper,  # 新建项目
+                       name, mobile, idNo, photoIdFront, photoIdReserve, photoDriverCard, photoTransPort, carNo,
+                       carLength, carModel, carLoad,  # 新建外请车
+                       ):
+
         '''我要录单'''
 
-        # 获取项目列表
-        project_list = ProjectSelect().project_select(rows='1000').json()['content']['dataList']
+        # 选择项目
+        project_list = ProjectSelect().project_select(rows='1000',projectStatus='1').json()['content']['dataList']
         if project_list == []:
-            self.project = {'projectId': '0', 'projectName': '其他'}
+            projectId = CreateProject().create_project(projectName,startTime,endTime,customerName,customerCode,phone,
+                                                       customerDeveloper)
+            self.project = {'projectId':projectId, 'projectName':projectName}
+            self.logger.info('新建的项目是: {0}'.format(self.project))
         else:
             self.project = random.sample(project_list, 1)[0]
             self.logger.info('选择的项目是: {0}'.format(self.project))
 
-        # 获取供应商列表
+        # 选择供应商
         supplier_list = SupplierSelect().supplier_select(rows='1000').json()['content']['dataList']
         if supplier_list == []:
             self.supplier = {'name':None,'supplierId':None}
@@ -40,12 +54,11 @@ class CreateWayBill(object):
             self.supplier = random.sample(supplier_list, 1)[0]
             self.logger.info('选择的供应商是: {0}'.format(self.supplier))
 
-        #新建外请车
-
+        #创建运单
         try:
+            #选择公司车
             if carType == '1':
-               #公司车
-               # 获取我的司机
+               # 选择司机
                my_car_list = MyCarSelect().my_car_select(rows='1000').json()['content']['dataList']
                if my_car_list == []:
                    self.my_car = None
@@ -53,8 +66,7 @@ class CreateWayBill(object):
                else:
                    self.my_car = random.sample(my_car_list, 1)[0]
                    self.logger.info('选择的司机是: {0}'.format(self.my_car))
-
-               # 获取我的车辆
+               # 选择车辆
                my_driver_list = MyDriverSelect().my_driver_select(rows='1000').json()['content']['dataList']
                if my_driver_list == []:
                    self.my_driver = None
@@ -64,102 +76,133 @@ class CreateWayBill(object):
                    self.logger.info('选择的车辆是: {0}'.format(self.my_driver))
 
                if ((self.my_driver != None) and (self.my_car != None)):
-                   self.waybill = WayBillCreate().waybill_create(
-                       carType=carType, applyDate=applyDate, projects=self.project['projectName'],
-                       projectId=self.project['projectId'],
-                       realName=self.my_driver['name'], idNo=self.my_driver['idNo'],
-                       mobile=self.my_driver['mobile'], carNo=self.my_car['carNo'],
-                       sendProvince=sendProvince, sendCity=sendCity, arriveProvince=arriveProvince,
-                       arriveCity=arriveCity,
-                       income=income, totalAmt=totalAmt, preAmt=preAmt, oilAmt=oilAmt, destAmt=destAmt, lastAmt=lastAmt,
-                       hasReceipt=hasReceipt,
-                       supplierName=self.supplier['name'], supplierId=self.supplier['supplierId'], content=content,
-                       source=source,
-                       cargoName=cargoName, cargoWeight=cargoWeight, cargoVolume=cargoVolume,
-                       cargoNumberOfCases=cargoNumberOfCases, cargoWorth=cargoWorth, insuranceCosts=insuranceCosts
-                   ).json()['content']
+                   response = WayBillCreate().waybill_create(carType,applyDate,
+                                                                 self.project['projectName'],self.project['projectId'],
+                                                                 self.supplier['name'], self.supplier['supplierId'],
+                                                                 self.my_driver['name'],self.my_driver['idNo'],
+                                                                 self.my_driver['mobile'],self.my_car['carNo'],
+                                                                 self.my_car['carLength'],self.my_car['carModel'],
+                                                                 photoAirWay,'',sendProvince, sendCity, sendDistrict,
+                                                                 arriveProvince, arriveCity, arriveDistrict,
+                                                                 income, totalAmt, preAmt, oilAmt, destAmt, lastAmt,
+                                                                 hasReceipt,content,source,
+                                                                 cargoName, cargoWeight, cargoVolume,
+                                                                 cargoNumberOfCases, cargoWorth, insuranceCosts,
+                                                                 handlingFee, deliveryFee, oilCardDeposit,
+                                                                 otherFee, upWayBillId, oilCardNo,vehicleIdNo,
+                                                                 driverCardNo,
+                                                                 #depositBank,accountName,
+                                                                 )
 
-                   # 判断手机号是否存在未发车的订单
-                   if self.waybill == None:
-                       # 【发车确认】按手机号查询订单，获取该订单号调用发车确认接口
-                       waybill = WayBillSelect().waybill_select(billStatus='W', normalCondition=self.my_driver['mobile'],
+                   if  response.json()['code'] == 0:
+                       return response.json()['content'], self.my_driver['mobile'], self.my_driver['name'],\
+                              self.my_driver['idNo'], self.my_car['carNo'], self.my_car['carLength'], \
+                              self.my_car['carModel'], self.project['projectName'], self.project['projectId'],\
+                              self.supplier['name'], self.supplier['supplierId']
+                   elif response.json()['code'] == 9040104 and response.json()['msg']== \
+                           '此手机号已有未确认的订单,不可重复提交，请发车确认后再录单':
+                       waybill = WayBillSelect().waybill_select(billStatus='W',
+                                                                normalCondition=self.my_driver['mobile'],
                                                                 searchStatus=True).json()['content']['dataList']
                        WayBillDepartureConfirm().waybill_departure_confirm(waybill[0]['id'])
-                       self.waybill = WayBillCreate().waybill_create(
-                           carType=carType, applyDate=applyDate, projects=self.project['projectName'],
-                           projectId=self.project['projectId'],
-                           realName=self.my_driver['name'], idNo=self.my_driver['idNo'],
-                           mobile=self.my_driver['mobile'], carNo=self.my_car['carNo'],
-                           sendProvince=sendProvince, sendCity=sendCity, arriveProvince=arriveProvince,
-                           arriveCity=arriveCity,
-                           income=income, totalAmt=totalAmt, preAmt=preAmt, oilAmt=oilAmt, destAmt=destAmt,
-                           lastAmt=lastAmt,
-                           hasReceipt=hasReceipt,
-                           supplierName=self.supplier['name'], supplierId=self.supplier['supplierId'], content=content,
-                           source=source,
-                           cargoName=cargoName, cargoWeight=cargoWeight, cargoVolume=cargoVolume,
-                           cargoNumberOfCases=cargoNumberOfCases, cargoWorth=cargoWorth, insuranceCosts=insuranceCosts
-                       ).json()['content']
-                       return self.waybill, self.my_driver['mobile'],self.my_driver['name'],\
-                              self.my_driver['idNo'],self.my_car['carNo']
+                       self.waybillId =  WayBillCreate().waybill_create(carType,applyDate,
+                                                                 self.project['projectName'],self.project['projectId'],
+                                                                 self.supplier['name'], self.supplier['supplierId'],
+                                                                 self.my_driver['name'],self.my_driver['idNo'],
+                                                                 self.my_driver['mobile'],self.my_car['carNo'],
+                                                                 self.my_car['carLength'],self.my_car['carModel'],
+                                                                 photoAirWay,'',sendProvince, sendCity, sendDistrict,
+                                                                 arriveProvince, arriveCity, arriveDistrict,
+                                                                 income, totalAmt, preAmt, oilAmt, destAmt, lastAmt,
+                                                                 hasReceipt,content,source,
+                                                                 cargoName, cargoWeight, cargoVolume,
+                                                                 cargoNumberOfCases, cargoWorth, insuranceCosts,
+                                                                 handlingFee, deliveryFee, oilCardDeposit,
+                                                                 otherFee, upWayBillId, oilCardNo,vehicleIdNo,
+                                                                 driverCardNo,
+                                                                 #depositBank,accountName,
+                                                                 ).json()['content']
+                       return self.waybillId, self.my_driver['mobile'], self.my_driver['name'],\
+                              self.my_driver['idNo'], self.my_car['carNo'], self.my_car['carLength'], \
+                              self.my_car['carModel'], self.project['projectName'], self.project['projectId'],\
+                              self.supplier['name'], self.supplier['supplierId']
                    else:
-                       return self.waybill, self.my_driver['mobile'],self.my_driver['name'],\
-                              self.my_driver['idNo'],self.my_car['carNo']
+                       self.logger.info("Failed to create the public waybill module")
+                       return None, None, None, None, None,None,None,None,None,None,None
 
             elif carType == '2':
-                #外请车
-                # 获取我的外请车列表
-                driver_list = DriverSelect().driver_select(rows='1000').json()['content']['dataList']
+                # 选择外请车
+                driver_list = DriverSelect().driver_select().json()['content']
                 if driver_list == []:
-                    self.driver = None
-                    self.logger.info('My outside driver list is empty')
+                    loginId, Id = CreateDriver().create_driver(name, mobile, idNo, photoIdFront, photoIdReserve,
+                                                               photoDriverCard,
+                                                               photoTransPort, carNo, carLength, carModel, carLoad)
+                    self.driver = {'loginId': loginId, 'name': name, 'idNo': idNo, 'mobile': mobile, 'carNo': carNo,
+                                   'carLength': carLength, 'carModel': carModel}
                 else:
                     self.driver = random.sample(driver_list, 1)[0]
                     self.logger.info('选择的外请车是: {0}'.format(self.driver))
 
-                if self.driver !=None:
-                    self.waybill = WayBillCreate().waybill_create(
-                        carType=carType, applyDate=applyDate, projects=self.project['projectName'],
-                        projectId=self.project['projectId'],
-                        loginId=self.driver['loginId'], realName=self.driver['name'], idNo=self.driver['idNo'],
-                        mobile=self.driver['mobile'], carNo=self.driver['carNo'],
-                        sendProvince=sendProvince, sendCity=sendCity, arriveProvince=arriveProvince,
-                        arriveCity=arriveCity,
-                        income=income, totalAmt=totalAmt, preAmt=preAmt, oilAmt=oilAmt, destAmt=destAmt,
-                        lastAmt=lastAmt, hasReceipt=hasReceipt,
-                        supplierName=self.supplier['name'], supplierId=self.supplier['supplierId'], content=content,
-                        source=source,
-                        cargoName=cargoName, cargoWeight=cargoWeight, cargoVolume=cargoVolume,
-                        cargoNumberOfCases=cargoNumberOfCases, cargoWorth=cargoWorth, insuranceCosts=insuranceCosts
-                    ).json()['content']
+                #获取银行卡号和车架号
+                driver_info = DriverBankVINGet().driver_bank_VIN_get(mobile).json()['content']
 
-                    # 判断手机号是否存在未发车的订单
-                    if self.waybill == None:
-                        # 【发车确认】按手机号查询订单，获取该订单号调用发车确认接口
-                        waybill = WayBillSelect().waybill_select(billStatus='W', normalCondition=self.driver['mobile'],
-                                                                 searchStatus=True).json()['content']['dataList']
-                        WayBillDepartureConfirm().waybill_departure_confirm(waybill[0]['id'])
-                        self.waybill = WayBillCreate().waybill_create(
-                            carType=carType, applyDate=applyDate, projects=self.project['projectName'],
-                            projectId=self.project['projectId'],
-                            loginId=self.driver['loginId'], realName=self.driver['name'], idNo=self.driver['idNo'],
-                            mobile=self.driver['mobile'], carNo=self.driver['carNo'],
-                            sendProvince=sendProvince, sendCity=sendCity, arriveProvince=arriveProvince,
-                            arriveCity=arriveCity,
-                            income=income, totalAmt=totalAmt, preAmt=preAmt, oilAmt=oilAmt, destAmt=destAmt,
-                            lastAmt=lastAmt, hasReceipt=hasReceipt,
-                            supplierName=self.supplier['name'], supplierId=self.supplier['supplierId'], content=content,
-                            source=source,
-                            cargoName=cargoName, cargoWeight=cargoWeight, cargoVolume=cargoVolume,
-                            cargoNumberOfCases=cargoNumberOfCases, cargoWorth=cargoWorth, insuranceCosts=insuranceCosts
-                        ).json()['content']
-                        return self.waybill,self.driver['mobile'],self.driver['name'],\
-                               self.driver['idNo'],self.driver['carNo'],
-                    else:
-                        return self.waybill,self.driver['mobile'],self.driver['name'],\
-                               self.driver['idNo'],self.driver['carNo'],
+                response = WayBillCreate().waybill_create(carType, applyDate,
+                                                          self.project['projectName'], self.project['projectId'],
+                                                          self.supplier['name'], self.supplier['supplierId'],
+                                                          self.driver['name'], self.driver['idNo'],
+                                                          self.driver['mobile'], self.driver['carNo'],
+                                                          self.driver['carLength'], self.driver['carModel'],
+                                                          photoAirWay, self.driver['loginId'],
+                                                          sendProvince, sendCity, sendDistrict,
+                                                          arriveProvince, arriveCity, arriveDistrict,
+                                                          income, totalAmt, preAmt, oilAmt, destAmt, lastAmt,
+                                                          hasReceipt, content, source,
+                                                          cargoName, cargoWeight, cargoVolume,
+                                                          cargoNumberOfCases, cargoWorth, insuranceCosts,
+                                                          handlingFee, deliveryFee, oilCardDeposit,
+                                                          otherFee, upWayBillId, oilCardNo, driver_info['vehicleIdNo'],
+                                                          driver_info['cardNo'],
+                                                          #depositBank, accountName,
+                                                          )
+                if response.json()['code'] == 0:
+                    return response.json()['content'], self.driver['mobile'],self.driver['name'],\
+                           self.driver['idNo'],self.driver['carNo'],self.driver['carLength'], self.driver['carModel'],\
+                           self.project['projectName'], self.project['projectId'], \
+                           self.supplier['name'], self.supplier['supplierId']
+
+                elif response.json()['code'] == 9040104 and response.json()['msg'] ==\
+                        '此手机号已有未确认的订单,不可重复提交，请发车确认后再录单':
+                    waybill = WayBillSelect().waybill_select(billStatus='W',
+                                                             normalCondition=self.driver['mobile'],
+                                                             searchStatus=True).json()['content']['dataList']
+                    WayBillDepartureConfirm().waybill_departure_confirm(waybill[0]['id'])
+                    self.waybillId = WayBillCreate().waybill_create(carType, applyDate,
+                                                          self.project['projectName'], self.project['projectId'],
+                                                          self.supplier['name'], self.supplier['supplierId'],
+                                                          self.driver['name'], self.driver['idNo'],
+                                                          self.driver['mobile'], self.driver['carNo'],
+                                                          self.driver['carLength'], self.driver['carModel'],
+                                                          photoAirWay, self.driver['loginId'],
+                                                          sendProvince, sendCity, sendDistrict,
+                                                          arriveProvince, arriveCity, arriveDistrict,
+                                                          income, totalAmt, preAmt, oilAmt, destAmt, lastAmt,
+                                                          hasReceipt, content, source,
+                                                          cargoName, cargoWeight, cargoVolume,
+                                                          cargoNumberOfCases, cargoWorth, insuranceCosts,
+                                                          handlingFee, deliveryFee, oilCardDeposit,
+                                                          otherFee, upWayBillId, oilCardNo, driver_info['vehicleIdNo'],
+                                                          driver_info['cardNo'],
+                                                          #depositBank, accountName,
+                                                          ).json()['content']
+                    return self.waybillId, self.driver['mobile'],self.driver['name'],\
+                           self.driver['idNo'],self.driver['carNo'],self.driver['carLength'], self.driver['carModel'],\
+                           self.project['projectName'], self.project['projectId'], \
+                           self.supplier['name'], self.supplier['supplierId']
+                else:
+                    self.logger.info("Failed to create the public waybill module")
+                    return None, None, None, None, None, None, None, None, None, None, None
             else:
                 self.logger.error('外请车类型错误: {0}'.format(carType))
-                return None,None,None,None,None
+                return None, None, None, None, None, None, None, None, None, None, None
         except Exception:
             return None

@@ -10,11 +10,11 @@ class DriverCreate(object):
     新增外请车
     /api/tms/driver/createTmsAppDriver/all
     '''
-    __slots__ = ('__createDriverApiUrl', '__head_dict')
+    __slots__ = ('__driverCreateApiUrl', '__head_dict')
 
     def __init__(self):
         config = ReadYaml( FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        self.__createDriverApiUrl = 'https://{0}:{1}{2}/api/tms/driver/createTmsAppDriver/all'.format(
+        self.__driverCreateApiUrl = 'https://{0}:{1}{2}/api/tms/driver/createTmsAppDriver/all'.format(
             config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
         self.__head_dict = {
             'token': config['tms_api_token']
@@ -54,7 +54,7 @@ class DriverCreate(object):
                 'carModel': (None, str(carModel)),
                 'carLoad': (None, str(carLoad)),
             }
-            response = HttpClient().post_multipart(self.__createDriverApiUrl, files, self.__head_dict)
+            response = HttpClient().post_multipart(self.__driverCreateApiUrl, files, self.__head_dict)
             return response
         except Exception:
             return None
