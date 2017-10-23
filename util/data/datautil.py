@@ -1,4 +1,5 @@
 # -*-coding:utf-8-*-
+
 import random
 import os
 from datetime import date, timedelta
@@ -27,7 +28,7 @@ class DataUtil(object):
     def getdistrictcode(self):
         # 读取地区编码
         self.distfile = FileUtil.getProjectObsPath() + os.path.sep + 'config' + os.path.sep + 'districtcode.txt'
-        with open(self.distfile) as file:
+        with open(self.distfile,'utf-8') as file:
             data = file.read()
             districtlist = data.split('\n')
         for node in districtlist:
