@@ -35,14 +35,14 @@ class TestDriverRelevanceCreate(unittest.TestCase):
                 DriverRelevanceDelete().driver_relevance_delete(id=driver['tmsDriverId'])
         driver_certificate_list = DriverMobileSelect().driver_mobile_select(mobile=self.mobile_certificate).json()[
             'content']
-        if len(driver_certificate_list) != 1:
-            self.logger.error('同一个已认证手机号不是只有一个外请车信息')
-        response = DriverRelevanceCreate().driver_relevance_create(driver_certificate_list[0]['loginId'])
-        self.logger.info('关联外请车返回状态码：{0}'.format(response))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()['code'], 0)
-        self.logger.info('关联外请车返回的结果是：{1}'.format(self.mobile_certificate,response.json()))
-
+        if driver_certificate_list != []:
+            response = DriverRelevanceCreate().driver_relevance_create(driver_certificate_list[0]['loginId'])
+            self.logger.info('关联外请车返回状态码：{0}'.format(response))
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.json()['code'], 0)
+            self.logger.info('关联外请车返回的结果是：{1}'.format(self.mobile_certificate,response.json()))
+        else:
+            self.logger.info('手机号{0}是未认证的'.format(self.mobile_certificate))
 
 
 if __name__ == '__main__':
