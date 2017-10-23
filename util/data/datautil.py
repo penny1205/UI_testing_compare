@@ -28,7 +28,7 @@ class DataUtil(object):
     def getdistrictcode(self):
         # 读取地区编码
         self.distfile = FileUtil.getProjectObsPath() + os.path.sep + 'config' + os.path.sep + 'districtcode.txt'
-        with open(self.distfile,encoding='utf-8') as file:
+        with open(self.distfile,encoding = "ISO-8859-1") as file:
             data = file.read()
             districtlist = data.split('\n')
         for node in districtlist:
