@@ -34,7 +34,7 @@ class TestLineSelect(unittest.TestCase):
         self.assertEqual(response.json()['code'], 0)
         self.logger.info('按照出发城市到达城市查询线路时效列表返回结果是：{0}'.format(response.json()))
 
-        line_list = LineSelect().line_select(sendCity=self.sendCity, arriveCity=self.arriveCity).json()['content'][
+        line_list = response.json()['content'][
             'dataList']
         if line_list != []:
             L = []
