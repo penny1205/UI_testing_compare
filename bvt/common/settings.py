@@ -25,3 +25,15 @@ class Settings(object):
             SystemParamsSettingsUpdate().system_params_settings_update(cargoParamsSet,userDefinedFee,carParamsSet,userDefinedFunction)
         except Exception:
             raise
+
+    def system_params_init_update(self):
+        '''初始化系统属性配置信息'''
+        try:
+            cargoParamsSet = '{"hasDriverCardNo":false,"driverCardNoRequired":false,"hasVehicleIdNo":false,"vehicleIdNoRequired":false,"hasDriverCardBank":false,"driverCardBankRequired":false}"'
+            userDefinedFee = '{"hasHandlingFee":false,"hasDeliveryFee":false,"hasOilCardDeposit":false,"hasOtherFee":false}'
+            carParamsSet = '{"hasDriverCardNo":false,"driverCardNoRequired":false,"hasVehicleIdNo":false,"vehicleIdNoRequired":false}'
+            userDefinedFunction = '{"authTodelWayBill":false}'
+            SystemParamsSettingsUpdate().system_params_settings_update(cargoParamsSet, userDefinedFee, carParamsSet,
+                                                                       userDefinedFunction)
+        except Exception:
+            raise
