@@ -20,7 +20,7 @@ class PaymentListExport(object):
         }
 
     def payment_list_export(self, currentPage='', rows='', searchMode='', globalCondition='', sendCity='',
-                                arriveCity='', carNo='', driverName='', applyDateFirst='2017-10-01', applyDateLast='2017-10-31', carType='',
+                                arriveCity='', carNo='', driverName='', applyDateFirst='1', applyDateLast='', carType='',
                                 amountType='', approveDateFirst='', approveDateLast='', paySchedule='', isLoan=''):
         """ 支付列表导出 """
         try:
@@ -50,5 +50,6 @@ class PaymentListExport(object):
 
 if __name__ == '__main__':
     test = PaymentListExport().payment_list_export()
+    print(test)
     with open('E:/1.xlsx', 'wb') as writeIn:
         writeIn.write(test.content)
