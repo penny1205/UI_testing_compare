@@ -38,7 +38,8 @@ class TestWayBillDeletedSelect(unittest.TestCase):
                                                         '天津', '', '1000', '10', '0.01', '0.02', '0.03', '0.04', '1',
                                                         '备注我要录单测试', 'TMS', '零担', '10', '100', '1000',
                                                         '10000', '100000', '20', '30', '40', '50', 'DD001', 'YK001',
-                                                        'LSVAM4187C2184847', '6222810001000', '中原物流项目', startTime,
+                                                        'LSVAM4187C2184847', '6222810001000',  '中国银行','张三',
+                                                        '中原物流项目', startTime,
                                                         endTime, '中原物流', 'ZYWL20171020', phone, '张经理', '赵师傅',
                                                         mobile, idNo, photoIdFront, photoIdReserve, photoDriverCard,
                                                         photoTransPort, carNo, carLength, carModel, '10')[0]
