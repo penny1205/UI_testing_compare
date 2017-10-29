@@ -44,12 +44,11 @@ class TestWayBillCreate(unittest.TestCase):
                                                           '0.02', '0.03', '0.04', '1', '备注我要录单测试','TMS',
                                                           '零担' ,'10', '100', '1000', '10000', '100000', '20','30',
                                                           '40','50','DD001','YK001','LSVAM4187C2184847','6222810001000',
-                                                          '中原物流项目',self.startTime,self.endTime,'中原物流',
-                                                          'ZYWL20171020',self.phone,'张经理',
+                                                          '中国银行','张三', '中原物流项目',self.startTime,self.endTime,
+                                                          '中原物流', 'ZYWL20171020',self.phone,'张经理',
                                                           '赵师傅',self.mobile,self.idNo,self.photoIdFront,
                                                           self.photoIdReserve, self.photoDriverCard, self.photoTransPort,
                                                           self.carNo,self.carLength, self.carModel, '10')[:2]
-
 
         waybill_list = WayBillSelect().waybill_select(normalCondition=mobile,searchStatus=True).json()['content']['dataList']
         L = []
@@ -64,7 +63,7 @@ class TestWayBillCreate(unittest.TestCase):
                                                           '0.02', '0.03', '0.04', '1', '备注我要录单测试','TMS',
                                                           '零担' ,'10', '100', '1000', '10000', '100000', '20','30',
                                                           '40','50','DD001','YK001','LSVAM4187C2184847','6222810001000',
-                                                          '中原物流项目',self.startTime,self.endTime,'中原物流',
+                                                          '中国银行', '张三','中原物流项目',self.startTime,self.endTime,'中原物流',
                                                           'ZYWL20171020',self.phone,'张经理',
                                                           '赵师傅',self.mobile,self.idNo,self.photoIdFront,
                                                           self.photoIdReserve, self.photoDriverCard, self.photoTransPort,

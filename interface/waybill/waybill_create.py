@@ -30,7 +30,7 @@ class WayBillCreate(object):
                        cargoName='',cargoWeight='',cargoVolume='',cargoNumberOfCases='',cargoWorth='',insuranceCosts='',
                        handlingFee='',deliveryFee='',oilCardDeposit='',otherFee='',upWayBillId='',oilCardNo='',
                        vehicleIdNo='',driverCardNo='',
-                       #depositBank='',accountName='',
+                       depositBank='',accountName='',
                       ):
         '''新增运单'''
         try:
@@ -88,8 +88,8 @@ class WayBillCreate(object):
                 'oilCardNo': (None, str(oilCardNo)),  # 油卡卡号
                 'vehicleIdNo': (None, str(vehicleIdNo)), # 车架号
                 'driverCardNo': (None, str(driverCardNo)), # 司机银行卡号
-            #    'depositBank': (None, str(depositBank)), # 开户行
-            #    'accountName': (None, str(accountName)) # 账户名称
+                'depositBank': (None, str(depositBank)), # 开户行
+                'accountName': (None, str(accountName)) # 账户名称
             }
             response = HttpClient().post_multipart(self.__createWayBillApiUrl,files,self.__head_dict)
             return response

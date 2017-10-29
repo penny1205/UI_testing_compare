@@ -38,9 +38,9 @@ class TestWayBillUpdate(unittest.TestCase):
             self.carType, self.applyDate, self.photoAirWay, '北京', '北京', '', '天津', '天津', '', '1000', '10', '0.01',
             '0.02', '0.03', '0.04', '1', '备注我要录单测试', 'TMS',
             '零担', '10', '100', '1000', '10000', '100000', '20', '30','40', '50', 'DD001', 'YK001', 'LSVAM4187C2184847',
-            '6222810001000','中原物流项目', self.startTime, self.endTime, '中原物流', 'ZYWL20171020', phone, '张经理',
-            '赵师傅', mobile, idNo, self.photoIdFront,self.photoIdReserve, self.photoDriverCard,self.photoTransPort,
-            carNo, carLength, carModel, '10')
+            '6222810001000', '中国银行','张三','中原物流项目', self.startTime, self.endTime, '中原物流', 'ZYWL20171020',
+            phone, '张经理', '赵师傅', mobile, idNo, self.photoIdFront,self.photoIdReserve, self.photoDriverCard,
+            self.photoTransPort,carNo, carLength, carModel, '10')
 
     def tearDown(self):
         self.logger.info('############################ TestUpdateWayBill END ############################')
@@ -55,8 +55,7 @@ class TestWayBillUpdate(unittest.TestCase):
                                                   '', '1000', '10', '0.01', '0.02', '0.03', '0.04', '1',
                                                   '备注我要录单测试', 'TMS','零担', '10', '100', '1000', '10000',
                                                   '100000','20', '30', '40', '50', 'DD001', 'YK001', 'LSVAM4187C2184847',
-                                                  '6222810001000',
-                                                  #depositBank,accountName,
+                                                  '6222810001000', '中国银行', '张三'
                                                   )
         self.logger.info('修改运单的发车时间返回状态码：{0}'.format(response))
         self.assertEqual(response.status_code, 200)

@@ -28,8 +28,8 @@ class CreateWayBill(object):
                        sendProvince, sendCity, sendDistrict, arriveProvince, arriveCity, arriveDistrict,
                        income, totalAmt, preAmt, oilAmt, destAmt, lastAmt, hasReceipt, content, source,
                        cargoName, cargoWeight, cargoVolume, cargoNumberOfCases, cargoWorth, insuranceCosts,
-                       handlingFee, deliveryFee, oilCardDeposit, otherFee, upWayBillId, oilCardNo, vehicleIdNo,driverCardNo,
-                       #depositBank, accountName,
+                       handlingFee, deliveryFee, oilCardDeposit, otherFee, upWayBillId, oilCardNo, vehicleIdNo,
+                       driverCardNo,depositBank, accountName,
                        projectName, startTime, endTime, customerName, customerCode, phone, customerDeveloper,  # 新建项目
                        name, mobile, idNo, photoIdFront, photoIdReserve, photoDriverCard, photoTransPort, carNo,
                        carLength, carModel, carLoad,  # 新建外请车
@@ -92,8 +92,7 @@ class CreateWayBill(object):
                                                                  cargoNumberOfCases, cargoWorth, insuranceCosts,
                                                                  handlingFee, deliveryFee, oilCardDeposit,
                                                                  otherFee, upWayBillId, oilCardNo,vehicleIdNo,
-                                                                 driverCardNo,
-                                                                 #depositBank,accountName,
+                                                                 driverCardNo,depositBank,accountName,
                                                                  )
 
                    if  response.json()['code'] == 0:
@@ -121,8 +120,7 @@ class CreateWayBill(object):
                                                                  cargoNumberOfCases, cargoWorth, insuranceCosts,
                                                                  handlingFee, deliveryFee, oilCardDeposit,
                                                                  otherFee, upWayBillId, oilCardNo,vehicleIdNo,
-                                                                 driverCardNo,
-                                                                 #depositBank,accountName,
+                                                                 driverCardNo,depositBank,accountName,
                                                                  ).json()['content']
                        return self.waybillId, self.my_driver['mobile'], self.my_driver['name'],\
                               self.my_driver['idNo'], self.my_car['carNo'], self.my_car['carLength'], \
@@ -163,8 +161,8 @@ class CreateWayBill(object):
                                                           cargoNumberOfCases, cargoWorth, insuranceCosts,
                                                           handlingFee, deliveryFee, oilCardDeposit,
                                                           otherFee, upWayBillId, oilCardNo, driver_info['vehicleIdNo'],
-                                                          driver_info['cardNo'],
-                                                          #depositBank, accountName,
+                                                          driver_info['cardNo'],driver_info['driverCardBank'],
+                                                          driver_info['accountName'],
                                                           )
                 if response.json()['code'] == 0:
                     return response.json()['content'], self.driver['mobile'],self.driver['name'],\
@@ -193,8 +191,8 @@ class CreateWayBill(object):
                                                           cargoNumberOfCases, cargoWorth, insuranceCosts,
                                                           handlingFee, deliveryFee, oilCardDeposit,
                                                           otherFee, upWayBillId, oilCardNo, driver_info['vehicleIdNo'],
-                                                          driver_info['cardNo'],
-                                                          #depositBank, accountName,
+                                                          driver_info['cardNo'],driver_info['driverCardBank'],
+                                                          driver_info['accountName'],
                                                           ).json()['content']
                     return self.waybillId, self.driver['mobile'],self.driver['name'],\
                            self.driver['idNo'],self.driver['carNo'],self.driver['carLength'], self.driver['carModel'],\
