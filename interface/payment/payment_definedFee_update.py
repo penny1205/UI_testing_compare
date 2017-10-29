@@ -28,11 +28,11 @@ class UserDefinedFeeUpdate(object):
                 "otherFee": otherFee                # 其他费用，非必填(自动转换为0)，两位小数的正数；
             }
             response = HttpClient().post_json(self.__updateUserDefinedFeeApiUrl,
-                                              header_dict=self.__head_dict, body_dict=payload)
+                                              header_dict=self.__head_dict, body_dict=payload, param_dict=payload)
             return response
         except Exception:
             return None
 
 if __name__ == '__main__':
-    test = UserDefinedFeeUpdate().userdefinedfee_update("77559")
+    test = UserDefinedFeeUpdate().userdefinedfee_update("77934", handlingFee=10, deliveryFee=10, oilCardDeposit=10, otherFee=10)
     print(test.json())

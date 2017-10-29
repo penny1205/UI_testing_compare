@@ -21,8 +21,8 @@ class PaymentSinglePay(object):
         try:
             payload = {
                 "wayBillId": wayBillId,          # 运单ID，String，必填
-                "paymentMethod": paymentMethod,  # 支付方式，int【贷款付商户=1】、【余额付司机=2】、【白条付司机=3】、【线下支付=4】
-                "amountType": amountType,        # 预付款1，油卡2，到付款3，尾款4
+                "paymentMethod": paymentMethod,  # 支付方式，int【贷款付商户=3】、【余额付司机=2】、【白条付司机=1】、【线下支付=4】
+                "amountType": amountType,        # 预付款1，油卡2，到付款3，尾款4，总运费9
                 "amount": amount,                # 实际支付金额，double
                 "password": password,            # 使用线下支付时必填，其他不填；
                 "verifiCode": verifiCode,        # 可能会有，非必填
