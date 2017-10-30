@@ -29,3 +29,8 @@ class WayBillDetailGet(object):
             return response
         except Exception:
             return None
+
+
+if __name__ == "__main__":
+    test = WayBillDetailGet().waybill_detail_get('77928').json()['content']['transportCashDetail']
+    print(test)

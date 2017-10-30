@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 
 import random
+import time
 from util.log.log import Log
 from interface.waybill.waybill_create import WayBillCreate
 from interface.waybill.waybill_select import WayBillSelect
@@ -9,6 +10,7 @@ from interface.waybill.waybill_departure_confirm import WayBillDepartureConfirm
 from interface.project.project_select import ProjectSelect
 from interface.driver.mycar_select import MyCarSelect
 from interface.driver.mydriver_select import MyDriverSelect
+from interface.driver.driver_mobile_select import DriverMobileSelect
 from interface.driver.driver_select import DriverSelect
 from interface.driver.supplier_select import SupplierSelect
 from interface.driver.driver_bank_VIN_get import DriverBankVINGet
@@ -204,3 +206,50 @@ class CreateWayBill(object):
                 return None, None, None, None, None, None, None, None, None, None, None
         except Exception:
             return None
+
+    def create_waybill_register(self, handlingFee='', deliveryFee='', oilCardDeposit='', otherFee=''):
+        """ 使用已认证司机新建运单 """
+        self.startTime = time.strftime('%Y-%m-%d')
+        self.endTime = time.strftime('%Y-%m-%d', time.localtime(time.time() + 86400))
+        # 获取项目信息
+        project_list = ProjectSelect().project_select(rows='1000', projectStatus='1').json()['content']['dataList']
+        if project_list == []:
+            projectId = CreateProject().create_project(projectName='支付测试', startTime=self.startTime,
+                                                       endTime=self.endTime, customerName='中原物流',
+                                                       customerCode='ZYWL20171020', phone='18056070532',
+                                                       customerDeveloper='张经理'),
+
+            project = {'projectId': projectId, 'projectName': '支付测试'}
+            self.logger.info('新建的项目是: {0}'.format(project))
+        else:
+            project = random.sample(project_list, 1)[0]
+            self.logger.info('选择的项目是: {0}'.format(project))
+        # 获取认证司机18056070532的信息
+        try:
+            driver = DriverMobileSelect().driver_mobile_select('18056070532').json()
+            self.logger.info('获取已认证司机信息：{0}'.format(driver))
+            driver = driver['content'][0]
+        except Exception:
+            return None
+        # 查询认证司机18056070532是否有待发车状态的运单并处理
+        waybill = WayBillSelect().waybill_select(billStatus='W',
+                                                 normalCondition=driver['mobile'],
+                                                 searchStatus='true').json()['content']['dataList']
+        if waybill:
+            WayBillDepartureConfirm().waybill_departure_confirm(waybill[0]['id'])
+        try:
+            response = WayBillCreate().waybill_create(applyDate=self.startTime, sendCity='北京', sendProvince='北京',
+                                                      arriveCity='北京', arriveProvince='北京', totalAmt='0.05',
+                                                      preAmt='0.01', oilAmt='0.01', destAmt='0.01', lastAmt='0.01',
+                                                      projectId=project['projectId'], projects=project['projectName'],
+                                                      carType='2', carNo=driver['carNo'], realName=driver['name'],
+                                                      carLength=driver['carLength'], carModel=driver['carModel'],
+                                                      mobile=driver['mobile'], hasReceipt='1', handlingFee=handlingFee,
+                                                      deliveryFee=deliveryFee, oilCardDeposit=oilCardDeposit,
+                                                      otherFee=otherFee)
+            return response
+        except Exception:
+            return None
+if __name__ == "__main__":
+    test = CreateWayBill().create_waybill_register(handlingFee='1', deliveryFee='1', oilCardDeposit='1', otherFee='1')
+    print(test.json()['content'])
