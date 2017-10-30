@@ -5,30 +5,30 @@ from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
 
-class WalletInfoGet(object):
+class WalletBillsUpdate(object):
     '''
-    获取企业钱包信息
-    /api/tms/wallet/getWalletInfo
+    修改交易状态
+    /api/tms/wallet/updateSerialNumber
     '''
-    __slots__ = ('__walletInfoGetApiUrl','partnerNo', '__head_dict')
+    __slots__ = ('__walletBillsSelectApiUrl', '__head_dict')
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        self.__walletInfoGetApiUrl = 'https://{0}:{1}{2}/api/tms/wallet/getWalletInfo'.format(
+        self.__walletBillsSelectApiUrl = 'https://{0}:{1}{2}/api/tms/wallet/updateSerialNumber'.format(
             config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
-        self.partnerNo = config['partnerNo']
         self.__head_dict = {
             'token': config['tms_api_token'],
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
 
-    def wallet_info_get(self):
-         '''获取企业钱包信息'''
+    def wallet_bills_update(self,serialNumber='',type=''):
+         '''修改交易状态'''
          try:
-             payload ={
-                 'userId': self.partnerNo,
+             payload = {
+                 'serialNumber': serialNumber,
+                 'type': type,
              }
-             response = HttpClient().get(self.__walletInfoGetApiUrl,self.__head_dict,payload)
+             response = HttpClient().post_form(self.__walletBillsSelectApiUrl,payload,self.__head_dict)
              return response
          except Exception:
              return None
