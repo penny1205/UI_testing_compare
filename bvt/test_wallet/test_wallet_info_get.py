@@ -9,10 +9,10 @@ class TestWalletInfoGet(unittest.TestCase):
     '''获取企业钱包信息'''
     def setUp(self):
         self.logger = Log()
-        self.logger.info('########################### TestBankAccountGet START ###########################')
+        self.logger.info('########################### TestWalletInfoGet START ###########################')
 
     def tearDown(self):
-        self.logger.info('############################ TestBankAccountGet END ############################')
+        self.logger.info('############################ TestWalletInfoGet END ############################')
 
     def test_wallet_info_get_success(self):
         '''获取企业钱包信息'''

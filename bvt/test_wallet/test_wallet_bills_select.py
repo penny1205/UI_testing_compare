@@ -10,10 +10,10 @@ class TestWalletBillsSelect(unittest.TestCase):
     '''交易记录查询'''
     def setUp(self):
         self.logger = Log()
-        self.logger.info('########################### TestLineSelect START ###########################')
+        self.logger.info('########################### TestWalletBillsSelect START ###########################')
 
     def tearDown(self):
-        self.logger.info('############################ TestLineSelect END ############################')
+        self.logger.info('############################ TestWalletBillsSelect END ############################')
 
 
     def test_wallet_bills_select_type_success(self):

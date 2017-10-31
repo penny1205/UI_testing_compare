@@ -9,10 +9,10 @@ class TestWalletLoanSelect(unittest.TestCase):
     '''可借款金额统计'''
     def setUp(self):
         self.logger = Log()
-        self.logger.info('########################### TestLineSelect START ###########################')
+        self.logger.info('########################### TestWalletLoanSelect START ###########################')
 
     def tearDown(self):
-        self.logger.info('############################ TestLineSelect END ############################')
+        self.logger.info('############################ TestWalletLoanSelect END ############################')
 
 
     def test_wallet_loan_select_type_success(self):

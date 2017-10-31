@@ -23,16 +23,17 @@ class WayBillReceiptConfirm(object):
             'YD_OAUTH': config['tms_api_YD_OAUTH']
         }
 
-    def waybill_receipt_confirm(self,wayBillId='',lastAmt='',lastMemo='',shipperMemo=''):
+    def waybill_receipt_confirm(self,wayBillId='',lastAmt='',lastMemo='',shipperMemo='',receipt_0=''):
          '''回单确认 新接口'''
          try:
              payload ={
                  'id': wayBillId,
                  'shipperMemo': shipperMemo,
                  'lastAmt':lastAmt,
-                 'lastMemo':lastMemo
+                 'lastMemo':lastMemo,
+                 'receipt_0':receipt_0 , # 回单照片, 最少上传一张，最多上传5张
                        }
-             response = HttpClient().post_json(self.__wayBillReceiptConfirmApiUrl,payload,self.__head_dict)
+             response = HttpClient().post_form(self.__wayBillReceiptConfirmApiUrl,payload,self.__head_dict)
              return response
          except Exception:
              return None

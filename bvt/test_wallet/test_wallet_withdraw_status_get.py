@@ -9,10 +9,10 @@ class TestWalletWithdrawStatusGet(unittest.TestCase):
     '''获取钱包提现状态'''
     def setUp(self):
         self.logger = Log()
-        self.logger.info('########################### TestWalletRecharge START ###########################')
+        self.logger.info('########################### TestWalletWithdrawStatusGet START ###########################')
 
     def tearDown(self):
-        self.logger.info('############################ TestWalletRecharge END ############################')
+        self.logger.info('############################ TestWalletWithdrawStatusGet END ############################')
 
 
     def test_wallet_withdraw_status_get_success(self):

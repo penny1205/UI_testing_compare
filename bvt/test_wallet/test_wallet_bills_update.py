@@ -18,7 +18,7 @@ class TestWalletBillsUpdate(unittest.TestCase):
 
 
     def test_wallet_bills_Update_success(self):
-        '''交易记录查询'''
+        '''修改交易状态'''
         type = random.choice([1,2,3])
         bills_list = WalletBillsSelect().wallet_bills_select(type=type).json()['content']['dataList']
         if bills_list == []:

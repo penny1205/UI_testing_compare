@@ -1,7 +1,6 @@
 #__author__ = 'pan'
 # -*- coding:utf-8 -*-
 
-import random
 import unittest
 from util.log.log import Log
 from util.file.fileutil import FileUtil
