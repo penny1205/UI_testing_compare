@@ -32,7 +32,7 @@ class TestSystemParamsUpdate(unittest.TestCase):
         '''更新系统属性配置信息'''
         cargoParamsSet = '{"hasCargoName":true,"cargoNameRequired":true,"hasCargoWeight":true,"cargoWeightRequired":true,"hasCargoVolume":true,"cargoVolumeRequired":true,"hasCargoNumberOfCases":true,"cargoNumberRequired":true,"hasCargocargoWorth":true,"cargoWorthRequired":true,"hasInsuranceCosts":true,"insuranceCostsRequired":true,"hasUpWayBillId":true,"upWayBillIdRequired":true,"hasOilCardNo":true,"oilCardNoRequired":true}'
         userDefinedFee = '{"hasHandlingFee":true,"hasDeliveryFee":true,"hasOilCardDeposit":true,"hasOtherFee":true}'
-        carParamsSet = '{"hasDriverCardNo":true,"driverCardNoRequired":true,"hasVehicleIdNo":true,"vehicleIdNoRequired":true}'
+        carParamsSet = '{"hasDriverCardNo":true,"driverCardNoRequired":true,"hasVehicleIdNo":true,"vehicleIdNoRequired":true,"driverCardBankRequired":true,"hasDriverCardBank":true,"accountNameRequired":true,"hasAccountName":true}'
         userDefinedFunction = '{"authTodelWayBill":true}'
         response = SystemParamsSettingsUpdate().system_params_settings_update(cargoParamsSet,userDefinedFee,
                                                                               carParamsSet,userDefinedFunction)

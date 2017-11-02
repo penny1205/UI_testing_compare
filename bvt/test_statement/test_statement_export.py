@@ -70,7 +70,7 @@ class TestStatementExport(unittest.TestCase):
                                                       applyDateLast=self.applyDate )
         self.logger.info('客户/供应商对账单导出返回状态码：{0}'.format(response))
         self.assertEqual(response.status_code, 200)
-        filename = FileUtil.getProjectObsPath() + '/file/' + 'statement_export.xlsx.'
+        filename = FileUtil.getProjectObsPath() + os.path.sep + 'file' + os.path.sep + 'statement_export.xlsx.'
         with open(filename, 'wb') as writeIn:
             writeIn.write(response.content)
         self.logger.info('客户/供应商对账单导出文件是：{0}'.format(filename))

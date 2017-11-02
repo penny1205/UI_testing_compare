@@ -1,6 +1,7 @@
 #__author__ = 'pan'
 # -*- coding:utf-8 -*-
 
+import os
 import random
 import time
 import unittest
@@ -27,7 +28,7 @@ class TestOutCarPriceReportExport(unittest.TestCase):
                                                             sendCity='杭州',arriveCity='合肥',dataType=self.dataType)
         self.logger.info('外请车价监控报表导出返回状态码：{0}'.format(response))
         self.assertEqual(response.status_code, 200)
-        filename = FileUtil.getProjectObsPath() + '/file/' + 'outCar_price_report_export.xlsx.'
+        filename = FileUtil.getProjectObsPath() + os.path.sep + 'file' + os.path.sep + 'outCar_price_report_export.xlsx'
         with open(filename, 'wb') as writeIn:
             writeIn.write(response.content)
         self.logger.info('外请车价监控报表导出文件是：{0}'.format(filename))

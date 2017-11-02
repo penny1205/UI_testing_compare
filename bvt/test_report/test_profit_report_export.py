@@ -1,6 +1,7 @@
 #__author__ = 'pan'
 # -*- coding:utf-8 -*-
 
+import os
 import time
 import unittest
 from util.log.log import Log
@@ -24,7 +25,7 @@ class TestProfitReportExport(unittest.TestCase):
         response = ProfitReportExport().profit_report_export(sendDateStart=self.sendDateStart,sendDateEnd=self.sendDateEnd)
         self.logger.info('利润报表信息列表导出返回状态码：{0}'.format(response))
         self.assertEqual(response.status_code, 200)
-        filename = FileUtil.getProjectObsPath() + '/file/' + 'profit_report_export.xlsx.'
+        filename = FileUtil.getProjectObsPath()+ os.path.sep + 'file' + os.path.sep + 'profit_report_export.xlsx'
         with open(filename, 'wb') as writeIn:
             writeIn.write(response.content)
         self.logger.info('利润报表信息列表导出文件是：{0}'.format(filename))

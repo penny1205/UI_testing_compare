@@ -1,6 +1,7 @@
 #__author__ = 'pan'
 # -*- coding:utf-8 -*-
 
+import os
 import time
 import unittest
 from util.log.log import Log
@@ -25,7 +26,7 @@ class TestSendCarReportExport(unittest.TestCase):
                                                                 sendCarDateEnd=self.sendCarDateEnd)
         self.logger.info('发车综合报表导出返回状态码：{0}'.format(response))
         self.assertEqual(response.status_code, 200)
-        filename = FileUtil.getProjectObsPath() + '/file/' + 'send_car_report_export.xlsx.'
+        filename = FileUtil.getProjectObsPath()+ os.path.sep + 'file' + os.path.sep + 'send_car_report_export.xlsx.'
         with open(filename, 'wb') as writeIn:
             writeIn.write(response.content)
         self.logger.info('利润报表信息列表导出文件是：{0}'.format(filename))
