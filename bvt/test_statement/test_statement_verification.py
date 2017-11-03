@@ -34,6 +34,7 @@ class TestStatementVerification(unittest.TestCase):
         WayBillDepartureConfirm().waybill_departure_confirm(self.wayBillId)
         waybill_transport_detail = WayBillDetailGet().waybill_detail_get(self.wayBillId).json()['content']
         self.wayBillNo = waybill_transport_detail['transportCash']['tmsBillCode']
+        self.logger.info('客户/供应商对账单核销确认的运单是：{0}'.format(self.wayBillNo))
         WayBillArrivalConfirm().waybill_arrival_confirm(self.wayBillId,
                                                         waybill_transport_detail['transportCash']['destAmt'],
                                                         waybill_transport_detail['transportCash']['destAmtMemo'])
@@ -50,6 +51,7 @@ class TestStatementVerification(unittest.TestCase):
     def test_statement_verification_success(self):
         '''客户/供应商对账单核销确认'''
         billType = random.randint(1, 2)
+        self.logger.info('客户/供应商对账单核销确认类型：{0}'.format(billType))
         response = StatementVerification().statement_verification(billType,str(self.wayBillId))
         self.logger.info('客户/供应商对账单核销确认返回状态码：{0}'.format(response))
         self.assertEqual(response.status_code, 200)
