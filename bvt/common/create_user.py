@@ -25,6 +25,7 @@ class CreateUser(object):
             else:
                 roleId = random.choice(role_list)['roleId']
                 self.logger.info('新增账号的角色ID是:{0}'.format(roleId))
+
             response = UserCreate().user_create(roleId,username,loginId,mobile)
             if response.json()['code'] == 0:
                 return response.json()['content'],roleId

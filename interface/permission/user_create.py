@@ -32,7 +32,7 @@ class UserCreate(object):
                  'loginId': loginId,
                  'mobile': mobile,
              }
-             response = HttpClient().post_form(self.__userCreateApiUrl,payload,self.__head_dict,payload)
+             response = HttpClient().post_form(self.__userCreateApiUrl,None,self.__head_dict,payload)
              return response
          except Exception:
              return None
