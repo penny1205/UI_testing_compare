@@ -4,7 +4,6 @@
 import random
 import unittest
 from util.log.log import Log
-from interface.permission.role_update import RoleUpdate
 from bvt.common.create_role import CreateRole
 
 class TestRoleUpdate(unittest.TestCase):
@@ -23,7 +22,7 @@ class TestRoleUpdate(unittest.TestCase):
     def test_role_update_roleName_success(self):
         '''修改角色'''
         roleName_update = random.choice(['老板', '高级管理'])
-        response = RoleUpdate().role_update(self.roleId,roleName_update,self.menuJson)
+        response = CreateRole().update_role(self.roleId,roleName_update,self.menuJson)
         self.logger.info('修改角色返回状态码：{0}'.format(response))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)

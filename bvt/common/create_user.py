@@ -43,6 +43,8 @@ class CreateUser(object):
                 userId = UserCreate().user_create(roleId, username, loginId, mobile).json()['content']
                 return userId,roleId
             else:
+                self.logger.info('新增账号返回错误:{0}'.format(response.json()))
                 return None,None
         except Exception:
+            self.logger.info('新增账号发生异常:{0}'.format(Exception))
             return None
