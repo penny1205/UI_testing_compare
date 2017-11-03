@@ -27,7 +27,7 @@ class TestLoanCreate(unittest.TestCase):
         if loan_list != []:
             L = []
             for loan in loan_list:
-                L.append((loan['id']))
+                L.append((str(loan['id'])))
             self.assertIn(Id, L, 'LargerLoan created fail!')
         else:
             self.logger.error('Please check the results of LargerLoan for empty')

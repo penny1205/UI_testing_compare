@@ -23,7 +23,7 @@ class TestCustomerSelect(unittest.TestCase):
 
     def test_customer_select_customerName_success(self):
         '''按客户名称查询客户列表'''
-        response = CustomerSelect().customer_select(customerName=self.customerName)
+        response = CustomerSelect().customer_select(customerName=self.customerName,customerStatus='0')
         self.logger.info('按客户名称查询客户列表返回状态码：{0}'.format(response))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)

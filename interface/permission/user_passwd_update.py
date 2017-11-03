@@ -28,7 +28,7 @@ class UserPasswordUpdate(object):
                  'id': userId,
                  'mobile': mobile,
              }
-             response = HttpClient().get(self.__userPasswordUpdateApiUrl,self.__head_dict,payload)
+             response = HttpClient().post_form(self.__userPasswordUpdateApiUrl,payload,self.__head_dict)
              return response
          except Exception:
              return None

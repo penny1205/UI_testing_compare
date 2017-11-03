@@ -27,11 +27,11 @@ class TestRoleCompanyGet(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
         self.logger.info('获取公司所有角色返回结果是：{0}'.format(response.json()))
-        role_list = response.json()['content']['dataList']
+        role_list = response.json()['content']
         if role_list != []:
             L = []
             for loan in role_list:
-                L.append((loan['roleId']))
+                L.append((str(loan['roleId'])))
             self.assertIn(self.roleId, L, '获取公司所有角色失败!')
         else:
             self.logger.error('Please check the results of Role for empty')

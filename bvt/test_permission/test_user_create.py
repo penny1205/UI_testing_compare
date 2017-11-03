@@ -30,7 +30,7 @@ class TestUserCreate(unittest.TestCase):
         if user_list != []:
             L = []
             for loan in user_list:
-                L.append((loan['id']))
+                L.append((str(loan['id'])))
             self.assertIn(userId, L, 'User created fail!')
         else:
             self.logger.error('Please check the results of user for empty')

@@ -29,9 +29,7 @@ class WayBillCreate(object):
                        income='',totalAmt='',preAmt='',oilAmt='',destAmt='',lastAmt='',hasReceipt='',content='',source='',
                        cargoName='',cargoWeight='',cargoVolume='',cargoNumberOfCases='',cargoWorth='',insuranceCosts='',
                        handlingFee='',deliveryFee='',oilCardDeposit='',otherFee='',upWayBillId='',oilCardNo='',
-                       vehicleIdNo='',driverCardNo='',
-                       depositBank='',accountName='',
-                      ):
+                       vehicleIdNo='',driverCardNo='',depositBank='', accountName='' ):
         '''新增运单'''
         try:
             if photoAirWay != '':

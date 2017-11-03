@@ -31,7 +31,7 @@ class TestRoleSelect(unittest.TestCase):
         if role_list != []:
             L = []
             for loan in role_list:
-                L.append((loan['roleId']))
+                L.append((str(loan['roleId'])))
             self.assertIn(self.roleId, L, 'Role selected fail!')
         else:
             self.logger.error('Please check the results of Role for empty')

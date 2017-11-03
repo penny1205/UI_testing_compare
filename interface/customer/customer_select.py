@@ -30,7 +30,7 @@ class CustomerSelect(object):
                  'customerName': customerName,
                  'startTime':startTime,
                  'endTime':endTime,
-                 'customerStatus':customerStatus
+                 'customerStatus':customerStatus  # 客户合作状态，int， 0-全部，1-合作中，2-停止合作，必填
              }
              response = HttpClient().get(self.__customerSelectApiUrl,self.__head_dict,payload)
              return response

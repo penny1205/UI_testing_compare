@@ -34,7 +34,7 @@ class TestLoanSelect(unittest.TestCase):
         if loan_list != []:
             L = []
             for loan in loan_list:
-                L.append((loan['id']))
+                L.append((str(loan['id'])))
             self.assertIn(self.Id, L, 'LargerLoan selected fail!')
         else:
             self.logger.error('Please check the results of LargerLoan for empty')

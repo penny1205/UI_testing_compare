@@ -32,18 +32,10 @@ class TestCostSettingsGet(unittest.TestCase):
         self.taxRate = random.uniform(0,100)
         self.otherCost = random.uniform(0,99999)
         self.infoCost = random.uniform(0,99999)
-        #若是没有项目，创建新项目
-        self.projectName = '德邦空运'
-        self.startTime = time.strftime('%Y-%M-%d')
-        self.endTime = time.strftime('%Y-%m-%d', time.localtime(time.time() + 86400))
-        self.customerName = '德邦'
-        self.customerCode = 'DB201710200001'
-        self.phone = DataUtil().createmoble()
         self.Id ,self.kilometers,self.projectId= CreateCostSettings().create_cost_settings(
             self.carType, self.sendProvince, self.sendCity,self.arriveProvince, self.arriveCity,self.carLength,
             self.carModel,self.calculateType, self.perIncome, self.oilCost, self.roadCost, self.repairCost,
-            self.depreciationCost, self.insurance, self.personCost, self.taxRate, self.otherCost, self.infoCost,
-            self.projectName,self.startTime,self.endTime,self.customerName,self.customerCode,self.phone,'黄经理')
+            self.depreciationCost, self.insurance, self.personCost, self.taxRate, self.otherCost, self.infoCost)
 
     def tearDown(self):
         self.logger.info('############################ TestSystemParamsGet END ############################')

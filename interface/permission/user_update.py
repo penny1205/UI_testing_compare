@@ -14,7 +14,7 @@ class UserUpdate(object):
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        self.__userUpdateApiUrl = 'https://{0}:{1}{2}api/tms/system/updateTmsUser'.format(
+        self.__userUpdateApiUrl = 'https://{0}:{1}{2}/api/tms/system/updateTmsUser'.format(
             config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
         self.partnerNo = config['partnerNo']
         self.__head_dict = {
@@ -33,7 +33,7 @@ class UserUpdate(object):
                  'loginId': loginId,
                  'mobile': mobile,
              }
-             response = HttpClient().post_json(self.__userUpdateApiUrl,payload,self.__head_dict)
+             response = HttpClient().post_json(self.__userUpdateApiUrl,payload,self.__head_dict,payload)
              return response
          except Exception:
              return None
