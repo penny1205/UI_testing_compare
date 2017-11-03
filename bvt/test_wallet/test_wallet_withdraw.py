@@ -27,10 +27,10 @@ class TestWalletWithdraw(unittest.TestCase):
             response = WalletWithdraw().wallet_withdraw(self.pwdPay,moneyOrder)
             self.logger.info('钱包提现申请返回状态码：{0}'.format(response))
             self.assertEqual(response.status_code, 200)
-            self.assertEqual(response.json()['code'], 1)
+            self.assertEqual(response.json()['code'], 0)
             self.logger.info('钱包提现申请返回结果是：{0}'.format(response.json()))
         else:
-            self.logger.info('钱包提现状态：{0}'.format(self.status))
+            self.logger.info('钱包提现状态：{0}, 今日不可再次提现'.format(self.status))
 
 
 if __name__ == '__main__':
