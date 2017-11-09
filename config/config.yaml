@@ -11,17 +11,19 @@ app_api_path: /app
 tms_api_token: eyJlbmNyeXB0ZWREYXRhIjoiWk94Q0VoN2N5YjJPVFoxcG5LTUtqRDdzVFcvWEpvTWVIL2QwNUFMeFhJMVFONGRGbm04dDN4UFhiYlpqOFJkQTFYK2M0RDZZMk1uNTBWVHg1dTNhWHlrVFBTZUZEQk5aR3dXdE02U21GMWpnNW9iNHpHd3dkT2ZsU1FKT2duVXpscmlKL0xubzVGYndaS0N1ZjZqUzI3L0kxd1FtQ0RPUVhZTWNSeTFRdmJvTTZIM2RKb0k0WU9WOXFpbGVyZkZPVGM4bE9DbjZQd1ZWWXRzcEpZZFFWUjE1b0RnMkUvaThDRVN1NitNK0V2eTdmZ28zeDV0UklwcTlyWFlhTlM0bFRtcEJhMlNHVzN2YVpvNWdDUDJockJ2dWZ5ekcyUk8zeEcyamJaSnpFSWhjNEtQOFU1T0RKZVpMeTd1Q2lWczd3cTBQN24wSFBMTXRPNkZiSzBCMDgwYW9FbnM0dVg2ZUxEeEtNNS95VG9LSzZMNGRSZnl3b05XU05IQzJnblB2KzBPUytxWE5zUGxMQ1AzcHNJU216emhUMERxcWFPV090NVU2Zm1kVVF6WU4wbTROVTZVQWZTWmcrYkpDem1xdEVreDcxTlNXTXBUVFhjT0tuSE95aWc9PSIsIndyYXBwZWRLZXkiOiJQY0RteTNnRzBnNi9iRXZtNGJER0JMQ1lYY1JZVlBiaVgwUGJEczRhd29kYzB3VE9heFNHdUpJMitLZmVLNXVDOGlyUStiWlFjM2lIR3F3T0VETjBsdz09In0=
 tms_api_YD_OAUTH: eyJlbmNyeXB0ZWREYXRhIjoiWk94Q0VoN2N5YjJPVFoxcG5LTUtqRDdzVFcvWEpvTWVIL2QwNUFMeFhJMVFONGRGbm04dDN4UFhiYlpqOFJkQTFYK2M0RDZZMk1uNTBWVHg1dTNhWHlrVFBTZUZEQk5aR3dXdE02U21GMWpnNW9iNHpHd3dkT2ZsU1FKT2duVXpscmlKL0xubzVGYndaS0N1ZjZqUzI3L0kxd1FtQ0RPUVhZTWNSeTFRdmJvTTZIM2RKb0k0WU9WOXFpbGVyZkZPVGM4bE9DbjZQd1ZWWXRzcEpZZFFWUjE1b0RnMkUvaThDRVN1NitNK0V2eTdmZ28zeDV0UklwcTlyWFlhTlM0bFRtcEJhMlNHVzN2YVpvNWdDUDJockJ2dWZ5ekcyUk8zeEcyamJaSnpFSWhjNEtQOFU1T0RKZVpMeTd1Q2lWczd3cTBQN24wSFBMTXRPNkZiSzBCMDgwYW9FbnM0dVg2ZUxEeEtNNS95VG9LSzZMNGRSZnl3b05XU05IQzJnblB2KzBPUytxWE5zUGxMQ1AzcHNJU216emhUMERxcWFPV090NVU2Zm1kVVF6WU4wbTROVTZVQWZTWmcrYkpDem1xdEVreDcxTlNXTXBUVFhjT0tuSE95aWc9PSIsIndyYXBwZWRLZXkiOiJQY0RteTNnRzBnNi9iRXZtNGJER0JMQ1lYY1JZVlBiaVgwUGJEczRhd29kYzB3VE9heFNHdUpJMitLZmVLNXVDOGlyUStiWlFjM2lIR3F3T0VETjBsdz09In0
 partnerNo: ShiDeTang
+loginId: APPSHIPPER20160927145329qQBQS
 #已认证外请车
-mobile_certificate: ['18301771383','18056070532','18556513575','18056070690','18505652366']
+mobile_certificate: ['13077327043','18301771383','15000422980']
 
 
 ##########log Config##########
-log_path_info: E:\api_testing\log
-log_path_error: E:\api_testing\log\error
+log_path_info: /home/testing/Logs/tms_uat
+log_path_error: /home/testing/Logs/tms_uat/error
 
 ##########Mail Config##########
 #receiver eg:['eamilAddress1@keking.cn','eamilAddress2@keking.cn']
-email_receiver : ['liuxinyu@keking.cn']
+email_receiver : ['zhangdawei@keking.cn', 'liuxinyu@keking.cn', 'panyuanyuan@keking.cn', 'qihong@keking.cn',
+                    'tangyanhu@keking.cn','luozhoukai@keking.cn','zhaojiapeng@keking.cn']
 #sender
 email_sender : 'ahkj@keking.cn'
 email_sender_pwd : 'redmineonly'
