@@ -50,3 +50,11 @@ class WayBillSelect(object):
          except Exception:
              return None
 
+
+if __name__ == '__main__':
+    test = WayBillSelect().waybill_select(billStatus='W', normalCondition='18056070532', searchStatus='true')
+    print(test.json()['content']['dataList'])
+
+
+
+

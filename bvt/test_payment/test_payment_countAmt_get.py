@@ -24,8 +24,9 @@ class GetCountAmt(unittest.TestCase):
 
     def test_countAmt_get(self):
         response = CountAmtGet().count_amt_get(countName=self.countname, applyDateFirst=self.firstDate,
-                                               applyDateLast=self.lastDate, sendCity='北京', arriveCity='天津',
+                                               applyDateLast=self.lastDate, sendCity='', arriveCity='',
                                                isCanLoan=self.isCanLoan)
+        self.logger.info('###请求信息：{0} ###'.format(response.request.url))
         self.logger.info('查询结果：{0}'.format(response.json()))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)

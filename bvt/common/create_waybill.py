@@ -269,7 +269,8 @@ class CreateWayBill(object):
             driver = DriverMobileSelect().driver_mobile_select(self.mobile_certificate).json()
             self.logger.info('获取已认证司机信息：{0}'.format(driver))
             driver = driver['content'][0]
-        except Exception:
+        except Exception as error:
+            self.logger.info('获取认证司机信息失败,错误信息：'+error)
             return None
         # 查询认证司机18056070532是否有待发车状态的运单并处理
         waybill = WayBillSelect().waybill_select(billStatus='W',normalCondition=driver['mobile'],

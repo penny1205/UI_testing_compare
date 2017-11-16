@@ -28,7 +28,7 @@ class HttpClient:
         return response
 
     def post_multipart_file(self, url, file_path, header_dict=None):
-        files = {'file': open(file_path, 'rb')}
+        files = {'file': (open(file_path, 'rb'))}
         response = requests.post(url, files=files, headers=header_dict)
         return response
 

@@ -19,7 +19,8 @@ class DeparturePayListSelect(object):
         }
 
     def departurePay_list_select(self, currentPage='1', rows='10', applyDateFirst='', applyDateLast='', sendCity='',
-                                 arriveCity='', carNo='', driverName='', isCanLoan=''):
+                                     arriveCity='', carNo='', driverName='', isCanLoan='',
+                                     globalCondition='', searchMode='general'):
         try:
             payload = {
                 "currentPage": currentPage,        # 当前页
@@ -30,7 +31,10 @@ class DeparturePayListSelect(object):
                 "arriveCity": arriveCity,          # 到达城市
                 "carNo": carNo,                    # 车牌号
                 "driverName": driverName,          # 司机姓名
-                "isCanLoan": isCanLoan             # 是否可贷款，1：可贷款，0：不可贷款
+                "isCanLoan": isCanLoan,            # 是否可贷款，1：可贷款，0：不可贷款
+                "globalCondition": globalCondition,  # 模糊查询的查询条件
+                "searchMode": searchMode,            # 查询方式，高级查询general，模糊查询global
+
             }
             response = HttpClient().get(self.__selectDeparturePayListApiUrl, self.__head_dict, payload)
             return response
