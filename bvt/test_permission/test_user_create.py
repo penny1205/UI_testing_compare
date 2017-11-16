@@ -22,15 +22,17 @@ class TestUserCreate(unittest.TestCase):
 
     def test_user_create_success(self):
         '''新增账号'''
-        username = random.choice(['蔡志伟','刘新宇','penny'])
-        loginId = random.choice(string.ascii_letters)
+        name = random.choice(['子君','唐晶','贺涵','penny'])
+        username = random.choice(['zijun','tangjin','hehan','penny'])
         mobile = DataUtil().createmoble()
-        userId = CreateUser().create_user(self.roleName,self.menuJson,username,loginId,mobile)[0]
-        user_list = UserSelect().user_select(username=username).json()['content']['dataList']
+        isLoginApp = random.choice([0,1])
+        carType=random.choice(['','1','2'])
+        userId = CreateUser().create_user(self.roleName,self.menuJson,name,username,mobile,isLoginApp,carType)[0]
+        user_list = UserSelect().user_select(name=name).json()['content']['dataList']
         if user_list != []:
             L = []
-            for loan in user_list:
-                L.append((str(loan['id'])))
+            for user in user_list:
+                L.append((str(user['loginId'])))
             self.assertIn(userId, L, 'User created fail!')
         else:
             self.logger.error('Please check the results of user for empty')

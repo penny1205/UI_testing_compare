@@ -46,6 +46,8 @@ class CreateCustomer(object):
                                                               customerDeveloper=customerDeveloper).json()['content']
                 return customerId
             else:
+                self.logger.info('新增客户返回错误:{0}'.format(response.json()))
                 return None
         except Exception:
+            self.logger.error('新增客户发生异常:{0}'.format(Exception))
             return None

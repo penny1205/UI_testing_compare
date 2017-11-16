@@ -10,12 +10,13 @@ from util.file.fileutil import FileUtil
 class WayBillDriverConfirm(object):
     """  司机确认发车 [/app/payment/confirmWayBill][POST] """
 
-    __slots__ = ('__driverConfirmWayBillApiUrl', '__head_dict')
+    __slots__ = ('__driverConfirmWayBillApiUrl','partnerNo', '__head_dict')
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
         self.__driverConfirmWayBillApiUrl = 'http://{0}:{1}{2}/payment/confirmWayBill'.format(
             config['app_api_host'], config['app_api_port'], config['app_api_path'])
+        self.partnerNo = config['partnerNo']
         self.__head_dict = {
             # 'content-type': "application/json",
             # 'token': config['tms_api_token'],
@@ -24,7 +25,7 @@ class WayBillDriverConfirm(object):
             'YD_OAUTH': 'eyJlbmNyeXB0ZWREYXRhIjoiQmdJd2JJSXBTd3ZGQ0YzVHFEUFR0WjNQQXN2eWk1Sk9nb2NrODB5ZHNlT3FpYkJ5ckRXbjVmWCtJUDhUZmNJRFkzSUhEeTVlNlZCeU1rdUM5UE5XeTZkREswZGpCeElXL0J4U01Kb3huN0x0TWZDRkhHYldvL1luRlU3TTQ3RklJV0J3cHVTc0Qzbm5wYzAzNDhuYUQwWG9FcHA0Tm1ZTGVVMi9iTjBDSUdGaWk2azRlMHdKSm1KNTJxT0lkaUFVMnJoU0h1NEZJVGJMNmVZMnhSclRaUGFNbFhIYzVCZk1vWk5PMSt6di9UVFJaMEFIRXE5THM3MFA4V1NVZzM3UyIsIndyYXBwZWRLZXkiOiIwVjV4SHBjM1hNM010bEhjTUhtUjhUR3dFNkFEMG1oYVVETVNOSEVhc3kzS0ErckxrdkE1VzJQcXJzNEtMQ1pKOFNRYUFYamlkUXl1dmV3YmltVnRkdz09In0=='
         }
 
-    def waybill_driver_confirm(self, billId='', partnerNo='ShiDeTang', totalAmt='', preAmt='', oilAmt='', destAmt='',
+    def waybill_driver_confirm(self, billId='', totalAmt='', preAmt='', oilAmt='', destAmt='',
                                  lastAmt='', receiverId=''):
         """ 司机确认发车 """
         try:
@@ -33,7 +34,7 @@ class WayBillDriverConfirm(object):
             with open(receipt_0, 'rb') as receipt_0:
                 photoAirWay = (receipt_name_0, receipt_0)
             payload = {'id': (None, str(billId)),
-                        'partnerNo': (None, str(partnerNo)),
+                        'partnerNo': (None, str(self.partnerNo)),
                         'totalAmt': (None, str(totalAmt)),
                         'preAmt': (None, str(preAmt)),
                         'oilAmt': (None, str(oilAmt)),

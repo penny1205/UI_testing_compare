@@ -13,9 +13,6 @@ class TestLineCreate(unittest.TestCase):
     def setUp(self):
         self.logger = Log()
         self.logger.info('########################### TestLineCreate START ###########################')
-        self.startTime = time.strftime('%Y-%M-%d')
-        self.endTime = time.strftime('%Y-%m-%d', time.localtime(time.time() + 86400))
-        self.phone = DataUtil().createmoble()
         self.sendProvince = '浙江'
         self.sendCity = '杭州'
         self.arriveProvince = '安徽'
@@ -26,9 +23,7 @@ class TestLineCreate(unittest.TestCase):
 
     def test_Line_create_success(self):
         '''新增线路'''
-        Id = CreateLine().create_line(self.sendProvince,self.sendCity, self.arriveProvince,self.arriveCity,'5',
-                                      '德邦空运',self.startTime,self.endTime, '德邦','DB201710200001',self.phone,
-                                      '黄经理')[0]
+        Id = CreateLine().create_line(self.sendProvince,self.sendCity, self.arriveProvince,self.arriveCity,'5')[0]
         line_list = LineSelect().line_select(sendCity=self.sendCity,arriveCity=self.arriveCity).json()['content']['dataList']
         if line_list != []:
             L = []

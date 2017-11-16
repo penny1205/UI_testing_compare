@@ -8,7 +8,7 @@ from util.file.fileutil import FileUtil
 class CostSettingsGet(object):
     '''
     获取收入成本参数配置详情
-   /api/tms/finance/getIncomeCostConfigInfoById
+    /api/tms/finance/getIncomeCostConfigInfoById
     '''
     __slots__ = ('__costSettingsGetApiUrl', '__head_dict')
 

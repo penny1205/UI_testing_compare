@@ -24,7 +24,7 @@ class WayBillReceiptGet(object):
         }
 
     def waybill_receipt_get(self,wayBillId=''):
-         '''回单确认'''
+         '''获取回单详情'''
          try:
              payload ={
                  'id': wayBillId,

@@ -8,7 +8,7 @@ from util.file.fileutil import FileUtil
 class SMSSettingsGet(object):
     '''
     获取短信设置
-    api/tms/system/sms/getSetting
+    /api/tms/system/sms/getSetting
     '''
     __slots__ = ('__SMSSettingsGetApiUrl', '__head_dict')
 

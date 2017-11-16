@@ -7,6 +7,7 @@ import os
 from util.log.log import Log
 from util.file.fileutil import FileUtil
 from util.data.datautil import DataUtil
+from util.config.yaml.readyaml import ReadYaml
 from interface.waybill.waybill_create import WayBillCreate
 from interface.waybill.waybill_select import WayBillSelect
 from interface.waybill.waybill_departure_confirm import WayBillDepartureConfirm
@@ -253,15 +254,19 @@ class CreateWayBill(object):
                 self.logger.error('外请车类型错误: {0}'.format(carType))
                 return None, None, None, None, None, None, None, None, None, None, None
         except Exception:
+            self.logger.error('新增运单发生异常:{0}'.format(Exception))
             return None
 
     def create_waybill_register(self, handlingFee='', deliveryFee='', oilCardDeposit='', otherFee=''):
         """ 使用已认证司机新建运单 """
         applyDate = time.strftime('%Y-%m-%d')
         project = CreateWayBill().project_choice()
+        config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
+        mobile_certificate = config['mobile_certificate']
+        self.mobile_certificate = random.sample(mobile_certificate, 1)[0]
         # 获取认证司机18056070532的信息
         try:
-            driver = DriverMobileSelect().driver_mobile_select('18056070532').json()
+            driver = DriverMobileSelect().driver_mobile_select(self.mobile_certificate).json()
             self.logger.info('获取已认证司机信息：{0}'.format(driver))
             driver = driver['content'][0]
         except Exception:
@@ -283,6 +288,7 @@ class CreateWayBill(object):
                                                       otherFee=otherFee)
             return response
         except Exception:
+            self.logger.error('新增运单发生异常:{0}'.format(Exception))
             return None
 
     def create_temp_waybill(self, file, projectName, customerName, customerCode,
@@ -296,6 +302,7 @@ class CreateWayBill(object):
             temp_waybillId =WayBillTempImport().waybill_temp_import(file).json()['content']
             return temp_waybillId
         except Exception:
+            self.logger.error('批量导入运单发生异常:{0}'.format(Exception))
             return None
 
 

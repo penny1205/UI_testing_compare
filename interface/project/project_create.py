@@ -8,7 +8,7 @@ from util.file.fileutil import FileUtil
 class ProjectCreate(object):
     '''
     新增项目
-   /api/tms/customer/addProject
+    /api/tms/customer/addProject
     '''
     __slots__ = ('__projectCreateApiUrl', '__head_dict')
 

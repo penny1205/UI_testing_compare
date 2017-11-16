@@ -12,15 +12,11 @@ class TestLineDelete(unittest.TestCase):
     def setUp(self):
         self.logger = Log()
         self.logger.info('########################### TestLineDelete START ###########################')
-        self.startTime = time.strftime('%Y-%M-%d')
-        self.endTime = time.strftime('%Y-%m-%d', time.localtime(time.time() + 86400))
         self.sendProvince = '浙江'
         self.sendCity = '杭州'
         self.arriveProvince = '安徽'
         self.arriveCity = '合肥'
-        self.Id = CreateLine().create_line(self.sendProvince, self.sendCity, self.arriveProvince, self.arriveCity, '5',
-                                           '德邦空运', self.startTime, self.endTime, '德邦', 'DB201710200001',
-                                           '13801011213', '黄经理')[0]
+        self.Id = CreateLine().create_line(self.sendProvince, self.sendCity, self.arriveProvince, self.arriveCity, '5')[0]
         self.logger.info('删除线路Id是：{0}'.format(self.Id))
 
     def tearDown(self):

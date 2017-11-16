@@ -25,7 +25,7 @@ class UserDelete(object):
          '''删除账号'''
          try:
              payload ={
-                 'id': userId,
+                 'loginId': userId,
              }
              response = HttpClient().post_form(self.__userDeleteApiUrl,payload,self.__head_dict)
              return response

@@ -75,6 +75,8 @@ class CreateDriver(object):
                         loginId = driver['loginId']
                         return loginId,Id
             else:
+                self.logger.info('新增外请车返回错误:{0}'.format(response.json()))
                 return None,None
         except Exception:
+            self.logger.error('新增外请车发生异常:{0}'.format(Exception))
             raise

@@ -8,7 +8,7 @@ from util.file.fileutil import FileUtil
 class SystemParamsSettingsUpdate(object):
     '''
     运单拓展属性配置
-   /api/tms/system/updateParamsSet
+    /api/tms/system/updateParamsSet
     '''
     __slots__ = ('__systemParamsSettingsUpdateApiUrl', '__head_dict')
 

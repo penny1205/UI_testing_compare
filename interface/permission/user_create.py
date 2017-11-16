@@ -1,6 +1,7 @@
 #__author__ = 'pan'
 # -*- coding:utf-8 -*-
 
+
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
@@ -22,15 +23,20 @@ class UserCreate(object):
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
 
-    def user_create(self,roleId='',username='',loginId='',mobile=''):
+    def user_create(self,roleId='',name='',userName='',mobile='',isLoginApp='',projectId='',carType=''):
          '''新增账号'''
          try:
+             dataAuth = "{{'tableAuthList':[{{'name':'AppTransportCashModel','propAuthList':[{{'name':'projectId'," \
+                        "'values':'{0}'}},{{'name':'carType','values':'{1}'}}]}},{{'name':'TmsProjectModel','propAuthList'" \
+                        ":[{{'name':'projectId','values':'{1}'}}]}}]}}".format(projectId,carType)
              payload ={
                  'partnerNo': self.partnerNo,
                  'role':  roleId,
-                 'name': username,
-                 'loginId': loginId,
+                 'name': name,
+                 'userName': userName,
                  'mobile': mobile,
+                 'isLoginApp': isLoginApp,
+                 'dataAuth':dataAuth,
              }
              response = HttpClient().post_form(self.__userCreateApiUrl,None,self.__head_dict,payload)
              return response

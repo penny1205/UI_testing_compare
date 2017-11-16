@@ -7,8 +7,8 @@ from util.file.fileutil import FileUtil
 
 class ProjectSelect(object):
     '''
-    查询项目列表
-   /api/tms/customer/listProjects
+    查询项目列表 添加数据权限
+    /api/tms/customer/listProjects
     '''
     __slots__ = ('__projectSelectApiUrl', '__head_dict')
 
@@ -22,7 +22,7 @@ class ProjectSelect(object):
         }
 
     def project_select(self,currentPage='1',rows='10',projectStatus ='',projectName=''):
-         '''我的外请车列表'''
+         '''查询项目列表 添加数据权限'''
          try:
              payload ={
                  'currentPage': currentPage,

@@ -10,7 +10,7 @@ import os.path
 class WayBillTempImport(object):
     '''
     批量导入运单
-   /api/tms/tmpWayBill/importExcel
+    /api/tms/tmpWayBill/importExcel
     '''
     __slots__ = ('__wayBillTempImportApiUrl', '__head_dict')
 

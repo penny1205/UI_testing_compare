@@ -19,7 +19,9 @@ class CreateMyDriver(object):
                                     photoDriverCard =photoDriverCard,frontIdCard=frontIdCard,backIdCard=backIdCard)
             self.logger.info('新增的司机手机号是: {0},身份证号是：{1}'.format(mobile,idNo))
             #判断手机号、身份证号是否重复
-            if response.json()['code'] == 9060009 or response.json()['code'] == 9060010:
+            if response.json()['code'] == 0:
+                return response.json()['content']
+            elif response.json()['code'] == 9060009 or response.json()['code'] == 9060010:
                 my_driver_list = MyDriverSelect().my_driver_select(mobile).json()['content']['dataList']
                 driverId = my_driver_list(0)['driverId']
                 MyDriverDelete().my_driver_delete(driverId=driverId)
@@ -28,6 +30,8 @@ class CreateMyDriver(object):
                                                              backIdCard=backIdCard).json()['content']
                 return driverId
             else:
-                return response.json()['content']
+                self.logger.info('新增司机返回错误:{0}'.format(response.json()))
+                return None
         except Exception:
+            self.logger.error('新增司机发生异常:{0}'.format(Exception))
             return None

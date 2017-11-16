@@ -8,7 +8,7 @@ from util.file.fileutil import FileUtil
 class LineGet(object):
     '''
     根据ID获取线路
-    api/tms/line/getLineById
+    /api/tms/line/getLineById
     '''
     __slots__ = ('__lineGetApiUrl', '__head_dict')
 

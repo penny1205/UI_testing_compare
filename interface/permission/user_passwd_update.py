@@ -25,7 +25,7 @@ class UserPasswordUpdate(object):
          '''重置账号密码'''
          try:
              payload ={
-                 'id': userId,
+                 'loginId': userId,
                  'mobile': mobile,
              }
              response = HttpClient().post_form(self.__userPasswordUpdateApiUrl,payload,self.__head_dict)

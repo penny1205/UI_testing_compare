@@ -9,7 +9,7 @@ from interface.project.project_select import ProjectSelect
 from bvt.common.create_project import CreateProject
 
 class TestProjectSelect(unittest.TestCase):
-    ''' 查询项目列表'''
+    ''' 查询项目列表 有数据权限'''
     def setUp(self):
         self.logger = Log()
         self.logger.info('########################### TestProjectSelect START ###########################')
@@ -26,8 +26,8 @@ class TestProjectSelect(unittest.TestCase):
         self.logger.info('############################ TestProjectSelect END ############################')
 
 
-    def test_project_create_projectName_success(self):
-        '''按项目名称查询项目列表'''
+    def test_project_select_projectName_success(self):
+        '''有数据权限 按项目名称查询项目列表'''
         response = ProjectSelect().project_select(projectStatus='0',projectName=self.projectName)
         self.logger.info('按项目名称查询项目列表返回状态码：{0}'.format(response))
         self.assertEqual(response.status_code, 200)

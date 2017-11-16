@@ -59,5 +59,5 @@ class CreateRole(object):
                 self.logger.info('修改角色返回错误:{0}'.format(response.json()))
                 return None
         except Exception:
-            self.logger.info('角色发生异常:{0}'.format(Exception))
+            self.logger.info('修改角色发生异常:{0}'.format(Exception))
             return None

@@ -1,4 +1,4 @@
-# __author__ = 'penny'
+# __author__ = 'pan'
 # -*- coding:utf-8 -*-
 
 import pymysql

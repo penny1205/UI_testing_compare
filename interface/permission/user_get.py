@@ -25,7 +25,7 @@ class UserGet(object):
          '''账号详情'''
          try:
              payload ={
-                 'id': userId,
+                 'loginId': userId,
              }
              response = HttpClient().get(self.__userDeleteApiUrl,self.__head_dict,payload)
              return response

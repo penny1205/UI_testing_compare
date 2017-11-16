@@ -22,17 +22,23 @@ class UserUpdate(object):
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
 
-    def user_update(self,userId='',roleId='',username='',loginId='',mobile=''):
+    def user_update(self,userId='',roleId='',name='',userName='',mobile='',isLoginApp='',projectId='',carType=''):
          '''修改账号'''
          try:
-             payload ={
+             dataAuth = "{{'tableAuthList':[{{'name':'AppTransportCashModel','propAuthList':[{{'name':'projectId'," \
+                        "'values':'{0}'}},{{'name':'carType','values':'{1}'}}]}},{{'name':'TmsProjectModel','propAuthList'" \
+                        ":[{{'name':'projectId','values':'{1}'}}]}}]}}".format(projectId, carType)
+             payload = {
                  'partnerNo': self.partnerNo,
-                 'id': userId,
+                 'loginId': userId,
                  'role': roleId,
-                 'name': username,
-                 'loginId': loginId,
+                 'name': name,
+                 'userName': userName,
                  'mobile': mobile,
+                 'isLoginApp': isLoginApp,
+                 'dataAuth': dataAuth,
              }
+
              response = HttpClient().post_json(self.__userUpdateApiUrl,payload,self.__head_dict,payload)
              return response
          except Exception:

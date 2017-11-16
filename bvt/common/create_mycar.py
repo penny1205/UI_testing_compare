@@ -20,7 +20,9 @@ class CreateMyCar(object):
                                                    photoDriverCard=photoDriverCard,photoCar=photoCar)
             self.logger.info('新增的车辆车牌号是: {0}'.format(carNo))
             # 判断新增车辆车牌号是否重复
-            if response.json()['code'] == 9050011:
+            if response.json()['code'] == 0:
+                return response.json()['content']
+            elif response.json()['code'] == 9050011:
                 my_car_list = MyCarSelect().my_car_select(carNo=carNo).json()['content']['dataList']
                 carId = my_car_list(0)['carId']
                 MyCarDelete().my_car_delete(carId=carId)
@@ -29,6 +31,8 @@ class CreateMyCar(object):
                                             photoDriverCard=photoDriverCard, photoCar=photoCar).json()['content']
                 return carId
             else:
-                return response.json()['content']
+                self.logger.info('新增车辆返回错误:{0}'.format(response.json()))
+                return None
         except Exception:
+            self.logger.error('新增车辆发生异常:{0}'.format(Exception))
             return None
