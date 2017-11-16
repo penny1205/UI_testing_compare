@@ -264,7 +264,7 @@ class CreateWayBill(object):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
         mobile_certificate = config['mobile_certificate']
         self.mobile_certificate = random.sample(mobile_certificate, 1)[0]
-        # 获取认证司机18056070532的信息
+        # 获取认证司机的信息
         try:
             driver = DriverMobileSelect().driver_mobile_select(self.mobile_certificate).json()
             self.logger.info('获取已认证司机信息：{0}'.format(driver))
@@ -272,7 +272,7 @@ class CreateWayBill(object):
         except Exception as error:
             self.logger.info('获取认证司机信息失败,错误信息：'+error)
             return None
-        # 查询认证司机18056070532是否有待发车状态的运单并处理
+        # 查询认证司机是否有待发车状态的运单并处理
         waybill = WayBillSelect().waybill_select(billStatus='W',normalCondition=driver['mobile'],
                                                  searchStatus='true').json()['content']['dataList']
         if waybill:
