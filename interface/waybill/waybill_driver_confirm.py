@@ -10,46 +10,46 @@ from util.file.fileutil import FileUtil
 class WayBillDriverConfirm(object):
     """  司机确认发车 [/app/payment/confirmWayBill][POST] """
 
-    __slots__ = ('__driverConfirmWayBillApiUrl','partnerNo', '__head_dict')
+    __slots__ = ('__driverConfirmWayBillApiUrl', '__head_dict')
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
         self.__driverConfirmWayBillApiUrl = 'http://{0}:{1}{2}/payment/confirmWayBill'.format(
             config['app_api_host'], config['app_api_port'], config['app_api_path'])
-        self.partnerNo = config['partnerNo']
         self.__head_dict = {
             # 'content-type': "application/json",
             # 'token': config['tms_api_token'],
-            'YD_VERSION': '2.14',
+            'YD_VERSION': '3.0',
             'YD_CLIENT': 'driver',
-            'YD_OAUTH': 'eyJlbmNyeXB0ZWREYXRhIjoiQmdJd2JJSXBTd3ZGQ0YzVHFEUFR0WjNQQXN2eWk1Sk9nb2NrODB5ZHNlT3FpYkJ5ckRXbjVmWCtJUDhUZmNJRFkzSUhEeTVlNlZCeU1rdUM5UE5XeTZkREswZGpCeElXL0J4U01Kb3huN0x0TWZDRkhHYldvL1luRlU3TTQ3RklJV0J3cHVTc0Qzbm5wYzAzNDhuYUQwWG9FcHA0Tm1ZTGVVMi9iTjBDSUdGaWk2azRlMHdKSm1KNTJxT0lkaUFVMnJoU0h1NEZJVGJMNmVZMnhSclRaUGFNbFhIYzVCZk1vWk5PMSt6di9UVFJaMEFIRXE5THM3MFA4V1NVZzM3UyIsIndyYXBwZWRLZXkiOiIwVjV4SHBjM1hNM010bEhjTUhtUjhUR3dFNkFEMG1oYVVETVNOSEVhc3kzS0ErckxrdkE1VzJQcXJzNEtMQ1pKOFNRYUFYamlkUXl1dmV3YmltVnRkdz09In0=='
+            'YD_OAUTH': 'eyJlbmNyeXB0ZWREYXRhIjoiTThOZ0Y3UG5LZE1KQWEzS0xOalgwVy9yNzl6S0MxSWZhTndrRitobUtrQmhtWkJIZW9BeEpwUVhMT3RKRGlhczVQNk9wdzhaQmNyRXo1RE9ZNlZoS0ZJNzNnRVJTTEZxVWk3LzAyWEZyQzBDTVpxVUlSNTFVejNVd3pXUjF1NmlFSjlCbjVqN1NxQzZBR1BmckdJTXZNSVlNT3daMGxka3JyVDczaWphck9XVUI4aEhHcUQ4VVdZMmJaMFVSdEZjT3NFaTFUQkZMMkVFeHJjTjNEZStiZU0yeUNmb202QWs1elVvUmR5Rld4SzhBNjFjQStLSUprcVp2Z1B2SEx3SiIsIndyYXBwZWRLZXkiOiJrQk9vT0U1SVp6YTdXZEsvL1F3UlFicVg5alo0OUVTNnMwZVk2djczZHdlOU1Yd1NYd3ZnZXdjUm5mL2dRNm0zdGdYUUFoMUw1cnd0NG80QWFEVnRtZz09In0='
         }
 
-    def waybill_driver_confirm(self, billId='', totalAmt='', preAmt='', oilAmt='', destAmt='',
+    def waybill_driver_confirm(self, billId='', partnerNo='wanshui', totalAmt='', preAmt='', oilAmt='', destAmt='',
                                  lastAmt='', receiverId=''):
         """ 司机确认发车 """
         try:
             receipt_0 = FileUtil.getProjectObsPath() + os.path.sep + 'image' + os.path.sep + 'logo.png'
             receipt_name_0 = os.path.basename(receipt_0)
             with open(receipt_0, 'rb') as receipt_0:
-                photoAirWay = (receipt_name_0, receipt_0)
+                photoAirWay = (receipt_name_0, receipt_0.read())
             payload = {'id': (None, str(billId)),
-                        'partnerNo': (None, str(self.partnerNo)),
-                        'totalAmt': (None, str(totalAmt)),
-                        'preAmt': (None, str(preAmt)),
-                        'oilAmt': (None, str(oilAmt)),
-                        'destAmt': (None, str(destAmt)),
-                        'lastAmt': (None, str(lastAmt)),
-                        'receiverId': (None, str(receiverId)),
-                        'photoAirWay': photoAirWay,
+                       'partnerNo': (None, str(partnerNo)),
+                       'totalAmt': (None, str(totalAmt)),
+                       'preAmt': (None, str(preAmt)),
+                       'oilAmt': (None, str(oilAmt)),
+                       'destAmt': (None, str(destAmt)),
+                       'lastAmt': (None, str(lastAmt)),
+                       'receiverId': (None, str(receiverId)),
+                       'photoAirWay': photoAirWay
                        }
-            response = HttpClient().post_multipart(self.__driverConfirmWayBillApiUrl, payload, self.__head_dict)
+            response = HttpClient().post_multipart(url=self.__driverConfirmWayBillApiUrl, files=payload,
+                                                   header_dict=self.__head_dict)
             return response
         except Exception:
             return None
 
 if __name__ == "__main__":
-    test = WayBillDriverConfirm().waybill_driver_confirm('77733', totalAmt='10', preAmt='1', oilAmt='1', destAmt='1',
+    test = WayBillDriverConfirm().waybill_driver_confirm('169694', totalAmt='10', preAmt='1', oilAmt='1', destAmt='1',
                                  lastAmt='1')
     print(test.request.headers)
     print(test.request.body)
