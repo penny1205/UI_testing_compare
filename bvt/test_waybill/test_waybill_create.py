@@ -1,14 +1,13 @@
 #__author__ = 'pan'
 # -*- coding:utf-8 -*-
 
-import os
 import time
 import unittest
 from util.log.log import Log
 from util.file.fileutil import FileUtil
-from util.data.datautil import DataUtil
 from interface.waybill.waybill_select import WayBillSelect
 from bvt.common.create_waybill import CreateWayBill
+from interface.waybill.waybill_driver_confirm import WayBillDriverConfirm
 
 class TestWayBillCreate(unittest.TestCase):
     '''我要录单 '''
@@ -18,19 +17,6 @@ class TestWayBillCreate(unittest.TestCase):
         self.logger.info('########################### TestCreateWayBill START ###########################')
         self.applyDate = time.strftime('%Y-%m-%d')
         self.photoAirWay = FileUtil.getProjectObsPath() + '/image/photoAirWay.jpg'
-        self.startTime = time.strftime('%Y-%M-%d')
-        self.endTime = time.strftime('%Y-%m-%d', time.localtime(time.time() + 86400))
-        self.phone = DataUtil().createmoble()
-        self.mobile = DataUtil().createmoble()
-        self.idNo = DataUtil().genneratorIdNo()
-        self.carNo = DataUtil().genneratorCarNo()
-        self.carLength = DataUtil().genneratorCarLength()
-        self.carModel = DataUtil().genneratorCarTypeInfo()
-        self.photoIdFront = FileUtil.getProjectObsPath() + os.path.sep + 'image' + os.path.sep + 'frontIdCard.jpg'
-        self.photoIdReserve = FileUtil.getProjectObsPath() + os.path.sep + 'image' + os.path.sep + 'backIdCard.jpg'
-        self.photoDriverCard = FileUtil.getProjectObsPath() + os.path.sep + 'image' + os.path.sep + 'photoDriverCard.jpg'
-        self.photoTransPort = FileUtil.getProjectObsPath() + os.path.sep + 'image' + os.path.sep + 'photoTransPort.jpg'
-
 
     def tearDown(self):
         self.logger.info('############################ TestCreateWayBill END ############################')
