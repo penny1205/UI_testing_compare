@@ -40,8 +40,6 @@ class SendMail:
             return True
         except Exception:
             raise
-            return False
-
 
 if __name__ == '__main__':
     print('sendMail')
