@@ -35,5 +35,5 @@ db_host: 106.75.31.207
 db_port: 23306
 db_user: kk_hf
 db_passwd: kk$3763
-db_dbname: YDAPPDB
+db_dbname: YDAPPDB1
 db_charset: utf8
