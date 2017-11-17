@@ -24,7 +24,7 @@ class CreateRole(object):
         elif response.json()['code'] == 9110015:
             user_list = UserSelect().user_select(roleId=roleId).json()['content']['dataList']
             for user in user_list:
-                UserDelete().user_delete(user['id'])
+                UserDelete().user_delete(user['loginId'])
 
     def create_role(self,roleName,menuJson):
         '''新增角色'''
