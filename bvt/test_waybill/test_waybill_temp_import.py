@@ -26,7 +26,7 @@ class TestWayBillTempImport(unittest.TestCase):
         if temp_waybill_list != None:
             L = []
             for temp_waybill in temp_waybill_list:
-                L.append(temp_waybill['id'])
+                L.append(st(temp_waybill['id']))
             self.assertIn(temp_waybillId, L, '批量运单导入失败!')
         else:
             self.logger.error('批量运单导入失败!')

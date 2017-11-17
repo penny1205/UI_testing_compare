@@ -29,7 +29,7 @@ class WayBillTempDelete(object):
              payload = {
                  'ids': wayBillIds,         # 临时运单IDs，必须为"1,2,3"样式整数字符串，必填
              }
-             response = HttpClient().post_json(self.__wayBillTempDeleteApiUrl,payload,self.__head_dict)
+             response = HttpClient().post_json(self.__wayBillTempDeleteApiUrl,payload,self.__head_dict,payload)
              return response
          except Exception:
              return None

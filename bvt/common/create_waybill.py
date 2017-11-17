@@ -293,15 +293,20 @@ class CreateWayBill(object):
             return None
 
     def create_temp_waybill(self, file, projectName, customerName, customerCode,
-                            phone ='130773271234', customerDeveloper='张经理'):
+                            phone='130773271234', customerDeveloper='张经理'):
         '''批量录单 导入运单'''
         startTime = time.strftime('%Y-%m-%d')
         endTime = time.strftime('%Y-%m-%d', time.localtime(time.time() + 2592000))
         try:
-            project = self.project_one_choice(projectName,startTime ,endTime, customerName, customerCode, phone ,
+            project = self.project_one_choice(projectName, startTime, endTime, customerName, customerCode, phone,
                                               customerDeveloper)
-            temp_waybillId =WayBillTempImport().waybill_temp_import(file).json()['content']
-            return temp_waybillId
+            response = WayBillTempImport().waybill_temp_import(file)
+            if response.json()['code'] == 0:
+                temp_waybillId = response.json()['content']
+                return temp_waybillId
+            else:
+                self.logger.error('批量导入运单报错:{0}'.format(response.json()))
+                return None
         except Exception:
             self.logger.error('批量导入运单发生异常:{0}'.format(Exception))
             return None

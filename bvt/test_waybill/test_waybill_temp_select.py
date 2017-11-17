@@ -26,7 +26,7 @@ class TestWayBillTempSelect(unittest.TestCase):
         if temp_waybill_list != None:
             L = []
             for temp_waybill in temp_waybill_list:
-                L.append(temp_waybill['id'])
+                L.append(str(temp_waybill['id']))
             self.assertIn(self.temp_waybillId, L, '查询临时运单列表失败!')
         else:
             self.logger.error('查询临时运单列表失败!')
