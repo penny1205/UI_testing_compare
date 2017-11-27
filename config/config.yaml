@@ -16,12 +16,12 @@ mobile_certificate: ['13077327043','18301771383','15000422980']
 
 
 ##########log Config##########
-log_path_info: /home/testing/Logs/tms_uat
-log_path_error: /home/testing/Logs/tms_uat/error
+log_path_info: F:\PycharmProjects\api_testing\log
+log_path_error: F:\PycharmProjects\api_testing\log\error
 
 ##########Mail Config##########
 #receiver eg:['eamilAddress1@keking.cn','eamilAddress2@keking.cn']
-email_receiver : [ 'liuxinyu@keking.cn']
+email_receiver : [ 'panyuanyuanu@keking.cn']
 #sender
 email_sender : 'ahkj@keking.cn'
 email_sender_pwd : 'redmineonly'
@@ -33,7 +33,7 @@ email_title : "TMS迭代BVT测试报告"
 #########DB Config###########
 db_host: 106.75.31.207
 db_port: 23306
-db_user: yd_devp
-db_passwd: yd_7758
-db_dbname: YDAPPDB
+db_user: kk_hf
+db_passwd: kk$3763
+db_dbname: YDAPPDB1
 db_charset: utf8

@@ -26,7 +26,7 @@ class TestWayBillTempCreate(unittest.TestCase):
         if temp_waybill_check != None:
             replaceIds = []
             for temp_waybill in temp_waybill_check:
-                replaceIds.append(temp_waybill['id'])
+                replaceIds.append(str(temp_waybill['id']))
         else:
             replaceIds = ''
         response = WayBillTempCreate().waybill_temp_create(self.temp_waybillId,','.join(replaceIds))
