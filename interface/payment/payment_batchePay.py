@@ -6,7 +6,7 @@ from util.file.fileutil import FileUtil
 
 
 class PaymentBatchePay(object):
-    """ 单条支付接口[api/tms/pay/batche][POST] """
+    """ 批量支付接口[api/tms/pay/batche][POST] """
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
