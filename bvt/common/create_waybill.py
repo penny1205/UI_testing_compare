@@ -288,6 +288,7 @@ class CreateWayBill(object):
                                                       mobile=driver['mobile'], hasReceipt='1', handlingFee=handlingFee,
                                                       deliveryFee=deliveryFee, oilCardDeposit=oilCardDeposit,
                                                       otherFee=otherFee)
+            self.logger.info('新建运单返回信息：{}'.format(response.json()))
             return response
         except Exception:
             self.logger.error('新增运单发生异常:{0}'.format(Exception))
