@@ -279,7 +279,7 @@ class CreateWayBill(object):
         if waybill:
             WayBillDepartureConfirm().waybill_departure_confirm(waybill[0]['id'])
         try:
-            response = WayBillCreate().waybill_create(applyDate=applyDate, sendCity='北京', sendProvince='北京',
+            response = WayBillCreate().waybill_create(applyDate=applyDate, sendCity='天津', sendProvince='天津',
                                                       arriveCity='北京', arriveProvince='北京', totalAmt='0.05',
                                                       preAmt='0.01', oilAmt='0.01', destAmt='0.01', lastAmt='0.01',
                                                       projectId=project['projectId'], projects=project['projectName'],
@@ -288,6 +288,7 @@ class CreateWayBill(object):
                                                       mobile=driver['mobile'], hasReceipt='1', handlingFee=handlingFee,
                                                       deliveryFee=deliveryFee, oilCardDeposit=oilCardDeposit,
                                                       otherFee=otherFee)
+            self.logger.info('新建运单返回信息：{}'.format(response.json()))
             return response
         except Exception:
             self.logger.error('新增运单发生异常:{0}'.format(Exception))
@@ -314,5 +315,9 @@ class CreateWayBill(object):
 
 
 if __name__ == "__main__":
-    test = CreateWayBill().create_waybill_register(handlingFee='1', deliveryFee='1', oilCardDeposit='1', otherFee='1')
-    print(test.json()['content'])
+    i = 0
+    # while i < 21:
+    test = CreateWayBill().create_waybill_register()
+    print(test.json())
+        # i += 1
+
