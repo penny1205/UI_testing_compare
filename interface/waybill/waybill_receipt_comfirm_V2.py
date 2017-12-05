@@ -33,7 +33,7 @@ class WayBillReceiptConfirm(object):
                  'lastMemo':lastMemo,
                  'receipt_0':receipt_0 , # 回单照片, 最少上传一张，最多上传5张
                        }
-             response = HttpClient().post_form(self.__wayBillReceiptConfirmApiUrl,payload,self.__head_dict)
+             response = HttpClient().post_json(self.__wayBillReceiptConfirmApiUrl,payload,self.__head_dict)
              return response
          except Exception:
              return None
