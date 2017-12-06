@@ -290,8 +290,8 @@ class CreateWayBill(object):
                                                       otherFee=otherFee)
             self.logger.info('新建运单返回信息：{}'.format(response.json()))
             return response
-        except Exception:
-            self.logger.error('新增运单发生异常:{0}'.format(Exception))
+        except Exception as e:
+            self.logger.error('新增运单发生异常:{0}'.format(e))
             return None
 
     def create_temp_waybill(self, file, projectName, customerName, customerCode,
@@ -309,8 +309,8 @@ class CreateWayBill(object):
             else:
                 self.logger.error('批量导入运单报错:{0}'.format(response.json()))
                 return None
-        except Exception:
-            self.logger.error('批量导入运单发生异常:{0}'.format(Exception))
+        except Exception as e:
+            self.logger.error('批量导入运单发生异常:{0}'.format(e))
             return None
 
 

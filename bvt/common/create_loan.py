@@ -21,6 +21,6 @@ class CreateLoan(object):
                                                 bank_account['bankName'],remarks,demandLoanDate)
             self.logger.info('新增贷款的收款账号是: {0}'.format(bank_account['cardNo']))
             return response.json()['content'],bank_account['acctName'],bank_account['cardNo'],bank_account['bankName']
-        except Exception:
-            self.logger.error('创建大额贷款记录发生异常:{0}'.format(Exception))
+        except Exception as e:
+            self.logger.error('创建大额贷款记录发生异常:{0}'.format(e))
             return None

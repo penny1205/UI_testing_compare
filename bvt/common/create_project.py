@@ -42,8 +42,8 @@ class CreateProject(object):
             else:
                 self.logger.info('新增的项目名称返回错误:{0}'.format(response.json()))
                 return None
-        except Exception:
-            self.logger.error('新增项目发生异常:{0}'.format(Exception))
+        except Exception as e:
+            self.logger.error('新增项目发生异常:{0}'.format(e))
             return None
 
     #选择项目

@@ -40,8 +40,8 @@ class CreateRole(object):
             else:
                 self.logger.info('新增角色返回错误:{0}'.format(response.json()))
                 return None
-        except Exception:
-            self.logger.info('新增角色发生异常:{0}'.format(Exception))
+        except Exception as e:
+            self.logger.info('新增角色发生异常:{0}'.format(e))
             return None
 
     def update_role(self,roleId,roleName,menuJson):
@@ -58,6 +58,6 @@ class CreateRole(object):
             else:
                 self.logger.info('修改角色返回错误:{0}'.format(response.json()))
                 return None
-        except Exception:
-            self.logger.info('修改角色发生异常:{0}'.format(Exception))
+        except Exception as e:
+            self.logger.info('修改角色发生异常:{0}'.format(e))
             return None

@@ -53,6 +53,6 @@ class CreateCostSettings(object):
                                                                  repairCost,depreciationCost, insurance, personCost,
                                                                  taxRate, otherCost, infoCost)
             return  response.json()['content'],self.kilometers,project['projectId']
-        except Exception:
-            self.logger.error('新增成本参数配置发生异常:{0}'.format(Exception))
+        except Exception as e:
+            self.logger.error('新增成本参数配置发生异常:{0}'.format(e))
             return None

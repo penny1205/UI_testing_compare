@@ -25,6 +25,6 @@ class CreateSupplier(object):
             #判断供应商名称是否重复
             #现在接口名称可以重复
             return response.json()['content']
-        except Exception:
-            self.logger.error('新增供应商发生异常:{0}'.format(Exception))
+        except Exception as e:
+            self.logger.error('新增供应商发生异常:{0}'.format(e))
             return None
