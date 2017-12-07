@@ -4,7 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
-
+from util.log.log import Log
 
 class MyDriverImport(object):
     '''
@@ -36,5 +36,6 @@ class MyDriverImport(object):
             }
             response = HttpClient().post_multipart(self.__myDriverImportApiUrl, files, self.__head_dict)
             return response
-        except Exception:
+        except Exception as e:
+            Log().error('导入自有车辆发生异常:{0}'.format(e))
             return None

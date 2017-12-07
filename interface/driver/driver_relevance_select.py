@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class DriverRelevanceSelect(object):
     '''
@@ -37,5 +38,6 @@ class DriverRelevanceSelect(object):
              }
              response = HttpClient().get(self.__driverRelevanceSelectApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('查询已关联的外请车发生异常:{0}'.format(e))
              return None

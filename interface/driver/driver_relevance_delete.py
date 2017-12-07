@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class DriverRelevanceDelete(object):
     '''
@@ -27,5 +28,6 @@ class DriverRelevanceDelete(object):
              payload ={'id':id}
              response = HttpClient().post_form(self.__driverRelevanceDeleteApiUrl,payload,self.__head_dict)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('删除外请车司机关联关系发生异常:{0}'.format(e))
              return None

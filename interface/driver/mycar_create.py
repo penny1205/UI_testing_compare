@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class MyCarCreate(object):
     '''
@@ -41,5 +42,6 @@ class MyCarCreate(object):
              }
              response = HttpClient().post_json(self.__myCarCreateApiUrl,payload,self.__head_dict)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('新增自有车发生异常:{0}'.format(e))
              return None

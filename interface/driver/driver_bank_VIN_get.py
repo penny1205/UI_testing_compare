@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class DriverBankVINGet(object):
     '''
@@ -27,5 +28,6 @@ class DriverBankVINGet(object):
              payload = {'mobile': mobile,}
              response = HttpClient().get(self.__driverBankVINGetApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('根据外请车司机手机号获取银行卡号和车架号发生异常:{0}'.format(e))
              return None
