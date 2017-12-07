@@ -44,9 +44,10 @@ class TestCostSettingsSelect(unittest.TestCase):
         '''收入成本参数配置查询'''
         response = CostSettingsSelect().cost_settings_select(sendCity=self.sendCity,arriveCity=self.arriveCity)
         self.logger.info('收入成本参数配置查询返回状态码：{0}'.format(response))
+        self.logger.info('收入成本参数配置查询返回结果是：{0}'.format(response.json()))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
-        self.logger.info('收入成本参数配置查询返回结果是：{0}'.format(response.json()))
+
 
         cost_settings_list = response.json()['content']['dataList']
         if cost_settings_list != []:

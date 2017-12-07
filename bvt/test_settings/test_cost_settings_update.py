@@ -50,9 +50,10 @@ class TestCostSettingsUpdate(unittest.TestCase):
                                                              self.depreciationCost, self.insurance, self.personCost,
                                                              self.taxRate, self.otherCost, self.infoCost,)
         self.logger.info('修改收入成本参数配置返回状态码：{0}'.format(response))
+        self.logger.info('修改收入成本参数配置返回结果是：{0}'.format(response.json()))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
-        self.logger.info('修改收入成本参数配置返回结果是：{0}'.format(response.json()))
+
 
 if __name__ == '__main__':
     unittest.main()

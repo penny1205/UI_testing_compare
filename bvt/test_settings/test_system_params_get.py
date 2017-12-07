@@ -21,9 +21,10 @@ class TestSystemParamsGet(unittest.TestCase):
         '''获得系统属性配置信息'''
         response = SystemParamsSettingsGet().system_params_settings_get()
         self.logger.info('获得系统属性配置信息返回状态码：{0}'.format(response))
+        self.logger.info('获得系统属性配置信息返回结果是：{0}'.format(response.json()))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
-        self.logger.info('获得系统属性配置信息返回结果是：{0}'.format(response.json()))
+
 
     # def test_1(self):
     #     settings = SystemParamsSettingsGet().system_params_settings_get().json()['content']

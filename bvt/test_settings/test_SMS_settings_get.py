@@ -19,9 +19,10 @@ class TestSMSSettingsGet(unittest.TestCase):
         '''获取短信设置'''
         response = SMSSettingsGet().SMS_settings_get()
         self.logger.info('获取短信设置返回状态码：{0}'.format(response))
+        self.logger.info('获取短信设置返回结果是：{0}'.format(response.json()))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
-        self.logger.info('获取短信设置返回结果是：{0}'.format(response.json()))
+
 
 if __name__ == '__main__':
     unittest.main()
