@@ -44,9 +44,10 @@ class TestCostSettingsGet(unittest.TestCase):
         '''获取收入成本参数配置详情'''
         response = CostSettingsGet().cost_settings_get(self.Id)
         self.logger.info('获取收入成本参数配置详情返回状态码：{0}'.format(response))
+        self.logger.info('获取收入成本参数配置详情返回结果是：{0}'.format(response.json()))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
-        self.logger.info('获取收入成本参数配置详情返回结果是：{0}'.format(response.json()))
+
 
 if __name__ == '__main__':
     unittest.main()
