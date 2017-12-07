@@ -4,13 +4,14 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class DriverUnCertificateCreate(object):
     '''
     新增未认证外请车
     /api/tms/driver/createUnCerAppDriver
     '''
-    __slots__ = ('__driverUnCertificateCreateApiUrl', '__head_dict')
+    __slots__ = ('__driverUnCertificateCreateApiUrl', '__head_dict', 'logger')
 
     def __init__(self):
         config = ReadYaml( FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
@@ -20,7 +21,7 @@ class DriverUnCertificateCreate(object):
             'token': config['tms_api_token'],
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
-
+        self.logger = Log()
     def driver_unCertificate_create(self,name='',mobile='',idNo='',
                                     photoIdFront='',photoIdReserve='',photoDriverCard='',photoTransPort='',
                                     carNo='',carLength='',carModel='',carLoad='',):
@@ -58,5 +59,6 @@ class DriverUnCertificateCreate(object):
                  }
             response = HttpClient().post_multipart(self.__driverUnCertificateCreateApiUrl,files,self.__head_dict)
             return response
-        except Exception:
+        except Exception as error:
+            self.logger.error('新增未认证外请车异常：{0}'.format(error))
             return None

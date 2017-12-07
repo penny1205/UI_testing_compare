@@ -4,13 +4,14 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class DriverRelevanceSelect(object):
     '''
     我的外请车列表,查询结果是已关联的外请车
     /api/tms/driver/listTmsAppDriver
     '''
-    __slots__ = ('__driverRelevanceSelectApiUrl','partnerNo', '__head_dict')
+    __slots__ = ('__driverRelevanceSelectApiUrl','partnerNo', '__head_dict', 'logger')
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
@@ -21,6 +22,7 @@ class DriverRelevanceSelect(object):
             'token': config['tms_api_token'],
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
+        self.logger = Log()
 
     def driver_relevance_select(self,currentPage='1',rows='10',mobile ='',name='',carNo='',recentLineStart='',recentLineEnd=''):
          '''查询已关联的外请车'''
@@ -37,5 +39,6 @@ class DriverRelevanceSelect(object):
              }
              response = HttpClient().get(self.__driverRelevanceSelectApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as error:
+             self.logger.error('查询已关联的外请车异常：{0}'.format(error))
              return None
