@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class SupplierDelete(object):
     '''
@@ -29,5 +30,6 @@ class SupplierDelete(object):
              }
              response = HttpClient().post_form(self.__supplierDeleteApiUrl,payload,self.__head_dict)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('删除供应商信息发生异常:{0}'.format(e))
              return None

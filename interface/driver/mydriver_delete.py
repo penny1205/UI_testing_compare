@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class MyDriverDelete(object):
     '''
@@ -22,12 +23,13 @@ class MyDriverDelete(object):
         }
 
     def my_driver_delete(self,driverId):
-         '''删除自有车信息'''
+         '''删除自有司机信息'''
          try:
              payload ={
                  'driverId': driverId,
              }
              response = HttpClient().post_form(self.__myDriverDeleteApiUrl,payload,self.__head_dict,)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('删除自有司机信息发生异常:{0}'.format(e))
              return None

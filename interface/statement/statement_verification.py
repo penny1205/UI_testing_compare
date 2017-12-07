@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class StatementVerification(object):
     '''
@@ -30,5 +31,6 @@ class StatementVerification(object):
              }
              response = HttpClient().post_json(self.__statementVerificationApiUrl,payload,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('客户/供应商对账单导出发生异常:{0}'.format(e))
              return None

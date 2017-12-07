@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 
 class WayBillReceiptConfirm(object):
@@ -34,5 +35,6 @@ class WayBillReceiptConfirm(object):
                        }
              response = HttpClient().post_json(self.__wayBillReceiptConfirmApiUrl,payload,self.__head_dict)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('回单确认发生异常:{0}'.format(e))
              return None

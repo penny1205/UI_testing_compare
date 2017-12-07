@@ -5,6 +5,7 @@ from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
 import os.path
+from util.log.log import Log
 
 
 class WayBillTempImport(object):
@@ -41,5 +42,6 @@ class WayBillTempImport(object):
              }
              response = HttpClient().post_multipart(self.__wayBillTempImportApiUrl,files,self.__head_dict)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('批量导入运单发生异常:{0}'.format(e))
              return None

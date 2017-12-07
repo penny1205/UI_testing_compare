@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class CustomerGet(object):
     '''
@@ -29,5 +30,6 @@ class CustomerGet(object):
              }
              response = HttpClient().get(self.__CustomerGetApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('获取客户详情发生异常:{0}'.format(e))
              return None

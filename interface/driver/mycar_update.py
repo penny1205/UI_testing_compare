@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class MyCarUpdate(object):
     '''
@@ -41,5 +42,6 @@ class MyCarUpdate(object):
              }
              response = HttpClient().post_json(self.__myCarUpdateApiUrl,payload,self.__head_dict)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('修改自有车信息发生异常:{0}'.format(e))
              return None

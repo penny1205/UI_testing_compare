@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class DriverRelevanceUpdate(object):
     '''
@@ -22,7 +23,7 @@ class DriverRelevanceUpdate(object):
 
     def driver_relevance_update(self,loginId='', name='', mobile='', idNo='',photoIdFront='', photoIdReverse='',
                                 photoDriverCard='',photoTransPort='',carNo='', carLength='', carModel='', carLoad=''):
-        '''新增外请车'''
+        '''修改外请车信息'''
 
         try:
             if photoIdFront != '':
@@ -57,5 +58,6 @@ class DriverRelevanceUpdate(object):
             }
             response = HttpClient().post_multipart(self.__driverRelevanceUpdateApiUrl, files, self.__head_dict)
             return response
-        except Exception:
+        except Exception as e:
+            Log().error('修改外请车信息发生异常:{0}'.format(e))
             return None

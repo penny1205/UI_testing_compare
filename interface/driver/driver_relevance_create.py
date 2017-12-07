@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class DriverRelevanceCreate(object):
     '''
@@ -27,5 +28,6 @@ class DriverRelevanceCreate(object):
              payload ={'loginId': loginId }
              response = HttpClient().post_form(self.__driverRelevanceCreateApiUrl, payload, self.__head_dict)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('录单时手机号查询发生异常:{0}'.format(e))
              return None

@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 
 class WayBillReceiptGet(object):
@@ -31,5 +32,6 @@ class WayBillReceiptGet(object):
                        }
              response = HttpClient().get(self.__wayBillReceiptGetApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('获取回单详情发生异常:{0}'.format(e))
              return None

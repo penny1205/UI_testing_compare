@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class DriverGet(object):
     '''
@@ -29,5 +30,6 @@ class DriverGet(object):
                         }
              response = HttpClient().get(self.__driverGetApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('根据外请车车主loginId查司机信息发生异常:{0}'.format(e))
              return None

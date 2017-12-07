@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class MyDriverSelect(object):
     '''
@@ -32,5 +33,6 @@ class MyDriverSelect(object):
              }
              response = HttpClient().get(self.__myDriverSelectApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('我的司机列表发生异常:{0}'.format(e))
              return None

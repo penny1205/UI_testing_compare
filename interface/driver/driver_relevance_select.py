@@ -11,7 +11,7 @@ class DriverRelevanceSelect(object):
     我的外请车列表,查询结果是已关联的外请车
     /api/tms/driver/listTmsAppDriver
     '''
-    __slots__ = ('__driverRelevanceSelectApiUrl','partnerNo', '__head_dict', 'logger')
+    __slots__ = ('__driverRelevanceSelectApiUrl','partnerNo', '__head_dict')
 
     def __init__(self):
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
@@ -22,7 +22,6 @@ class DriverRelevanceSelect(object):
             'token': config['tms_api_token'],
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
-        self.logger = Log()
 
     def driver_relevance_select(self,currentPage='1',rows='10',mobile ='',name='',carNo='',recentLineStart='',recentLineEnd=''):
          '''查询已关联的外请车'''
@@ -39,6 +38,6 @@ class DriverRelevanceSelect(object):
              }
              response = HttpClient().get(self.__driverRelevanceSelectApiUrl,self.__head_dict,payload)
              return response
-         except Exception as error:
-             self.logger.error('查询已关联的外请车异常：{0}'.format(error))
+         except Exception as e:
+             Log().error('查询已关联的外请车发生异常:{0}'.format(e))
              return None

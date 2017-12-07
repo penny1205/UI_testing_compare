@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 
 class WayBillCreate(object):
@@ -91,5 +92,6 @@ class WayBillCreate(object):
             }
             response = HttpClient().post_multipart(self.__createWayBillApiUrl,files,self.__head_dict)
             return response
-        except Exception:
+        except Exception as e:
+            Log().error('新增运单发生异常:{0}'.format(e))
             return None

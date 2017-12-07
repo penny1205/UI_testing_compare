@@ -11,7 +11,7 @@ class DriverUnCertificateCreate(object):
     新增未认证外请车
     /api/tms/driver/createUnCerAppDriver
     '''
-    __slots__ = ('__driverUnCertificateCreateApiUrl', '__head_dict', 'logger')
+    __slots__ = ('__driverUnCertificateCreateApiUrl', '__head_dict')
 
     def __init__(self):
         config = ReadYaml( FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
@@ -21,7 +21,7 @@ class DriverUnCertificateCreate(object):
             'token': config['tms_api_token'],
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
-        self.logger = Log()
+
     def driver_unCertificate_create(self,name='',mobile='',idNo='',
                                     photoIdFront='',photoIdReserve='',photoDriverCard='',photoTransPort='',
                                     carNo='',carLength='',carModel='',carLoad='',):
@@ -59,6 +59,6 @@ class DriverUnCertificateCreate(object):
                  }
             response = HttpClient().post_multipart(self.__driverUnCertificateCreateApiUrl,files,self.__head_dict)
             return response
-        except Exception as error:
-            self.logger.error('新增未认证外请车异常：{0}'.format(error))
+        except Exception as e:
+            Log().error('新增未认证外请车发生异常:{0}'.format(e))
             return None

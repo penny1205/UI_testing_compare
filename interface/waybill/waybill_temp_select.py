@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 
 class WayBillTempSelect(object):
@@ -42,6 +43,7 @@ class WayBillTempSelect(object):
              }
              response = HttpClient().get(self.__wayBillTempSelectApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('查询临时运单列表发生异常:{0}'.format(e))
              return None
 
