@@ -9,6 +9,8 @@ class HttpClient:
     def __init__(self, timeout=60):
         self.requests = requests
         self.timeout = timeout
+        self.s = requests.session()
+        self.s.keep_alive = False
 
     def get(self, url, header_dict=None, param_dict=None):
         response = requests.get(url, headers=header_dict, params=param_dict, timeout=self.timeout)
