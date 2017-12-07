@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class UserGet(object):
     '''
@@ -29,5 +30,6 @@ class UserGet(object):
              }
              response = HttpClient().get(self.__userDeleteApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('账号详情发生异常:{0}'.format(e))
              return None

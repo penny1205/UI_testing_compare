@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class RoleCreate(object):
     '''
@@ -32,5 +33,6 @@ class RoleCreate(object):
              }
              response = HttpClient().post_json(self.__roleCreateApiUrl,payload,self.__head_dict)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('新增角色发生异常:{0}'.format(e))
              return None

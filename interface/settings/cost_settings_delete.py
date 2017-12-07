@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class CostSettingsDelete(object):
     '''
@@ -29,5 +30,6 @@ class CostSettingsDelete(object):
              }
              response = HttpClient().get(self.__costSettingsDeleteApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('收入成本参数配置删除发生异常:{0}'.format(e))
              return None

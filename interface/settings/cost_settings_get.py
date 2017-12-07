@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class CostSettingsGet(object):
     '''
@@ -29,5 +30,6 @@ class CostSettingsGet(object):
              }
              response = HttpClient().get(self.__costSettingsGetApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('获取收入成本参数配置详情发生异常:{0}'.format(e))
              return None

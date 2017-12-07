@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class CostSettingsSelect(object):
     '''
@@ -37,5 +38,6 @@ class CostSettingsSelect(object):
              }
              response = HttpClient().post_json(self.__costSettingsSelectApiUrl,payload,self.__head_dict)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('收入成本参数配置列表查询发生异常:{0}'.format(e))
              return None

@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class UserPasswordUpdate(object):
     '''
@@ -30,5 +31,6 @@ class UserPasswordUpdate(object):
              }
              response = HttpClient().post_form(self.__userPasswordUpdateApiUrl,payload,self.__head_dict)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('重置账号密码发生异常:{0}'.format(e))
              return None

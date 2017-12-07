@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class SystemParamsSettingsUpdate(object):
     '''
@@ -63,6 +64,6 @@ class SystemParamsSettingsUpdate(object):
              }
              response = HttpClient().post_json(self.__systemParamsSettingsUpdateApiUrl,payload,self.__head_dict,payload)
              return response
-         except Exception:
-             raise
-             # return None
+         except Exception as e:
+             Log().error('运单拓展属性配置发生异常:{0}'.format(e))
+             return None
