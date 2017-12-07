@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 
 class WayBillSelect(object):
@@ -47,7 +48,8 @@ class WayBillSelect(object):
              }
              response = HttpClient().get(self.__selectWayBillApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('运单查询发生异常:{0}'.format(e))
              return None
 
 

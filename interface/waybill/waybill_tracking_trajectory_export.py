@@ -1,6 +1,7 @@
 from util.config.yaml.readyaml import ReadYaml
 from util.http.httpclient import HttpClient
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 
 class WayBillTrackingTrajectoryExport(object):
@@ -34,6 +35,6 @@ class WayBillTrackingTrajectoryExport(object):
             }
             response = HttpClient().post_json(self.__wayBillTrackingTrajectoryCreateApiUrl, None, self.__head_dict,payload)
             return response
-        except Exception:
-            raise
-            # return None
+        except Exception as e:
+            Log().error('添加跟踪备注信息发生异常:{0}'.format(e))
+            return None

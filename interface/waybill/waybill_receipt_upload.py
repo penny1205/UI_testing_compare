@@ -5,6 +5,7 @@ import os.path
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 
 class WayBillReceiptUpload(object):
@@ -73,5 +74,6 @@ class WayBillReceiptUpload(object):
 
              response = HttpClient().post_multipart(self.__wayBillReceiptUploadApiUrl,payload,self.__head_dict)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('回单上传发生异常:{0}'.format(e))
              return None

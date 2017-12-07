@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 
 class WayBillDepartureConfirm(object):
@@ -29,5 +30,6 @@ class WayBillDepartureConfirm(object):
             payload ={ 'billId':billId}
             response = HttpClient().post_json(self.__departureConfirmWayBillApiUrl,payload,self.__head_dict)
             return response
-        except Exception:
+        except Exception as e:
+            Log().error('发车确认发生异常:{0}'.format(e))
             return None

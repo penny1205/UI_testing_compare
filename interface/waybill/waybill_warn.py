@@ -1,6 +1,7 @@
 from util.config.yaml.readyaml import ReadYaml
 from util.http.httpclient import HttpClient
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 
 class WayBillWarn(object):
@@ -32,6 +33,6 @@ class WayBillWarn(object):
             response = HttpClient().post_json(self.__wayBillWarnApiUrl, payload, self.__head_dict)
             print(response.request.body,response.request.url)
             return response
-        except Exception:
+        except Exception as e:
+            Log().error('运单预警发生异常:{0}'.format(e))
             return None
-

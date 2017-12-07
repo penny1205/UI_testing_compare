@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 
 class WayBillDeletedEmpty(object):
@@ -30,6 +31,7 @@ class WayBillDeletedEmpty(object):
              }
              response = HttpClient().post_form(self.__wayBillDeletedEmptyApiUrl,payload,self.__head_dict)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('清空/恢复回收站发生异常:{0}'.format(e))
              return None
 

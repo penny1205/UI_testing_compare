@@ -1,6 +1,7 @@
 from util.config.yaml.readyaml import ReadYaml
 from util.http.httpclient import HttpClient
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 
 class WayBillCancel(object):
@@ -21,5 +22,6 @@ class WayBillCancel(object):
             cancel_data_dict = {'billId': wayBillId, 'cancleReason': 'CancelByQaPythonTesting'}
             response = HttpClient().post_json(self.__cancelWayBillApiUrl, cancel_data_dict, self.__head_dict)
             return response
-        except Exception:
+        except Exception as e:
+            Log().error('取消运单发生异常:{0}'.format(e))
             return None
