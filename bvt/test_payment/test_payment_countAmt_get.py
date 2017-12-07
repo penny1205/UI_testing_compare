@@ -23,6 +23,7 @@ class GetCountAmt(unittest.TestCase):
         pass
 
     def test_countAmt_get(self):
+        """ 待支付合计金额统计值获取 """
         response = CountAmtGet().count_amt_get(countName=self.countname, applyDateFirst=self.firstDate,
                                                applyDateLast=self.lastDate, sendCity='', arriveCity='',
                                                isCanLoan=self.isCanLoan)
