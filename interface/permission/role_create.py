@@ -32,6 +32,7 @@ class RoleCreate(object):
                  'menuJson': menuJson,
              }
              response = HttpClient().post_json(self.__roleCreateApiUrl,payload,self.__head_dict)
+             Log().info('##role_create#新增角色接口返回内容：{0}##'.format(response.json()))
              return response
          except Exception as e:
              Log().error('新增角色发生异常:{0}'.format(e))

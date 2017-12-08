@@ -31,9 +31,10 @@ class TestWayBillTempCreate(unittest.TestCase):
             replaceIds = ''
         response = WayBillTempCreate().waybill_temp_create(self.temp_waybillId,','.join(replaceIds))
         self.logger.info('生成运单返回状态码：{0}'.format(response))
+        self.logger.info('生成运单返回结果是：{0}'.format(response.json()))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
-        self.logger.info('生成运单返回结果是：{0}'.format(response.json()))
+
 
 if __name__ == '__main__':
     unittest.main()

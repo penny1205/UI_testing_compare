@@ -9,6 +9,8 @@ class HttpClient:
     def __init__(self, timeout=60):
         self.requests = requests
         self.timeout = timeout
+        requests.adapters.DEFAULT_RETRIES = 5
+        requests.adapters.DEFAULT_POOLSIZE = 20
         # self.s = requests.session()
         # self.s.keep_alive = False
 
