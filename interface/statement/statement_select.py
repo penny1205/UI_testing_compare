@@ -22,7 +22,7 @@ class StatementSelect(object):
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
 
-    def statement_select(self,currentPage='1',rows='10000',billType='',searchStatus ='',normalCondition='',
+    def statement_select(self,currentPage='1',rows='1000',billType='',searchStatus ='',normalCondition='',
                          applyDateFirst='',applyDateLast='',verificDateStart='',verificDateEnd='',
                          sendCity='',arriveCity='',driver='',client='',project='',supplier='',verificStatus=''):
          '''客户/供应商对账单分页查询'''
