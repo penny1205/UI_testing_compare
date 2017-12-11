@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class LoanUpdate(object):
     '''
@@ -39,5 +40,6 @@ class LoanUpdate(object):
              }
              response = HttpClient().post_json(self.__loanUpdateApiUrl,payload,self.__head_dict)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('修改大额贷款记录发生异常:{0}'.format(e))
              return None

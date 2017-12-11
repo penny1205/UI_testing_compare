@@ -5,7 +5,7 @@ import time
 import random
 from util.log.log import Log
 from interface.settings.cost_settings_update import CostSettingsUpdate
-from interface.line.line_distance_get import LineDistanceGet
+from interface.line.line_mileage_get import LineDistanceGet
 from interface.project.project_select import ProjectSelect
 from bvt.common.create_project import CreateProject
 

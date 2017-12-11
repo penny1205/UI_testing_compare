@@ -8,7 +8,7 @@ from interface.line.line_create import LineCreate
 from interface.line.line_select import LineSelect
 from interface.line.line_delete import LineDelete
 from interface.project.project_select import ProjectSelect
-from interface.line.line_distance_get import LineDistanceGet
+from interface.line.line_mileage_more_get import LineMileageMoreGet
 from bvt.common.create_project import CreateProject
 
 class CreateLine(object):
@@ -39,15 +39,19 @@ class CreateLine(object):
             CreateLine.my_print('选择的项目是: {0}'.format(project))
         return project
 
-    def create_line(self,sendProvince,sendCity,arriveProvince,arriveCity,arriveTime):
+    def create_line(self,sendProvince,sendCity,sendDistrict,arriveProvince,arriveCity,arriveDistrict,stationAProvince,
+                    stationACity,stationADistrict,stationBProvince,stationBCity,stationBDistrict,arriveTime):
         '''新增线路'''
         try:
             project = CreateLine().project_choice()
 
-            mileage = LineDistanceGet().line_get(sendCity,arriveCity,sendProvince+sendCity,
-                                                 arriveProvince+arriveCity).json()['content']
+            mileage = LineMileageMoreGet().line_mileage_more_get(sendProvince,sendCity,sendDistrict,stationAProvince,
+                                        stationACity,stationADistrict,stationBProvince,stationBCity,stationBDistrict,
+                                        arriveProvince,arriveCity,arriveDistrict).json()['content']
 
-            response = LineCreate().line_create(sendProvince,sendCity,arriveProvince,arriveCity,mileage,arriveTime,
+            response = LineCreate().line_create(sendProvince,sendCity,sendDistrict,arriveProvince,arriveCity,
+                                                arriveDistrict,stationAProvince,stationACity,stationADistrict,
+                                                stationBProvince,stationBCity,stationBDistrict,mileage,arriveTime,
                                                 project['projectId'])
 
             # 判断线路是否已经创建
@@ -57,17 +61,16 @@ class CreateLine(object):
             elif response.json()['code'] == 9020707:
                 line_list = LineSelect().line_select(projectId=project['projectId'],sendCity=sendCity,
                                                      arriveCity=arriveCity).json()['content']['dataList']
-                if len(line_list) == 1:
-                    LineDelete().line_delete(line_list[0]['id'])
-                    Id = LineCreate().line_create(sendProvince, sendCity, arriveProvince, arriveCity, mileage,
-                                                  arriveTime, project['projectId']).json()['content']
-                    return Id,mileage,project['projectId']
-                else:
-                    self.logger.error('项目中该线路已经存在判断错误！')
-                    return None,None,None
+                for line in line_list:
+                    LineDelete().line_delete(line['id'])
+                Id = LineCreate().line_create(sendProvince,sendCity,sendDistrict,arriveProvince,arriveCity,
+                                                arriveDistrict,stationAProvince,stationACity,stationADistrict,
+                                                stationBProvince,stationBCity,stationBDistrict,mileage,arriveTime,
+                                                project['projectId']).json()['content']
+                return Id,mileage,project['projectId']
             else:
-                self.logger.info('新增客户返回错误:{0}'.format(response.json()))
+                self.logger.error('新增线路返回错误:{0}'.format(response.json()))
                 return None,None,None
         except Exception as e:
-            self.logger.error('新增客户发生异常:{0}'.format(e))
+            self.logger.error('新增线路公共模块发生异常:{0}'.format(e))
             return None

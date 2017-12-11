@@ -4,6 +4,8 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
+
 
 class LineDelete(object):
     '''
@@ -29,5 +31,6 @@ class LineDelete(object):
              }
              response = HttpClient().post_form(self.__lineDeleteApiUrl,payload,self.__head_dict)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('根据ID删除线路发生异常:{0}'.format(e))
              return None

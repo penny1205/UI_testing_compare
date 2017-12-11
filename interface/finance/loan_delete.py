@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class LoanDelete(object):
     '''
@@ -29,5 +30,6 @@ class LoanDelete(object):
              }
              response = HttpClient().get(self.__loanDeleteApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('根据ID删除数据发生异常:{0}'.format(e))
              return None

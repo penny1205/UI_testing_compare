@@ -4,6 +4,8 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
+
 
 class LineSelect(object):
     '''
@@ -21,7 +23,7 @@ class LineSelect(object):
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
 
-    def line_select(self,currentPage='1',rows='10',projectId='',sendCity='',arriveCity='',
+    def line_select(self,currentPage='1',rows='1000',projectId='',sendCity='',arriveCity='',
                     servicingTimeFirst='',servicingTimeLast=''):
          '''线路时效维护列表'''
          try:
@@ -31,10 +33,11 @@ class LineSelect(object):
                  'projectId': projectId,
                  'sendCity': sendCity,
                  'arriveCity': arriveCity,
-                 'servicingTimeFirst': servicingTimeFirst,
-                 'servicingTimeLast': servicingTimeLast,
+                 'servicingTimeFirst': servicingTimeFirst, #维护时间：开始时间"yyyy-MM-dd"
+                 'servicingTimeLast': servicingTimeLast,   #维护时间：结束时间，格式为“yyyy-MM-dd”
              }
              response = HttpClient().get(self.__lineSelectApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('线路时效维护列表生异常:{0}'.format(e))
              return None

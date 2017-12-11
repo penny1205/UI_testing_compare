@@ -1,7 +1,6 @@
 #__author__ = 'pan'
 # -*- coding:utf-8 -*-
 
-import time
 import unittest
 from util.log.log import Log
 from util.data.datautil import DataUtil
@@ -15,15 +14,27 @@ class TestLineCreate(unittest.TestCase):
         self.logger.info('########################### TestLineCreate START ###########################')
         self.sendProvince = '浙江'
         self.sendCity = '杭州'
+        self.sendDistrict = ''
         self.arriveProvince = '安徽'
         self.arriveCity = '合肥'
+        self.arriveDistrict = ''
+        self.stationAProvince= '上海'
+        self.stationACity = '上海'
+        self.stationADistrict = ''
+        self.stationBProvince = ''
+        self.stationBCity = ''
+        self.stationBDistrict = ''
+        self.arriveTime ='10'
 
     def tearDown(self):
         self.logger.info('############################ TestLineCreate END ############################')
 
     def test_Line_create_success(self):
         '''新增线路'''
-        Id = CreateLine().create_line(self.sendProvince,self.sendCity, self.arriveProvince,self.arriveCity,'5')[0]
+        Id = CreateLine().create_line(self.sendProvince,self.sendCity,self.sendDistrict,self.arriveProvince,
+                                      self.arriveCity,self.arriveDistrict,self.stationAProvince,self.stationACity,
+                                      self.stationADistrict,self.stationBProvince,self.stationBCity,
+                                      self.stationBDistrict,self.arriveTime)[0]
         line_list = LineSelect().line_select(sendCity=self.sendCity,arriveCity=self.arriveCity).json()['content']['dataList']
         if line_list != []:
             L = []

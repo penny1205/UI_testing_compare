@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class LineCreate(object):
     '''
@@ -21,20 +22,30 @@ class LineCreate(object):
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
 
-    def line_create(self,sendProvince='',sendCity='',arriveProvince ='',arriveCity ='',mileage='',arriveTime='',
-                    projectId=''):
+    def line_create(self,sendProvince='',sendCity='',sendDistrict='',arriveProvince ='',arriveCity ='',arriveDistrict='',
+                    stationAProvince='',stationACity='',stationADistrict='',stationBProvince='',stationBCity='',
+                    stationBDistrict='',mileage='',arriveTime='',projectId=''):
          '''创建线路'''
          try:
              payload ={
                  'sendProvince': sendProvince,
                  'sendCity': sendCity,
+                 'sendDistrict': sendDistrict,
                  'arriveProvince': arriveProvince,
-                 'arriveCity':arriveCity,
+                 'arriveCity': arriveCity,
+                 'arriveDistrict': arriveDistrict,
                  'mileage': mileage,
                  'arriveTime': arriveTime,
                  'projectId': projectId,
+                 'stationAProvince' : stationAProvince,
+                 'stationACity' : stationACity,
+                 'stationADistrict' : stationADistrict,
+                 'stationBProvince': stationBProvince,
+                 'stationBCity' : stationBCity,
+                 'stationBDistrict' : stationBDistrict
              }
              response = HttpClient().post_json(self.__lineCreateApiUrl,payload,self.__head_dict)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('创建线路发生异常:{0}'.format(e))
              return None

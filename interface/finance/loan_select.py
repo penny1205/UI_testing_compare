@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class LoanSelect(object):
     '''
@@ -35,5 +36,6 @@ class LoanSelect(object):
              }
              response = HttpClient().get(self.__loanSelectApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('获取大额放款申请的列表发生异常:{0}'.format(e))
              return None

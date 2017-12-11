@@ -3,6 +3,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 
 class UserDefinedFeeUpdate(object):
@@ -30,7 +31,8 @@ class UserDefinedFeeUpdate(object):
             response = HttpClient().post_json(self.__updateUserDefinedFeeApiUrl,
                                               header_dict=self.__head_dict, body_dict=payload, param_dict=payload)
             return response
-        except Exception:
+        except Exception as e:
+            Log().error('更新自定义费用发生异常:{0}'.format(e))
             return None
 
 if __name__ == '__main__':

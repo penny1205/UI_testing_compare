@@ -3,6 +3,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 
 class ArrivePayListSelect(object):
@@ -36,8 +37,8 @@ class ArrivePayListSelect(object):
             }
             response = HttpClient().get(self.__selectArrivePayListApiUrl, self.__head_dict, payload)
             return response
-
-        except Exception:
+        except Exception as e:
+            Log().error('到达支付列表发生异常:{0}'.format(e))
             return None
 
 if __name__ == '__main__':

@@ -14,12 +14,22 @@ class TestLineUpdate(unittest.TestCase):
         self.logger.info('########################### TestLineUpdate START ###########################')
         self.sendProvince = '浙江'
         self.sendCity = '杭州'
+        self.sendDistrict = ''
         self.arriveProvince = '安徽'
         self.arriveCity = '合肥'
-        self.arriveTime = '5'
+        self.arriveDistrict = ''
+        self.stationAProvince = '上海'
+        self.stationACity = '上海'
+        self.stationADistrict = ''
+        self.stationBProvince = ''
+        self.stationBCity = ''
+        self.stationBDistrict = ''
+        self.arriveTime = '10'
         self.Id,self.mileage,self.projectId = CreateLine().create_line(self.sendProvince, self.sendCity,
-                                                                       self.arriveProvince, self.arriveCity, '5')
-        print( self.Id,self.mileage,self.projectId)
+                                                self.sendDistrict, self.arriveProvince,self.arriveCity,
+                                                self.arriveDistrict, self.stationAProvince,self.stationACity,
+                                                self.stationADistrict, self.stationBProvince, self.stationBCity,
+                                                self.stationBDistrict, self.arriveTime)[0]
 
     def tearDown(self):
         self.logger.info('############################ TestLineUpdate END ############################')

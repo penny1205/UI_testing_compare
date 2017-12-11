@@ -4,6 +4,8 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
+
 
 class LineGet(object):
     '''
@@ -22,12 +24,13 @@ class LineGet(object):
         }
 
     def line_get(self,id=''):
-         '''根据ID删除线路'''
+         '''根据ID获取线路'''
          try:
              payload ={
                  'id': id,
              }
              response = HttpClient().get(self.__lineGetApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('根据ID获取线路发生异常:{0}'.format(e))
              return None

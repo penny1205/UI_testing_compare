@@ -3,6 +3,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 
 class PaymentBatchePay(object):
@@ -30,7 +31,8 @@ class PaymentBatchePay(object):
             response = HttpClient().post_json(self.__singlePayApiUrl, header_dict=self.__head_dict,
                                               body_dict=payload, param_dict=payload)
             return response
-        except Exception:
+        except Exception as e:
+            Log().error('批量支付异常:{0}'.format(e))
             return None
 
 if __name__ == '__main__':

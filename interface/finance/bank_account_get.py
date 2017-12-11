@@ -4,6 +4,7 @@
 from util.http.httpclient import HttpClient
 from util.config.yaml.readyaml import ReadYaml
 from util.file.fileutil import FileUtil
+from util.log.log import Log
 
 class BankAccountGet(object):
     '''
@@ -30,5 +31,6 @@ class BankAccountGet(object):
              }
              response = HttpClient().get(self.__loanDeleteApiUrl,self.__head_dict,payload)
              return response
-         except Exception:
+         except Exception as e:
+             Log().error('根据partnerNo获取开户行信息发生异常:{0}'.format(e))
              return None
