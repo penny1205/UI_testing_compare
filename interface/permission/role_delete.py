@@ -29,6 +29,8 @@ class RoleDelete(object):
                  'roleId': roleId,
              }
              response = HttpClient().post_form(self.__roleDeleteApiUrl,payload,self.__head_dict)
+             Log().info('#删除角色返回内容{0}#'.format(response.json()))
              return response
-         except Exception:
+         except Exception as error:
+             Log().error('RoleDelete().role_delete  删除角色接口调用异常：{0}'.format(error))
              return None
