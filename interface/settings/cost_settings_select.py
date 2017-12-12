@@ -22,7 +22,7 @@ class CostSettingsSelect(object):
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
 
-    def cost_settings_select(self,currentPage='1',rows='100000',sendCity='',arriveCity='',carType='',carLength='',
+    def cost_settings_select(self,currentPage='1',rows='1000',sendCity='',arriveCity='',carType='',carLength='',
                              carModel='',projectId=''):
          '''收入成本参数配置列表查询'''
          try:

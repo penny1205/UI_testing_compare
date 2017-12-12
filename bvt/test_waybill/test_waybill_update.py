@@ -47,10 +47,12 @@ class TestWayBillUpdate(unittest.TestCase):
                                                   '备注我要录单测试', 'TMS','零担', '10', '100', '1000', '10000',
                                                   '100000','20', '30', '40', '50', 'DD001', 'YK001', 'LSVAM4187C2184847',
                                                   '6222810001000', '中国银行', '张三')
+        self.logger.info('请求url：{0} '.format(response.request.url))
+        self.logger.info('请求body：{0} '.format(response.request.body))
         self.logger.info('修改运单的发车时间返回状态码：{0}'.format(response))
+        self.logger.info('修改运单的发车时间返回：{0}'.format(response.json()))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
-        self.logger.info('修改运单的发车时间返回：{0}'.format(response.json()))
         response_get = WayBillDetailGet().waybill_detail_get(self.wayBillId)
         self.assertEqual(self.applyDate_update, response_get.json()['content']['transportCash']['applyDate'],
                          'Waybill updated fail!')

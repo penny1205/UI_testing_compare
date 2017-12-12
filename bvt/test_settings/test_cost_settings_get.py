@@ -6,7 +6,7 @@ import unittest
 from util.log.log import Log
 from util.data.datautil import DataUtil
 from interface.settings.cost_settings_get import CostSettingsGet
-from bvt.common.create_cost_settings import CreateCostSettings
+from bvt.common.cost_settings import CostSettings
 
 class TestCostSettingsGet(unittest.TestCase):
     ''' 获取收入成本参数配置详情'''
@@ -39,7 +39,7 @@ class TestCostSettingsGet(unittest.TestCase):
         self.taxRate = random.uniform(0,100)
         self.otherCost = random.uniform(0,99999)
         self.infoCost = random.uniform(0,99999)
-        self.Id, self.kilometers, self.projectId = CreateCostSettings().create_cost_settings(
+        self.Id, self.kilometers, self.projectId = CostSettings().create_cost_settings(
             self.carType, self.sendProvince, self.sendCity, self.arriveDistrict, self.arriveProvince, self.arriveCity,
             self.arriveDistrict, self.stationAProvince, self.stationACity, self.stationADistrict, self.stationBProvince,
             self.stationBCity, self.stationBDistrict, self.carLength, self.carModel, self.calculateType, self.perIncome,

@@ -48,10 +48,10 @@ class CreateWayBill(object):
             projectId = CreateProject().create_project(projectName, startTime, endTime, customerName, customerCode,
                                                        phone,customerDeveloper)
             project = {'projectId': projectId, 'projectName': projectName}
-            CreateWayBill.my_print('新建的项目是: {0}'.format(project))
+            CreateWayBill.my_print('新建的项目名称是: {0}'.format(project['projectName']))
         else:
             project = random.sample(project_list, 1)[0]
-            CreateWayBill.my_print('选择的项目是: {0}'.format(project))
+            CreateWayBill.my_print('选择的项目名称是: {0}'.format(project['projectName']))
         return project
 
     # 选择指定项目
@@ -91,10 +91,10 @@ class CreateWayBill(object):
                         contactPersonIdCardPhoto,businessLicencePhoto,businessPermitPhoto,
                         taxRegistrationCertificatePhoto,contractPhoto)
             supplier = {'name': name, 'supplierId': supplierId}
-            CreateWayBill.my_print('新建的供应商是: {0}'.format(supplier))
+            CreateWayBill.my_print('新建的供应商名称是: {0}'.format(supplier['supplier']))
         else:
             supplier = random.sample(supplier_list, 1)[0]
-            CreateWayBill.my_print('选择的供应商是: {0}'.format(supplier))
+            CreateWayBill.my_print('选择的供应商名称是: {0}'.format(supplier['supplier']))
         return supplier
 
     # 选择司机
@@ -109,10 +109,10 @@ class CreateWayBill(object):
             backIdCard = 'http://yudian.ufile.ucloud.com.cn/4acb87e0-8c0d-44a9-a1b3-b8cb7ca103d1.jpg?UCloudPublicKey=ucloudtangshd@weifenf.com14355492830001993909323&Expires=&Signature=XfbOAUgpkjIe1FJU/hxiMqfsWno='
             CreateMyDriver().create_my_driver(mobile,name,idNo,photoDriverCard,frontIdCard,backIdCard)
             driver = {'name': name, 'idNo': idNo, 'mobile': mobile,}
-            CreateWayBill.my_print('新建的司机是: {0}'.format(driver))
+            CreateWayBill.my_print('新建的司机手机号是: {0}'.format(driver['mobile']))
         else:
             driver = random.sample(driver_list, 1)[0]
-            CreateWayBill.my_print('选择的司机是: {0}'.format(driver))
+            CreateWayBill.my_print('选择的司机手机号是: {0}'.format(driver['mobile']))
         return driver
 
     # 选择车辆
@@ -128,10 +128,10 @@ class CreateWayBill(object):
             photoCar = 'http://yudian.ufile.ucloud.com.cn/69eec140-f95d-4af7-9aaf-c57b8442d799.jpg?UCloudPublicKey=ucloudtangshd@weifenf.com14355492830001993909323&Expires=&Signature=bPzioEVJ8i4E3iXi+Yx7KQSeHvw='
             CreateMyCar().create_my_car(carNo,carModel,carLength,carLoad,carAge,buycarTime,carBrand,photoDriverCard,photoCar)
             car = { 'carNo': carNo, 'carLength': carLength, 'carModel': carModel}
-            CreateWayBill.my_print('新建的车辆是: {0}'.format(car))
+            CreateWayBill.my_print('新建的车牌号是: {0}'.format(car['carNo']))
         else:
             car = random.sample(car_list, 1)[0]
-            CreateWayBill.my_print('选择的车辆是: {0}'.format(car))
+            CreateWayBill.my_print('选择的车牌号是: {0}'.format(car['carNo']))
         return car
 
     #选择外请车
@@ -154,7 +154,7 @@ class CreateWayBill(object):
                            'carLength': carLength, 'carModel': carModel}
         else:
             outCar = random.sample(outCar_list, 1)[0]
-            CreateWayBill.my_print('选择的外请车是: {0}'.format(outCar))
+            CreateWayBill.my_print('选择的外请车车牌号是: {0}'.format(outCar['carNo']))
         return outCar
 
     #创建运单

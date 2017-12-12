@@ -22,23 +22,34 @@ class CostSettingsUpdate(object):
             'YD_OAUTH': config['tms_api_YD_OAUTH'],
         }
 
-    def cost_settings_update(self,Id='',carType='',sendCity='',arriveCity='',carLength='',carModel='',kilometers='',
+    def cost_settings_update(self,Id='',carType='',sendProvince='',sendCity='',sendDistrict='',arriveProvince='',
+                             arriveCity='',arriveDistrict='',stationAProvince='',stationACity='',stationADistrict='',
+                             stationBProvince='',stationBCity='',stationBDistrict='',
+                             carLength='',carModel='',kilometers='',
                              calculateType='',perIncome='',projectId='',oilCost='',roadCost='',repairCost='',
                              depreciationCost='',insurance='',personCost='',taxRate='',otherCost='',infoCost=''):
          '''收入成本参数配置修改(与添加)'''
          try:
              payload = {
                  'id': Id,  # 收入成本参数配置表主键(添加时不需要传入，修改时需要传入)
-                 # 必须参数
                  'carType': carType,
+                 'sendProvince':sendProvince,
                  'sendCity': sendCity,
+                 'sendDistrict':sendDistrict,
+                 'arriveProvince':arriveProvince,
                  'arriveCity': arriveCity,
+                 'arriveDistrict':arriveDistrict,
+                 'stationAProvince':stationAProvince,
+                 'stationACity':stationACity,
+                 'stationADistrict':stationADistrict,
+                 'stationBProvince':stationBProvince,
+                 'stationBCity':stationBCity,
+                 'stationBDistrict':stationBDistrict,
                  'carLength': carLength,
                  'carModel': carModel,
                  'kilometers': kilometers,
                  'calculateType': calculateType,
                  'perIncome': perIncome,  # 每单位计费的收入
-                 # 非必须参数
                  'projectId': projectId,
                  'oilCost': oilCost,
                  'roadCost': roadCost,
