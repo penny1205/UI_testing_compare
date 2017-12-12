@@ -24,9 +24,9 @@ class TestRoleUpdate(unittest.TestCase):
         roleName_update = random.choice(['老板', '高级管理'])
         response = CreateRole().update_role(self.roleId,roleName_update,self.menuJson)
         self.logger.info('修改角色返回状态码：{0}'.format(response))
+        self.logger.info('修改角色返回结果是：{0}'.format(response.json()))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
-        self.logger.info('修改角色返回结果是：{0}'.format(response.json()))
 
 if __name__ == '__main__':
     unittest.main()

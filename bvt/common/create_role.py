@@ -30,6 +30,7 @@ class CreateRole(object):
             user_list = UserSelect().user_select(roleId=roleId).json()['content']['dataList']
             for user in user_list:
                 UserDelete().user_delete(user['loginId'])
+            RoleDelete().role_delete(roleId)
         else:
             CreateRole.my_print('删除角色返回错误:{0}'.format(response.json()))
 
@@ -44,6 +45,7 @@ class CreateRole(object):
                 role_list = RoleSelect().role_select(roleName=roleName).json()['content']['dataList']
                 CreateRole.delete_role(random.choice(role_list)['roleId'])
                 roleId = RoleCreate().role_create(roleName,menuJson).json()['content']
+                self.logger.error('新增角色返回roleId:{0}'.format(roleId))
                 return roleId
             else:
                 self.logger.error('新增角色返回错误:{0}'.format(response.json()))
