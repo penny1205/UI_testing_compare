@@ -20,7 +20,7 @@ class CountAmtGet(object):
         }
 
     def count_amt_get(self, countName, applyDateFirst='', applyDateLast='', sendCity='', arriveCity='', carNo='',
-                      driverName='', isCanLoan=''):
+                      driverName='', isCanLoan='',globalCondition='',searchMode='general'):
         try:
             payload = {
                 "countName": countName,  # 需统计的金额：amtFee 总运费，cash 预付款，oilFee 油卡，destAmtConfirm 到付金额，retAmtConfirm 尾款金额
@@ -30,12 +30,14 @@ class CountAmtGet(object):
                 "arriveCity": arriveCity,          # 到达城市
                 "carNo": carNo,                    # 车牌号
                 "driverName": driverName,          # 司机姓名
-                "isCanLoan": isCanLoan             # 是否可贷款，1：可贷款，0：不可贷款
+                "isCanLoan": isCanLoan,            # 是否可贷款，1：可贷款，0：不可贷款
+                "globalCondition": globalCondition,
+                "searchMode":searchMode,
             }
             response = HttpClient().get(self.__getCountAmtApiUrl, self.__head_dict, payload)
             return response
         except Exception as e:
-            Log().error('待支付合计金额统计值获取发生异常:{0}'.format(e))
+            Log().error('待支付合计金额统计值获取接口调用异常:{0}'.format(e))
             return None
 
 if __name__ == '__main__':
