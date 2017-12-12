@@ -2,7 +2,6 @@
 # -*- coding:utf-8 -*-
 
 import random
-import time
 import unittest
 from util.log.log import Log
 from util.data.datautil import DataUtil
@@ -17,8 +16,16 @@ class TestCostSettingsUpdate(unittest.TestCase):
         self.carType = random.sample([1,2], 1)[0]
         self.sendProvince = '浙江'
         self.sendCity = '杭州'
+        self.sendDistrict = ''
         self.arriveProvince = '安徽'
         self.arriveCity = '合肥'
+        self.arriveDistrict = ''
+        self.stationAProvince = '上海'
+        self.stationACity = '上海'
+        self.stationADistrict = ''
+        self.stationBProvince = ''
+        self.stationBCity = ''
+        self.stationBDistrict = ''
         self.carLength = DataUtil().genneratorCarLength()
         self.carModel = DataUtil().genneratorCarTypeInfo()
         self.calculateType = random.sample([1,2,3,4], 1)[0]
@@ -32,10 +39,12 @@ class TestCostSettingsUpdate(unittest.TestCase):
         self.taxRate = random.uniform(0,100)
         self.otherCost = random.uniform(0,99999)
         self.infoCost = random.uniform(0,99999)
-        self.Id ,self.kilometers,self.projectId= CreateCostSettings().create_cost_settings(
-            self.carType, self.sendProvince, self.sendCity,self.arriveProvince, self.arriveCity,self.carLength,
-            self.carModel,self.calculateType, self.perIncome, self.oilCost, self.roadCost, self.repairCost,
-            self.depreciationCost, self.insurance, self.personCost, self.taxRate, self.otherCost, self.infoCost)
+        self.Id, self.kilometers, self.projectId = CreateCostSettings().create_cost_settings(
+            self.carType, self.sendProvince, self.sendCity, self.arriveDistrict, self.arriveProvince, self.arriveCity,
+            self.arriveDistrict, self.stationAProvince, self.stationACity, self.stationADistrict, self.stationBProvince,
+            self.stationBCity, self.stationBDistrict, self.carLength, self.carModel, self.calculateType, self.perIncome,
+            self.oilCost, self.roadCost, self.repairCost, self.depreciationCost, self.insurance, self.personCost,
+            self.taxRate, self.otherCost, self.infoCost)
 
     def tearDown(self):
         self.logger.info('############################ TestSystemParamsGet END ############################')

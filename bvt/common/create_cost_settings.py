@@ -5,7 +5,7 @@ import time
 import random
 from util.log.log import Log
 from interface.settings.cost_settings_update import CostSettingsUpdate
-from interface.line.line_mileage_get import LineDistanceGet
+from interface.line.line_mileage_more_get import LineMileageMoreGet
 from interface.project.project_select import ProjectSelect
 from bvt.common.create_project import CreateProject
 
@@ -37,22 +37,25 @@ class CreateCostSettings(object):
             CreateCostSettings.my_print('选择的项目是: {0}'.format(project))
         return project
 
-    def create_cost_settings(self, carType, sendProvince, sendCity, arriveProvince, arriveCity,carLength, carModel,
-                             calculateType, perIncome, oilCost, roadCost, repairCost,depreciationCost, insurance,
+    def create_cost_settings(self, carType, sendProvince, sendCity, sendDistrict, arriveProvince, arriveCity,
+                             arriveDistrict, stationAProvince, stationACity, stationADistrict, stationBProvince,
+                             stationBCity, stationBDistrict, carLength, carModel, calculateType,
+                             perIncome, oilCost, roadCost, repairCost, depreciationCost, insurance,
                              personCost, taxRate, otherCost, infoCost):
         '''新增成本参数配置'''
 
         try:
             project = CreateCostSettings().project_choice()
             # 计算距离
-            self.kilometers = LineDistanceGet().line_get(sendCity, arriveCity, sendProvince + sendCity,
-                                                         arriveProvince + arriveCity).json()['content']
+            self.mileage = LineMileageMoreGet().line_mileage_more_get(sendProvince,sendCity,sendDistrict,stationAProvince,
+                                        stationACity,stationADistrict,stationBProvince,stationBCity,stationBDistrict,
+                                        arriveProvince,arriveCity,arriveDistrict).json()['content']
             response = CostSettingsUpdate().cost_settings_update('', carType, sendCity,arriveCity,
-                                                                 carLength, carModel, self.kilometers,calculateType,
+                                                                 carLength, carModel, self.mileage,calculateType,
                                                                  perIncome, project['projectId'],oilCost, roadCost,
                                                                  repairCost,depreciationCost, insurance, personCost,
                                                                  taxRate, otherCost, infoCost)
-            return  response.json()['content'],self.kilometers,project['projectId']
+            return  response.json()['content'],self.mileage,project['projectId']
         except Exception as e:
             self.logger.error('新增成本参数配置发生异常:{0}'.format(e))
             return None
