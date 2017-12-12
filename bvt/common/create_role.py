@@ -32,7 +32,7 @@ class CreateRole(object):
                 UserDelete().user_delete(user['loginId'])
             RoleDelete().role_delete(roleId)
         else:
-            CreateRole.my_print('删除角色返回错误:{0}'.format(response.json()))
+            CreateRole.my_print('静态方法删除角色返回错误:{0}'.format(response.json()))
 
 
     def create_role(self,roleName,menuJson):
@@ -45,7 +45,7 @@ class CreateRole(object):
                 role_list = RoleSelect().role_select(roleName=roleName).json()['content']['dataList']
                 CreateRole.delete_role(random.choice(role_list)['roleId'])
                 roleId = RoleCreate().role_create(roleName,menuJson).json()['content']
-                self.logger.error('新增角色返回roleId:{0}'.format(roleId))
+                self.logger.info('新增角色返回roleId:{0}'.format(roleId))
                 return roleId
             else:
                 self.logger.error('新增角色返回错误:{0}'.format(response.json()))
@@ -63,7 +63,7 @@ class CreateRole(object):
             elif response.json()['code'] == 9110012:
                 role_list = RoleSelect().role_select(roleName=roleName).json()['content']['dataList']
                 CreateRole.delete_role(random.choice(role_list)['roleId'])
-                response = RoleUpdate().role_update(roleName,menuJson)
+                response = RoleUpdate().role_update(roleId,roleName,menuJson)
                 return response
             else:
                 self.logger.info('修改角色返回错误:{0}'.format(response.json()))
