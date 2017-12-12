@@ -26,7 +26,7 @@ class TestRoleCompanyGet(unittest.TestCase):
         self.logger.info('获取公司所有角色返回状态码：{0}'.format(response))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
-        self.logger.info('获取公司所有角色返回结果是：{0}'.format(response.json()))
+        self.logger.info('获取公司所有角色返回码code：{0}'.format(response.json()['code']))
         role_list = response.json()['content']
         if role_list != []:
             L = []
