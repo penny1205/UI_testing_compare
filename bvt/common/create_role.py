@@ -17,6 +17,11 @@ class CreateRole(object):
         self.logger = Log()
 
     @staticmethod
+    def my_print(msg):
+        logger = Log()
+        logger.info(msg)
+
+    @staticmethod
     def delete_role(roleId):
         response = RoleDelete().role_delete(roleId)
         if response.json()['code'] == 0:
@@ -25,6 +30,9 @@ class CreateRole(object):
             user_list = UserSelect().user_select(roleId=roleId).json()['content']['dataList']
             for user in user_list:
                 UserDelete().user_delete(user['loginId'])
+        else:
+            CreateRole.my_print('删除角色返回错误:{0}'.format(response.json()))
+
 
     def create_role(self,roleName,menuJson):
         '''新增角色'''
@@ -38,10 +46,10 @@ class CreateRole(object):
                 roleId = RoleCreate().role_create(roleName,menuJson).json()['content']
                 return roleId
             else:
-                self.logger.info('新增角色返回错误:{0}'.format(response.json()))
+                self.logger.error('新增角色返回错误:{0}'.format(response.json()))
                 return None
         except Exception as e:
-            self.logger.info('新增角色发生异常:{0}'.format(e))
+            self.logger.error('新增角色发生异常:{0}'.format(e))
             return None
 
     def update_role(self,roleId,roleName,menuJson):
