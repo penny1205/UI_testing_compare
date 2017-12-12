@@ -39,7 +39,7 @@ class TestCostSettingsGet(unittest.TestCase):
         self.taxRate = random.uniform(0,100)
         self.otherCost = random.uniform(0,99999)
         self.infoCost = random.uniform(0,99999)
-        self.Id, self.kilometers, self.projectId = CostSettings().create_cost_settings(
+        self.Id, self.kilometers, self.projectId = CostSettings().create_cost_settings('',
             self.carType, self.sendProvince, self.sendCity, self.arriveDistrict, self.arriveProvince, self.arriveCity,
             self.arriveDistrict, self.stationAProvince, self.stationACity, self.stationADistrict, self.stationBProvince,
             self.stationBCity, self.stationBDistrict, self.carLength, self.carModel, self.calculateType, self.perIncome,
