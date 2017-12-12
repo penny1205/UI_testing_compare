@@ -45,7 +45,9 @@ class CreateRole(object):
                 role_list = RoleSelect().role_select(roleName=roleName).json()['content']['dataList']
                 CreateRole.delete_role(random.choice(role_list)['roleId'])
                 roleId = RoleCreate().role_create(roleName,menuJson).json()['content']
-                self.logger.info('新增角色返回roleId:{0}'.format(roleId))
+                self.logger.info('删除角色后新增角色返回response:{0}'.format(RoleCreate().role_create(roleName, menuJson)))
+                self.logger.info('删除角色后新增角色url:{0}'.format(RoleCreate().role_create(roleName,menuJson).request.url))
+                self.logger.info('删除角色后新增角色body:{0}'.format(RoleCreate().role_create(roleName, menuJson).request.body))
                 return roleId
             else:
                 self.logger.error('新增角色返回错误:{0}'.format(response.json()))
