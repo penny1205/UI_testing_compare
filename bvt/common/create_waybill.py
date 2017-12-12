@@ -91,10 +91,10 @@ class CreateWayBill(object):
                         contactPersonIdCardPhoto,businessLicencePhoto,businessPermitPhoto,
                         taxRegistrationCertificatePhoto,contractPhoto)
             supplier = {'name': name, 'supplierId': supplierId}
-            CreateWayBill.my_print('新建的供应商名称是: {0}'.format(supplier['supplier']))
+            CreateWayBill.my_print('新建的供应商名称是: {0}'.format(supplier['name']))
         else:
             supplier = random.sample(supplier_list, 1)[0]
-            CreateWayBill.my_print('选择的供应商名称是: {0}'.format(supplier['supplier']))
+            CreateWayBill.my_print('选择的供应商名称是: {0}'.format(supplier['name']))
         return supplier
 
     # 选择司机
