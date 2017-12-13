@@ -13,7 +13,6 @@ class HttpClient:
 
     def get(self, url, header_dict=None, param_dict=None):
         response = requests.get(url, headers=header_dict, params=param_dict, timeout=self.timeout)
-        requests.session().close()
         return response
 
     def post_form(self, url, body_dict=None, header_dict=None, param_dict=None):
