@@ -9,10 +9,10 @@ class TestLoanAmtGet(unittest.TestCase):
     ''' 可借款金额统计 '''
     def setUp(self):
         self.logger = Log()
-        self.logger.info('########################### TestGetLoanAmt START ###########################')
+        self.logger.info('########################### TestLoanAmtGet START ###########################')
 
     def tearDown(self):
-        self.logger.info('########################### TestGetLoanAmt END ###########################')
+        self.logger.info('########################### TestLoanAmtGet END ###########################')
 
     def test_count_amt_get(self):
         '''可借款金额统计'''

@@ -10,14 +10,14 @@ class TestCountAmtGet(unittest.TestCase):
     ''' 待支付合计金额统计 '''
     def setUp(self):
         self.logger = Log()
-        self.logger.info('########################### TestGetCountAmt START ###########################')
+        self.logger.info('########################### TestCountAmtGet START ###########################')
         self.lastDate = str(datetime.date.today())
         self.firstDate = str(datetime.date.today().replace(day=1))
         self.countname = random.sample(['feeAmt', 'cash', 'oilFee', 'destAmtConfirm', 'retAmtConfirm'], 1)
         self.isCanLoan = random.sample(['', '0', '1'], 1)
 
     def tearDown(self):
-        self.logger.info('########################### TestGetCountAmt END ###########################')
+        self.logger.info('########################### TestCountAmtGet END ###########################')
 
 
     def test_count_amt_get(self):

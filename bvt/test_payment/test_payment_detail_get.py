@@ -11,14 +11,14 @@ class TestPaymentDetailGet(unittest.TestCase):
     ''' 运单支付详情获取 '''
     def setUp(self):
         self.logger = Log()
-        self.logger.info('########################### TestGetPayDetail START ###########################')
+        self.logger.info('########################### TestPaymentDetailGet START ###########################')
         self.wayBillId = CreateWayBill().create_waybill_register().json()['content']
         self.logger.info('创建的运单号是：%s' % self.wayBillId)
         self.driverConfirm = WayBillDepartureConfirm().waybill_departure_confirm(billId=self.wayBillId)
         self.logger.info('确认发车操作完成。')
 
     def tearDown(self):
-        self.logger.info('########################### TestGetPayDetail END ###########################')
+        self.logger.info('########################### TestPaymentDetailGet END ###########################')
 
     def test_payment_detail_get(self):
         '''  获取运单支付详情 '''

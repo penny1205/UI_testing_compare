@@ -11,10 +11,10 @@ class TestPaymentSingle(unittest.TestCase):
     ''' 运费支付 单条支付'''
     def setUp(self):
         self.logger = Log()
-        self.logger.info('########################### TestSinglePay START ###########################')
+        self.logger.info('########################### TestPaymentSingle START ###########################')
 
     def tearDown(self):
-        self.logger.info('########################### TestSinglePay END ###########################')
+        self.logger.info('########################### TestPaymentSingle END ###########################')
 
     def test_singlePay_KEKING_TO_COMPANY(self):
         ''' 运费支付方式：贷款付商户 '''

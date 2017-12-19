@@ -11,12 +11,12 @@ class TestPaymentArriveSelect(unittest.TestCase):
     '''到达支付列表查询'''
     def setUp(self):
         self.logger = Log()
-        self.logger.info('########################### TestSelectArrivePayList START ###########################')
+        self.logger.info('########################### TestPaymentArriveSelect START ###########################')
         self.lastDate = str(datetime.date.today())
         self.firstDate = str(datetime.date.today().replace(day=1))
 
     def tearDown(self):
-        self.logger.info('########################### TestSelectArrivePayList END ###########################')
+        self.logger.info('########################### TestPaymentArriveSelect END ###########################')
 
     def test_payment_arrive_select_vague_success(self):
         ''' 到达支付列表查询--模糊查询 '''
