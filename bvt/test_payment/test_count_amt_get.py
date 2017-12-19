@@ -4,11 +4,10 @@ import unittest
 import datetime
 import random
 from util.log.log import Log
-from interface.payment.payment_countAmt_get import CountAmtGet
+from interface.payment.count_amt_get import CountAmtGet
 
-
-class GetCountAmt(unittest.TestCase):
-    """ 待支付合计金额统计 """
+class TestCountAmtGet(unittest.TestCase):
+    ''' 待支付合计金额统计 '''
     def setUp(self):
         self.logger = Log()
         self.logger.info('########################### TestGetCountAmt START ###########################')
@@ -21,14 +20,15 @@ class GetCountAmt(unittest.TestCase):
         self.logger.info('########################### TestGetCountAmt END ###########################')
 
 
-    def test_countAmt_get(self):
-        """ 待支付合计金额统计值获取 """
+    def test_count_amt_get(self):
+        ''' 待支付合计金额统计值获取 '''
         response = CountAmtGet().count_amt_get(countName=self.countname, applyDateFirst=self.firstDate,
                                                applyDateLast=self.lastDate, sendCity='', arriveCity='',
                                                isCanLoan=self.isCanLoan)
-        self.logger.info('请求url：{0} '.format(response.request.url))
-        self.logger.info('请求body：{0} '.format(response.request.body))
-        self.logger.info('查询结果：{0}'.format(response.json()))
+        self.logger.info('待支付合计金额统计值获取返回状态码：{0}'.format(response))
+        self.logger.info('待支付合计金额统计值获取返回结果：{0}'.format(response.json()))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
 
+if __name__ == '__main__':
+    unittest.main()

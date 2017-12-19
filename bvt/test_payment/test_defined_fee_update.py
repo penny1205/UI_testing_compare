@@ -4,17 +4,17 @@ import unittest
 import random
 from util.log.log import Log
 from bvt.common.create_waybill import CreateWayBill
-from interface.payment.payment_definedFee_update import UserDefinedFeeUpdate
+from interface.payment.defined_fee_update import DefinedFeeUpdate
 from bvt.common.settings import Settings
 from interface.waybill.waybill_departure_confirm import WayBillDepartureConfirm
 from interface.waybill.waybill_detail_get import WayBillDetailGet
 
 
-class UpdateUserDefinedFee(unittest.TestCase):
-    """ 更新用户配置自定义费用字段 """
+class TestDefinedFeeUpdate(unittest.TestCase):
+    ''' 更新用户配置自定义费用字段 '''
     def setUp(self):
         self.logger = Log()
-        self.logger.info('########################### TestUpdateUserDefinedFee START ###########################')
+        self.logger.info('########################### TestDefinedFeeUpdate START ###########################')
         Settings().system_params_update()
         self.logger.info('更新系统属性配置信息')
         self.waybillID = CreateWayBill().create_waybill_register(handlingFee='1', deliveryFee='1', oilCardDeposit='1',
@@ -26,14 +26,12 @@ class UpdateUserDefinedFee(unittest.TestCase):
         self.deliveryFee = random.randint(1, 100)
         self.oilCardDeposit = random.randint(1, 100)
         self.otherFee = random.randint(1, 100)
-        pass
 
     def tearDown(self):
-        self.logger.info('########################### TestUpdateUserDefinedFee END ###########################')
-        pass
+        self.logger.info('########################### TestDefinedFeeUpdate END ###########################')
 
-    def test_UserDefinedFee_update(self):
-        response = UserDefinedFeeUpdate().userdefinedfee_update(self.waybillID, handlingFee=self.handlingFee,
+    def test_defined_fee_update_success(self):
+        response = DefinedFeeUpdate().defined_fee_update(self.waybillID, handlingFee=self.handlingFee,
                                                                 deliveryFee=self.deliveryFee,
                                                                 oilCardDeposit=self.oilCardDeposit,
                                                                 otherFee=self.otherFee)
@@ -47,3 +45,6 @@ class UpdateUserDefinedFee(unittest.TestCase):
         self.assertEqual(wayBillDetail['deliveryFee'], self.deliveryFee)
         self.assertEqual(wayBillDetail['oilCardDeposit'], self.oilCardDeposit)
         self.assertEqual(wayBillDetail['otherFee'], self.otherFee)
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,25 +1,26 @@
 # -*- coding:utf-8 -*-
 
 import unittest
-import datetime
-import random
 from util.log.log import Log
-from interface.payment.payment_loanAmt_get import LoanAmtGet
+from interface.payment.loan_amt_get import LoanAmtGet
 
 
-class GetLoanAmt(unittest.TestCase):
-    """ 商户可借款金额统计 """
+class TestLoanAmtGet(unittest.TestCase):
+    ''' 可借款金额统计 '''
     def setUp(self):
         self.logger = Log()
         self.logger.info('########################### TestGetLoanAmt START ###########################')
-        pass
 
     def tearDown(self):
         self.logger.info('########################### TestGetLoanAmt END ###########################')
-        pass
 
-    def test_countAmt_get(self):
+    def test_count_amt_get(self):
+        '''可借款金额统计'''
         response = LoanAmtGet().loan_amt_get()
-        self.logger.info('查询结果：{0}'.format(response.json()))
+        self.logger.info('可借款金额统计返回状态码：{0}'.format(response))
+        self.logger.info('可借款金额统计返回结果是：{0}'.format(response.json()))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
+
+if __name__ == '__main__':
+    unittest.main()
