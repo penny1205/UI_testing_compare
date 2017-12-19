@@ -9,7 +9,7 @@ class HttpClient:
     def __init__(self, timeout=60):
         self.requests = requests
         self.timeout = timeout
-        requests.session().mount('https://',Ssl3Adapter())
+        self.requests.session().mount('https://',Ssl3Adapter())
 
     def get(self, url, header_dict=None, param_dict=None):
         response = requests.get(url, headers=header_dict, params=param_dict, timeout=self.timeout, verify=False)
