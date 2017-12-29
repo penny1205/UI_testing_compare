@@ -21,10 +21,10 @@ class TestPaymentSelect(unittest.TestCase):
     def test_payment_select_vague_success(self):
         """ 支付列表查询--模糊查询 """
 
-        mobile = DataUtil().createmoble()
-        response = PaymentSelect().payment_select(searchMode='global', globalCondition=mobile)
+        waybillNo = 'Y03811712290091'
+        response = PaymentSelect().payment_select(searchMode='global', globalCondition=waybillNo)
         self.logger.info('支付列表模糊查询返回状态码：{0}'.format(response))
-        self.logger.info('支付列表模糊查询条件： {0} .支付列表查询的结果：{1}' .format(str(mobile), response.json()))
+        self.logger.info('支付列表模糊查询条件： {0} .支付列表查询的结果：{1}' .format(str(waybillNo), response.json()))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['code'], 0)
 

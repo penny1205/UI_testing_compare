@@ -184,7 +184,7 @@ class CreateWayBill(object):
 
                 elif response.json()['code'] == 9040104 and response.json()['msg'] == \
                         '此手机号已有未确认的订单,不可重复提交，请发车确认后再录单':
-                    waybill = WayBillSelect().waybill_select(billStatus='W', normalCondition=driver['mobile'],
+                    waybill = WayBillSelect().waybill_select(billStatus='W', normalCondition=car['carNo'],
                                                              searchStatus=True).json()['content']['dataList']
                     WayBillDepartureConfirm().waybill_departure_confirm(waybill[0]['id'])
                     waybillId = WayBillCreate().waybill_create(carType, applyDate, project['projectName'],
@@ -228,7 +228,7 @@ class CreateWayBill(object):
 
                 elif response.json()['code'] == 9040104 and response.json()['msg'] ==\
                           '此手机号已有未确认的订单,不可重复提交，请发车确认后再录单':
-                    waybill = WayBillSelect().waybill_select(billStatus='W',normalCondition=outCar['mobile'],
+                    waybill = WayBillSelect().waybill_select(billStatus='W',normalCondition=outCar['carNo'],
                                                              searchStatus=True).json()['content']['dataList']
                     WayBillDepartureConfirm().waybill_departure_confirm(waybill[0]['id'])
                     waybillId = WayBillCreate().waybill_create(carType, applyDate, project['projectName'],
@@ -257,6 +257,32 @@ class CreateWayBill(object):
             self.logger.error('新增运单发生异常:{0}'.format(Exception))
             return None
 
+    # def create_waybill_register1(self):
+    #     '''使用已认证司机录单,并发车确认'''
+    #     applyDate = time.strftime('%Y-%m-%d')
+    #     photoAirWay = FileUtil.getProjectObsPath() + '/image/photoAirWay.jpg'
+    #     sendProvince = '浙江'
+    #     sendCity = '杭州'
+    #     sendDistrict = ''
+    #     arriveProvince = '安徽'
+    #     arriveCity = '合肥'
+    #     arriveDistrict = ''
+    #     stationAProvince= '上海'
+    #     stationACity = '上海'
+    #     stationADistrict = ''
+    #     stationBProvince = ''
+    #     stationBCity = ''
+    #     income = random.uniform(0,99999)
+    #     totalAmt = random.uniform(0,99999)
+    #     preAmt = random.uniform(0,99999)
+    #     oilAmt = random.uniform(0,99999)
+    #     destAmt = random.uniform(0,99999)
+    #     lastAmt = random.uniform(0,99999)
+    #     CreateWayBill().create_waybill('2', applyDate, photoAirWay,sendProvince, sendCity, sendDistrict,arriveProvince,
+    #         arriveCity, arriveDistrict,income, totalAmt, preAmt, oilAmt, destAmt, lastAmt,hasReceipt, content, source,
+    #         cargoName, cargoWeight, cargoVolume,cargoNumberOfCases, cargoWorth, insuranceCosts, handlingFee, deliveryFee,
+    #         oilCardDeposit,otherFee, upWayBillId, oilCardNo, vehicleIdNo,driverCardNo, depositBank, accountName)
+
     def create_waybill_register(self, handlingFee='', deliveryFee='', oilCardDeposit='', otherFee=''):
         """ 使用已认证司机新建运单 """
         applyDate = time.strftime('%Y-%m-%d')
@@ -270,11 +296,10 @@ class CreateWayBill(object):
             self.logger.info('获取已认证司机信息：{0}'.format(driver))
             driver = driver['content'][0]
         except Exception as error:
-            print(error)
             self.logger.info('获取认证司机信息失败,错误信息：{0}'.format(error))
             return None
         # 查询认证司机是否有待发车状态的运单并处理
-        waybill = WayBillSelect().waybill_select(billStatus='W',normalCondition=driver['mobile'],
+        waybill = WayBillSelect().waybill_select(billStatus='W',normalCondition=driver['carNo'],
                                                  searchStatus='true').json()['content']['dataList']
         if waybill:
             WayBillDepartureConfirm().waybill_departure_confirm(waybill[0]['id'])
