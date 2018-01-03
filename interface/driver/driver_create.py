@@ -18,7 +18,8 @@ class DriverCreate(object):
         self.__driverCreateApiUrl = 'https://{0}:{1}{2}/api/tms/driver/createTmsAppDriver/all'.format(
             config['tms_api_host'],config['tms_api_port'],config['tms_api_path'])
         self.__head_dict = {
-            'token': config['tms_api_token']
+            'token': config['tms_api_token'],
+            'YD_OAUTH':config['tms_api_token']
         }
 
     def driver_create(self, name='', mobile='', idNo='',photoIdFront='', photoIdReserve='', photoDriverCard='',
