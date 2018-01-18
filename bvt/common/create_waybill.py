@@ -198,7 +198,7 @@ class CreateWayBill(object):
                                                       cargoWorth, insuranceCosts, handlingFee, deliveryFee,
                                                       oilCardDeposit, otherFee, upWayBillId, oilCardNo, '','', '', ''
                                                                ).json()['content']
-                    return waybillId,driver['mobile'],driver['mobile'],driver['name'],driver['idNo'],car['carNo'],\
+                    return waybillId,driver['mobile'],driver['name'],driver['idNo'],car['carNo'],\
                            car['carLength'],car['carModel'],project['projectName'],project['projectId'],\
                            supplier['name'],supplier['supplierId']
 
