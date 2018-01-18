@@ -57,6 +57,7 @@ class CostSettings(object):
                     stationBProvince, stationBCity, stationBDistrict, carLength, carModel, self.mileage,calculateType,
                     perIncome, project['projectId'],oilCost, roadCost, repairCost,depreciationCost, insurance,
                     personCost, taxRate, otherCost, infoCost)
+            self.logger.error('新增成本参数配置返回:{0}'.format(response.json()))
             if response.json()['code'] == 0:
                 return response.json()['content'],self.mileage,project['projectId']
             elif response.json()['code'] == 9180111:
@@ -69,7 +70,7 @@ class CostSettings(object):
                     arriveProvince, arriveCity, arriveDistrict, stationAProvince, stationACity, stationADistrict,
                     stationBProvince, stationBCity, stationBDistrict, carLength, carModel, self.mileage,calculateType,
                     perIncome, project['projectId'],oilCost, roadCost, repairCost,depreciationCost, insurance,
-                    personCost, taxRate, otherCost, infoCost)
+                    personCost, taxRate, otherCost, infoCost).json()['content']
                 return  Id1,self.mileage,project['projectId']
             else:
                 self.logger.error('新增成本参数配置返回错误:{0}'.format(response.json()))
