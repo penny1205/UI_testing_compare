@@ -253,8 +253,8 @@ class CreateWayBill(object):
             else:
                 self.logger.error('外请车类型错误: {0}'.format(carType))
                 return None, None, None, None, None, None, None, None, None, None, None
-        except Exception:
-            self.logger.error('新增运单发生异常:{0}'.format(Exception))
+        except Exception as e:
+            self.logger.error('新增运单公共模块发生异常:{0}'.format(e))
             return None
 
     # def create_waybill_register1(self):
