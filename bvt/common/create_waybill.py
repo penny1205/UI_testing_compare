@@ -178,7 +178,7 @@ class CreateWayBill(object):
                                                       source, cargoName, cargoWeight, cargoVolume, cargoNumberOfCases,
                                                       cargoWorth, insuranceCosts, handlingFee, deliveryFee,
                                                       oilCardDeposit, otherFee, upWayBillId, oilCardNo, '','', '', '')
-                self.logger.info("公司车创建运单功能模块response:{0}".format(response.json()))
+                self.logger.info("公司车创建运单公共模块response:{0}".format(response.json()))
                 if response.json()['code'] == 0:
                     return response.json()['content'],driver['mobile'],driver['name'],driver['idNo'],car['carNo'],\
                            car['carLength'],car['carModel'],project['projectName'],project['projectId'],\
@@ -230,7 +230,7 @@ class CreateWayBill(object):
                                                       oilCardDeposit, otherFee, upWayBillId, oilCardNo,
                                                       driver_info['vehicleIdNo'], driver_info['cardNo'],
                                                       driver_info['driverCardBank'],driver_info['accountName'])
-                self.logger.info("外请车创建运单功能模块response:{0}".format(response.json()))
+                self.logger.info("外请车创建运单公共模块response:{0}".format(response.json()))
                 if response.json()['code'] == 0:
                     return response.json()['content'],outCar['mobile'],outCar['name'],outCar['idNo'],outCar['carNo'],\
                            outCar['carLength'],outCar['carModel'],project['projectName'], project['projectId'],\
