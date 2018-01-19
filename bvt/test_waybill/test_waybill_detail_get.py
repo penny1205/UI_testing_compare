@@ -33,8 +33,8 @@ class TestWayBillDetailGet(unittest.TestCase):
         response = WayBillDetailGet().waybill_detail_get(self.wayBillId)
         self.logger.info('获取运单详情返回状态码：{0}'.format(response))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()['code'], 0)
         self.logger.info('模获取运单详情查询结果是：{0}'.format(response.json()))
+        self.assertEqual(response.json()['code'], 0)
 
 
 if __name__ == '__main__':

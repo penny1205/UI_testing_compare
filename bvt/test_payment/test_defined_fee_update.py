@@ -18,10 +18,8 @@ class TestDefinedFeeUpdate(unittest.TestCase):
         Settings().system_params_update()
         self.logger.info('更新系统属性配置信息')
         self.waybillID = CreateWayBill().create_waybill_register(handlingFee='1', deliveryFee='1', oilCardDeposit='1',
-                                                                 otherFee='1').json()['content']
+                                                                 otherFee='1')
         self.logger.info('新建运单，录入的自定义费用项数值均为1，生成的运单号为{0}'.format(self.waybillID))
-        confirmMsg=WayBillDepartureConfirm().waybill_departure_confirm(self.waybillID).json()
-        self.logger.info('运单{0}，进行确认发车，返回信息：{1}'.format(self.waybillID, confirmMsg))
         self.handlingFee = random.randint(1, 100)
         self.deliveryFee = random.randint(1, 100)
         self.oilCardDeposit = random.randint(1, 100)

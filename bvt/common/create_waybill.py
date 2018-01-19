@@ -7,9 +7,9 @@ import os
 from util.log.log import Log
 from util.file.fileutil import FileUtil
 from util.data.datautil import DataUtil
+from util.db.dbutil import DBUtil
 from util.config.yaml.readyaml import ReadYaml
 from interface.waybill.waybill_create import WayBillCreate
-from interface.waybill.waybill_select import WayBillSelect
 from interface.waybill.waybill_departure_confirm import WayBillDepartureConfirm
 from interface.waybill.waybill_temp_import import WayBillTempImport
 from interface.project.project_select import ProjectSelect
@@ -24,13 +24,14 @@ from bvt.common.create_supplier import CreateSupplier
 from bvt.common.create_driver import CreateDriver
 from bvt.common.create_mydriver import CreateMyDriver
 from bvt.common.create_mycar import CreateMyCar
-
+from interface.waybill.waybill_driver_confirm import WayBillDriverConfirm
 
 
 class CreateWayBill(object):
     '''我要录单'''
     def __init__(self):
         self.logger = Log()
+        self.config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
 
     @staticmethod
     def my_print(msg):
@@ -177,6 +178,7 @@ class CreateWayBill(object):
                                                       source, cargoName, cargoWeight, cargoVolume, cargoNumberOfCases,
                                                       cargoWorth, insuranceCosts, handlingFee, deliveryFee,
                                                       oilCardDeposit, otherFee, upWayBillId, oilCardNo, '','', '', '')
+                self.logger.info("公司车创建运单功能模块response:{0}".format(response.json()))
                 if response.json()['code'] == 0:
                     return response.json()['content'],driver['mobile'],driver['name'],driver['idNo'],car['carNo'],\
                            car['carLength'],car['carModel'],project['projectName'],project['projectId'],\
@@ -184,10 +186,16 @@ class CreateWayBill(object):
 
                 elif response.json()['code'] == 9040104 and response.json()['msg'] == \
                         '此手机号已有未确认的订单,不可重复提交，请发车确认后再录单':
-                    waybill = WayBillSelect().waybill_select(billStatus='W', normalCondition=car['carNo'],
-                                                             searchStatus=True).json()['content']['dataList']
-                    WayBillDepartureConfirm().waybill_departure_confirm(waybill[0]['id'])
-                    waybillId = WayBillCreate().waybill_create(carType, applyDate, project['projectName'],
+                    sql = 'SELECT id FROM YD_APP_TRANSPORTCASH WHERE mobile = \'{0}\' and billStatus = \'W\' and  ' \
+                          'delStatus = \'0\' and partnerNo = \'{1}\''.format(driver['mobile'], self.config['partnerNo'])
+                    self.DBUtil = DBUtil(host=self.config['db_host'], port=self.config['db_port'],
+                                         user=self.config['db_user'], passwd=self.config['db_passwd'],
+                                         dbname=self.config['db_dbname'], charset=self.config['db_charset'])
+                    waybillId_ = self.DBUtil.excute_select_one_record(sql)
+                    self.logger.info("公司车存在未发车确认的运单ID:{0}".format(waybillId_[0]))
+                    response_departure_confirm = WayBillDepartureConfirm().waybill_departure_confirm(waybillId_[0])
+                    self.logger.info("发车确认返回结果:{0}".format(response_departure_confirm.json()))
+                    response_ = WayBillCreate().waybill_create(carType, applyDate, project['projectName'],
                                                                project['projectId'],supplier['name'],
                                                                supplier['supplierId'], driver['name'],
                                                       driver['idNo'], driver['mobile'], car['carNo'], car['carLength'],
@@ -196,14 +204,15 @@ class CreateWayBill(object):
                                                       totalAmt, preAmt, oilAmt, destAmt, lastAmt, hasReceipt, content,
                                                       source, cargoName, cargoWeight, cargoVolume, cargoNumberOfCases,
                                                       cargoWorth, insuranceCosts, handlingFee, deliveryFee,
-                                                      oilCardDeposit, otherFee, upWayBillId, oilCardNo, '','', '', ''
-                                                               ).json()['content']
+                                                      oilCardDeposit, otherFee, upWayBillId, oilCardNo, '','', '', '')
+                    self.logger.info("公司车发车确认后，再次录单返回结果:{0}".format(response_.json()))
+                    waybillId = response_.json()['content']
                     return waybillId,driver['mobile'],driver['name'],driver['idNo'],car['carNo'],\
                            car['carLength'],car['carModel'],project['projectName'],project['projectId'],\
                            supplier['name'],supplier['supplierId']
 
                 else:
-                    self.logger.info("创建运单公共模块失败!")
+                    self.logger.info("创建公司车运单公共模块失败!")
                     return None, None, None, None, None, None, None, None, None, None, None
 
             elif  carType == '2':
@@ -221,6 +230,7 @@ class CreateWayBill(object):
                                                       oilCardDeposit, otherFee, upWayBillId, oilCardNo,
                                                       driver_info['vehicleIdNo'], driver_info['cardNo'],
                                                       driver_info['driverCardBank'],driver_info['accountName'])
+                self.logger.info("外请车创建运单功能模块response:{0}".format(response.json()))
                 if response.json()['code'] == 0:
                     return response.json()['content'],outCar['mobile'],outCar['name'],outCar['idNo'],outCar['carNo'],\
                            outCar['carLength'],outCar['carModel'],project['projectName'], project['projectId'],\
@@ -228,10 +238,16 @@ class CreateWayBill(object):
 
                 elif response.json()['code'] == 9040104 and response.json()['msg'] ==\
                           '此手机号已有未确认的订单,不可重复提交，请发车确认后再录单':
-                    waybill = WayBillSelect().waybill_select(billStatus='W',normalCondition=outCar['carNo'],
-                                                             searchStatus=True).json()['content']['dataList']
-                    WayBillDepartureConfirm().waybill_departure_confirm(waybill[0]['id'])
-                    waybillId = WayBillCreate().waybill_create(carType, applyDate, project['projectName'],
+                    sql = 'SELECT id FROM YD_APP_TRANSPORTCASH WHERE mobile = \'{0}\' and billStatus = \'W\' and ' \
+                          'delStatus = \'0\' and partnerNo = \'{1}\''.format(outCar['mobile'], self.config['partnerNo'])
+                    self.DBUtil = DBUtil(host=self.config['db_host'], port=self.config['db_port'],
+                                         user=self.config['db_user'], passwd=self.config['db_passwd'],
+                                         dbname=self.config['db_dbname'], charset=self.config['db_charset'])
+                    waybillId_ = self.DBUtil.excute_select_one_record(sql)
+                    self.logger.info("公司车存在未发车确认的运单ID:{0}".format(waybillId_[0]))
+                    response_departure_confirm = WayBillDepartureConfirm().waybill_departure_confirm(waybillId_[0])
+                    self.logger.info("发车确认返回结果:{0}".format(response_departure_confirm.json()))
+                    response_ = WayBillCreate().waybill_create(carType, applyDate, project['projectName'],
                                                            project['projectId'],supplier['name'],supplier['supplierId'],
                                                            outCar['name'],outCar['idNo'], outCar['mobile'], outCar['carNo'],
                                                            outCar['carLength'], outCar['carModel'], photoAirWay,
@@ -243,12 +259,14 @@ class CreateWayBill(object):
                                                            oilCardDeposit, otherFee, upWayBillId, oilCardNo,
                                                            driver_info['vehicleIdNo'], driver_info['cardNo'],
                                                            driver_info['driverCardBank'],driver_info['accountName']
-                                                           ).json()['content']
+                                                           )
+                    self.logger.info("公司车发车确认后，再次录单返回结果:{0}".format(response_.json()))
+                    waybillId = response_.json()['content']
                     return waybillId, outCar['mobile'],outCar['name'],outCar['idNo'],outCar['carNo'],outCar['carLength'],\
                            outCar['carModel'],project['projectName'], project['projectId'],supplier['name'], \
                            supplier['supplierId']
                 else:
-                    self.logger.info("Failed to create the public waybill module")
+                    self.logger.info("创建外请车运单公共模块失败")
                     return None, None, None, None, None, None, None, None, None, None, None
             else:
                 self.logger.error('外请车类型错误: {0}'.format(carType))
@@ -285,39 +303,57 @@ class CreateWayBill(object):
 
     def create_waybill_register(self, handlingFee='', deliveryFee='', oilCardDeposit='', otherFee=''):
         """ 使用已认证司机新建运单 """
-        applyDate = time.strftime('%Y-%m-%d')
-        project = CreateWayBill().project_choice()
-        config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
-        mobile_certificate = config['mobile_certificate']
-        self.mobile_certificate = random.sample(mobile_certificate, 1)[0]
-        # 获取认证司机的信息
         try:
-            driver = DriverMobileSelect().driver_mobile_select(self.mobile_certificate).json()
+
+            applyDate = time.strftime('%Y-%m-%d')
+            photoAirWay = FileUtil.getProjectObsPath() + '/image/photoAirWay.jpg'
+            upWayBillId= time.strftime('%Y%m%d%H%M%S', time.localtime(time.time()))[2:] + str(random.randint(100, 999))
+            project = CreateWayBill().project_choice()
+            supplier = CreateWayBill().supplier_choice()
+            # 随机选择一个已认证的外请车
+            mobile_certificate = self.config['mobile_certificate']
+            mobile_certificate = random.sample(mobile_certificate, 1)[0]
+            # 获取认证司机的信息
+            driver = DriverMobileSelect().driver_mobile_select(mobile_certificate).json()['content'][0]
             self.logger.info('获取已认证司机信息：{0}'.format(driver))
-            driver = driver['content'][0]
-        except Exception as error:
-            self.logger.info('获取认证司机信息失败,错误信息：{0}'.format(error))
-            return None
-        # 查询认证司机是否有待发车状态的运单并处理
-        waybill = WayBillSelect().waybill_select(billStatus='W',normalCondition=driver['carNo'],
-                                                 searchStatus='true').json()['content']['dataList']
-        if waybill:
-            WayBillDepartureConfirm().waybill_departure_confirm(waybill[0]['id'])
-        try:
-            response = WayBillCreate().waybill_create(applyDate=applyDate, sendCity='天津', sendProvince='天津',
-                                                      arriveCity='北京', arriveProvince='北京', totalAmt='0.05',
-                                                      preAmt='0.01', oilAmt='0.01', destAmt='0.01', lastAmt='0.01',
-                                                      projectId=project['projectId'], projects=project['projectName'],
-                                                      carType='2', carNo=driver['carNo'], realName=driver['name'],
-                                                      carLength=driver['carLength'], carModel=driver['carModel'],
-                                                      mobile=driver['mobile'], hasReceipt='1', handlingFee=handlingFee,
-                                                      deliveryFee=deliveryFee, oilCardDeposit=oilCardDeposit,
-                                                      otherFee=otherFee)
-            self.logger.info('新建运单返回信息：{}'.format(response.json()))
-            return response
+            # 判断司机是否有未发车的运单
+            sql = 'SELECT id FROM YD_APP_TRANSPORTCASH WHERE mobile = \'{0}\' and billStatus = \'W\' and ' \
+                  'delStatus = \'0\' and partnerNo = \'{1}\''.format(driver['mobile'], self.config['partnerNo'])
+            self.DBUtil = DBUtil(host=self.config['db_host'], port=self.config['db_port'],
+                                 user=self.config['db_user'], passwd=self.config['db_passwd'],
+                                 dbname=self.config['db_dbname'], charset=self.config['db_charset'])
+            waybillId_ = self.DBUtil.excute_select_one_record(sql)
+            if waybillId_ == None:
+                pass
+            else:
+                WayBillDepartureConfirm().waybill_departure_confirm(waybillId_[0])
+            # 创建运单
+            response = WayBillCreate().waybill_create('2', applyDate, project['projectName'], project['projectId'],
+                                                      supplier['name'], supplier['supplierId'], driver['name'],
+                                                      driver['idNo'], driver['mobile'], driver['carNo'],
+                                                      driver['carLength'], driver['carModel'], photoAirWay,
+                                                      driver['loginId'], sendProvince='北京', sendCity='北京', sendDistrict='',
+                                                       arriveProvince='天津',arriveCity='天津', arriveDistrict='',
+                                                       income='1000', totalAmt='0.05', preAmt='0.01', oilAmt='0.01',
+                                                       destAmt='0.01', lastAmt='0.01',hasReceipt='1', content='auto备注测试',
+                                                       source='TMS',cargoName='零担', cargoWeight='10', cargoVolume='100',
+                                                       cargoNumberOfCases='1000', cargoWorth='10000', insuranceCosts='10000',
+                                                       handlingFee=handlingFee, deliveryFee=deliveryFee,
+                                                       oilCardDeposit=oilCardDeposit,otherFee=otherFee,
+                                                       upWayBillId=upWayBillId, oilCardNo='YK001',
+                                                       vehicleIdNo='LSVAM4187C2184847',driverCardNo='6222810001000',
+                                                       depositBank='中国银行合肥分行', accountName='auto张三')
+            wayBillId = response.json()['content']
+            self.logger.info('使用已认证司机创建的运单ID是：{0}'.format(wayBillId))
+            #司机发车确认
+            confirmMsg = WayBillDriverConfirm().waybill_driver_confirm(wayBillId, totalAmt='0.05', preAmt='0.01',
+                                                                       oilAmt='0.01', destAmt='0.01', lastAmt='0.01')
+            self.logger.info('运单ID{0}，司机确认发车返回结果：{1}'.format(wayBillId, confirmMsg.json()))
+            return wayBillId
         except Exception as e:
-            self.logger.error('新增运单发生异常:{0}'.format(e))
+            self.logger.info('新建已认证外请车运单公共模块发生异常：{0}'.format(e))
             return None
+
 
     def create_temp_waybill(self, file, projectName, customerName, customerCode,
                             phone='130773271234', customerDeveloper='张经理'):
@@ -337,12 +373,3 @@ class CreateWayBill(object):
         except Exception as e:
             self.logger.error('批量导入运单发生异常:{0}'.format(e))
             return None
-
-
-if __name__ == "__main__":
-    i = 0
-    # while i < 21:
-    test = CreateWayBill().create_waybill_register()
-    print(test.json())
-        # i += 1
-

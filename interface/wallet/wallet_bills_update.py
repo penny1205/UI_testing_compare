@@ -26,7 +26,7 @@ class WalletBillsUpdate(object):
          try:
              payload = {
                  'serialNumber': serialNumber,
-                 'type': type,
+                 'type': type,      #订单类型，1=充值，2=提现，3=转账，不支持type=3
              }
              response = HttpClient().post_form(self.__walletBillsSelectApiUrl,payload,self.__head_dict)
              return response
