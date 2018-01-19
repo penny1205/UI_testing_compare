@@ -323,6 +323,7 @@ class CreateWayBill(object):
                                  user=self.config['db_user'], passwd=self.config['db_passwd'],
                                  dbname=self.config['db_dbname'], charset=self.config['db_charset'])
             waybillId_ = self.DBUtil.excute_select_one_record(sql)
+            self.logger.info("已认证外请车存在未发车确认的运单ID:{0}".format(waybillId_))
             if waybillId_ == None:
                 pass
             else:
