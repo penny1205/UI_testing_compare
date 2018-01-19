@@ -8,7 +8,7 @@ import time
 
 if __name__ == '__main__':
     try:
-        time.sleep(30)
+        time.sleep(10)
         config = ReadYaml(FileUtil.getProjectObsPath() + '/config/config.yaml').getValue()
         bvtcases = UnitTestUtil().discover_pattern(FileUtil.getProjectObsPath() + '/bvt/', '*.py')
 
