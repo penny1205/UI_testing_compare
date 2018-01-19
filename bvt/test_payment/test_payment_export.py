@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import unittest
-import datetime
+import time
 from util.log.log import Log
 from interface.payment.payment_export import PaymentExport
 
@@ -11,8 +11,8 @@ class TestPaymentExport(unittest.TestCase):
     def setUp(self):
         self.logger = Log()
         self.logger.info('########################### TestPaymentExport START ###########################')
-        self.lastDate = str(datetime.date.today())
-        self.firstDate = str(datetime.date.today().replace(day=1))
+        self.lastDate = time.strftime('%Y-%m-%d')
+        self.firstDate = time.strftime('%Y-%m-%d')
 
     def tearDown(self):
         self.logger.info('########################### TestPaymentExport END ###########################')
