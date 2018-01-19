@@ -26,11 +26,20 @@ class TestWalletBillsUpdate(unittest.TestCase):
         else:
             bills_choice = random.choice(bills_list)
             self.logger.info('查询交易记录的流水号是{0},交易类型是{1}'.format(bills_choice['serialNumber'],bills_choice['type']))
-            response = WalletBillsUpdate().wallet_bills_update(bills_choice['serialNumber'],bills_choice['type'])
-            self.logger.info('交易记录查询返回状态码：{0}'.format(response))
-            self.assertEqual(response.status_code, 200)
-            self.logger.info('交易记录查询返回结果是：{0}'.format(response.json()))
-            self.assertEqual(response.json()['code'], 0)
+            response = WalletBillsUpdate().wallet_bills_update(bills_choice['serialNumber'], bills_choice['type'])
+            if bills_choice['status'] ==1:
+                self.logger.info('交易记录查询返回状态码：{0}'.format(response))
+                self.assertEqual(response.status_code, 200)
+                self.logger.info('交易记录查询返回结果是：{0}'.format(response.json()))
+                self.assertEqual(response.json()['code'], 0)
+            elif bills_choice['status'] ==2 or bills_choice['status'] ==3:
+                self.logger.info('交易记录查询返回状态码：{0}'.format(response))
+                self.assertEqual(response.status_code, 200)
+                self.logger.info('交易记录查询返回结果是：{0}'.format(response.json()))
+                self.assertEqual(response.json()['code'], 1)
+            else:
+                self.logger.info('交易记录查询失败：{0}'.format(response.json()))
+
 
 if __name__ == '__main__':
     unittest.main()
