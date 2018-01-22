@@ -53,21 +53,22 @@ class CreateLine(object):
                                                 arriveDistrict,stationAProvince,stationACity,stationADistrict,
                                                 stationBProvince,stationBCity,stationBDistrict,mileage,arriveTime,
                                                 project['projectId'])
+            self.logger.info("新增线路公共模块response:{0}".format(response.json()))
 
             # 判断线路是否已经创建
             if response.json()['code'] == 0:
-                print(response.json()['content'],mileage,project['projectId'])
                 return response.json()['content'],mileage,project['projectId']
             elif response.json()['code'] == 9020707:
                 line_list = LineSelect().line_select(projectId=project['projectId'],sendCity=sendCity,
                                                      arriveCity=arriveCity).json()['content']['dataList']
                 for line in line_list:
                     LineDelete().line_delete(line['id'])
-                Id = LineCreate().line_create(sendProvince,sendCity,sendDistrict,arriveProvince,arriveCity,
+                response_ = LineCreate().line_create(sendProvince,sendCity,sendDistrict,arriveProvince,arriveCity,
                                                 arriveDistrict,stationAProvince,stationACity,stationADistrict,
                                                 stationBProvince,stationBCity,stationBDistrict,mileage,arriveTime,
-                                                project['projectId']).json()['content']
-                return Id,mileage,project['projectId']
+                                                project['projectId'])
+                self.logger.info("删除已存在线路后新增线路response:{0}".format(response_.json()))
+                return response_.json()['content'],mileage,project['projectId']
             else:
                 self.logger.error('新增线路返回错误:{0}'.format(response.json()))
                 return None,None,None

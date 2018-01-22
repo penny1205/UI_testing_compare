@@ -29,7 +29,7 @@ class TestLineUpdate(unittest.TestCase):
                                                 self.sendDistrict, self.arriveProvince,self.arriveCity,
                                                 self.arriveDistrict, self.stationAProvince,self.stationACity,
                                                 self.stationADistrict, self.stationBProvince, self.stationBCity,
-                                                self.stationBDistrict, self.arriveTime)[0]
+                                                self.stationBDistrict, self.arriveTime)
 
     def tearDown(self):
         self.logger.info('############################ TestLineUpdate END ############################')
@@ -40,10 +40,12 @@ class TestLineUpdate(unittest.TestCase):
         mileage = '150'
         response = LineUpdate().line_update(self.Id,self.sendProvince,self.sendCity,self.arriveProvince,self.arriveCity,
                                             mileage,self.arriveTime,self.projectId)
+        self.logger.info('url：{0}'.format(response.request.url))
+        self.logger.info('body：{0}'.format(response.request.body))
         self.logger.info('根据ID获取线路返回状态码：{0}'.format(response))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()['code'], 0)
         self.logger.info('根据ID获取线路返回结果是：{0}'.format(response.json()))
+        self.assertEqual(response.json()['code'], 0)
 
 if __name__ == '__main__':
     unittest.main()
