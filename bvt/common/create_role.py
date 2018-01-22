@@ -24,6 +24,7 @@ class CreateRole(object):
     @staticmethod
     def delete_role(roleId):
         response = RoleDelete().role_delete(roleId)
+        CreateRole.my_print('删除角色公共模块response:{0}'.format(response.json()))
         if response.json()['code'] == 0:
             pass
         elif response.json()['code'] == 9110015:
@@ -32,44 +33,46 @@ class CreateRole(object):
                 UserDelete().user_delete(user['loginId'])
             RoleDelete().role_delete(roleId)
         else:
-            CreateRole.my_print('静态方法删除角色返回错误:{0}'.format(response.json()))
+            CreateRole.my_print('删除角色公共模块返回错误:{0}'.format(response.json()))
 
 
     def create_role(self,roleName,menuJson):
         '''新增角色'''
         try:
             response = RoleCreate().role_create(roleName,menuJson)
+            self.logger.info("新增角色公共模块response:{0}".format(response.json()))
             if response.json()['code'] == 0:
                 return response.json()['content']
             elif response.json()['code'] == 9110012:
                 role_list = RoleSelect().role_select(roleName=roleName).json()['content']['dataList']
-                CreateRole.delete_role(random.choice(role_list)['roleId'])
-                roleId = RoleCreate().role_create(roleName,menuJson).json()['content']
-                self.logger.info('删除角色后新增角色返回response:{0}'.format(RoleCreate().role_create(roleName, menuJson)))
-                self.logger.info('删除角色后新增角色url:{0}'.format(RoleCreate().role_create(roleName,menuJson).request.url))
-                self.logger.info('删除角色后新增角色body:{0}'.format(RoleCreate().role_create(roleName, menuJson).request.body))
-                return roleId
+                for role in role_list:
+                    CreateRole.delete_role(role['roleId'])
+                response_ = RoleCreate().role_create(roleName,menuJson)
+                self.logger.info('删除角色后新增角色response:{0}'.format(response_.json()))
+                return response_.json()['content']
             else:
-                self.logger.error('新增角色返回错误:{0}'.format(response.json()))
+                self.logger.error('新增角色公共模块返回错误:{0}'.format(response.json()))
                 return None
         except Exception as e:
-            self.logger.error('新增角色发生异常:{0}'.format(e))
+            self.logger.error('新增角色公共模块发生异常:{0}'.format(e))
             return None
 
     def update_role(self,roleId,roleName,menuJson):
         '''修改角色'''
         try:
             response = RoleUpdate().role_update(roleId,roleName,menuJson)
+            self.logger.info("修改角色公共模块response:{0}".format(response.json()))
             if response.json()['code'] == 0:
                 return response
             elif response.json()['code'] == 9110012:
                 role_list = RoleSelect().role_select(roleName=roleName).json()['content']['dataList']
                 CreateRole.delete_role(random.choice(role_list)['roleId'])
-                response = RoleUpdate().role_update(roleId,roleName,menuJson)
-                return response
+                response_ = RoleUpdate().role_update(roleId,roleName,menuJson)
+                self.logger.info("删除角色后修改角色response:{0}".format(response_.json()))
+                return response_
             else:
-                self.logger.info('修改角色返回错误:{0}'.format(response.json()))
+                self.logger.info('修改角色公共模块返回错误:{0}'.format(response.json()))
                 return None
         except Exception as e:
-            self.logger.info('修改角色发生异常:{0}'.format(e))
+            self.logger.info('修改角色公共模块发生异常:{0}'.format(e))
             return None
